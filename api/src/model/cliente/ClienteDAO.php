@@ -25,12 +25,14 @@ Class ClienteDAO {
 
 	//cadastrar
 	function cadastrar (cliente $obj) {
-		$this->sql = sprintf("INSERT INTO cliente(idusuario, nome, celular, email, status)
-		VALUES(%d, '%s', '%s', '%s', '%s')",
+		$this->sql = sprintf("INSERT INTO cliente(idusuario, nome, celular, email, interesse, observacao, status)
+		VALUES(%d, '%s', '%s', '%s', '%s', '%s', '%s')",
 			mysqli_real_escape_string($this->con, $obj->getObjusuario()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getNome()),
 			mysqli_real_escape_string($this->con, $obj->getCelular()),
 			mysqli_real_escape_string($this->con, $obj->getEmail()),
+			mysqli_real_escape_string($this->con, $obj->getInteresse()),
+			mysqli_real_escape_string($this->con, $obj->getObservacao()),
 			mysqli_real_escape_string($this->con, $obj->getStatus()));
 
 		$this->superdao->resetResponse();
@@ -48,11 +50,13 @@ Class ClienteDAO {
 
 	//atualizar
 	function atualizar (Cliente $obj) {
-		$this->sql = sprintf("UPDATE cliente SET idusuario = %d, nome = '%s', celular = '%s', email = '%s', status = '%s', dataedicao = '%s' WHERE id = %d ",
+		$this->sql = sprintf("UPDATE cliente SET idusuario = %d, nome = '%s', celular = '%s', email = '%s', interesse = '%s', observacao = '%s', status = '%s', dataedicao = '%s' WHERE id = %d ",
 			mysqli_real_escape_string($this->con, $obj->getObjusuario()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getNome()),
 			mysqli_real_escape_string($this->con, $obj->getCelular()),
 			mysqli_real_escape_string($this->con, $obj->getEmail()),
+			mysqli_real_escape_string($this->con, $obj->getInteresse()),
+			mysqli_real_escape_string($this->con, $obj->getObservacao()),
 			mysqli_real_escape_string($this->con, $obj->getStatus()),
 			mysqli_real_escape_string($this->con, date('Y-m-d H:i:s')),
 			mysqli_real_escape_string($this->con, $obj->getId()));

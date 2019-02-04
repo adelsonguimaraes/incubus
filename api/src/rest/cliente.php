@@ -37,10 +37,12 @@ function cadastrar () {
 	$obj = new Cliente(
 		NULL,
 		new Usuario($usuario['idusuario']),
-		$data['nome'],
-		$data['celular'],
-		$data['email'],
-		$data['status']
+		stripslashes(strip_tags(trim($data['nome']))),
+		stripslashes(strip_tags(trim($data['celular']))),
+		stripslashes(strip_tags(trim($data['email']))),
+		stripslashes(strip_tags(trim($data['interesse']))),
+		stripslashes(strip_tags(trim($data['observacao']))),
+		stripslashes(strip_tags(trim($data['status'])))
 	);
 	$control = new ClienteControl($obj);
 	$response = $control->cadastrar();
@@ -63,10 +65,12 @@ function atualizar () {
 	$obj = new Cliente(
 		$data['id'],
 		new Usuario($data['idusuario']),
-		$data['nome'],
-		$data['celular'],
-		$data['email'],
-		$data['status']
+		stripslashes(strip_tags(trim($data['nome']))),
+		stripslashes(strip_tags(trim($data['celular']))),
+		stripslashes(strip_tags(trim($data['email']))),
+		stripslashes(strip_tags(trim($data['interesse']))),
+		stripslashes(strip_tags(trim($data['observacao']))),
+		stripslashes(strip_tags(trim($data['status'])))
 	);
 	$control = new ClienteControl($obj);
 	$response = $control->atualizar();
