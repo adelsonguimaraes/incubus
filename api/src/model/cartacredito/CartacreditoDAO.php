@@ -134,7 +134,7 @@ Class CartacreditoDAO {
 		$where
 		order by cc.id";
 
-		echo $this->sql;exit;
+		// echo $this->sql;exit;
 // 
 		$result = mysqli_query($this->con, $this->sql);
 
