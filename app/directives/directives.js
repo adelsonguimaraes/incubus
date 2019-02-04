@@ -961,6 +961,100 @@ function mascara () {
     }
 };
 
+function mascaraMoeda ($timeout) {
+    return {
+        restrict: "A",
+        require: "ngModel",
+        link: function (sc, el, att, model) {
+            
+            var KEY_RANGES = {
+                numeric: [48, 57],
+                padnum: [96, 105]
+            };
+
+            function isInRange (a, b) {
+                return a >= b[0] && a <= b[1];
+            };
+            
+            function stopEventFunction (a) {
+                var b = a.keyCode;
+                if (isInRange(b, KEY_RANGES.padnum)) {
+                   b -= 48;
+                }
+                if (((b >= 41 && b <= 122) || b == 32 || b == 8 || b > 186) && (!a.altKey && !a.ctrlKey)) {
+                    a.stopPropagation();
+                }
+            };
+            function start (input) {
+                return formataValor( input );
+            };
+
+            el.bind("keyup", function (e) {
+                stopEventFunction(e);
+                model.$setViewValue(format(model.$viewValue));
+                model.$render();
+            });
+
+            el.bind("keydown", function (e) {
+                stopEventFunction(e);
+                // if (_keyCodes(e.keyCode)) return false;
+                model.$setViewValue(format(model.$viewValue));
+                model.$render();
+            });
+            
+            el.bind("keypress", function (e) {
+                if(stopEventFunction(e)) return false;
+                model.$setViewValue(format(model.$viewValue));
+                model.$render();
+            });
+
+            // format
+            function format (k) {
+                var value = model.$viewValue;
+
+                var j = k.keyCode;
+                if (isInRange(j, KEY_RANGES.padnum)) {
+                   j -= 48;
+                }
+                var d = (isInRange(j, KEY_RANGES.numeric) ? String.fromCharCode(j) : "");
+                var h = (value.replace(/\D/g, "").substr(0) + d).replace(/\D/g, "");
+                
+                var a = h.length;
+                
+                
+                if (d == "" && a > 0 && j == 8) {
+                   a--;
+                   h = h.substring(0, a);      
+                   k.stopPropagation();
+                }
+                
+                // if (a >= 23){
+                //     k.stopPropagation();
+                // }
+          
+                /*
+                   adiciona ponto do decimal
+                */
+                h = h.substr(0, h.length-2) + '.' + h.substr(-2);
+          
+                return formataValor( h );
+             }
+
+            // após ganhar foco
+            el.bind("focus", function (e) {
+                model.$setViewValue(start(model.$viewValue));
+                model.$render();
+            });
+
+            // após perder o foco
+            el.bind("blur", function () {
+                model.$setViewValue(start(model.$viewValue));
+                model.$render();
+            });
+        }
+    }
+};
+
 /**
  *
  * Pass all functions into module
@@ -995,6 +1089,7 @@ angular
     .directive('validarcnpj', validarCNPJ)
     .directive('validarcep', validarCEP)
     .directive('mascara', mascara)
+    .directive('mascaraMoeda', mascaraMoeda)
     .directive('reiniciarFootable', function () {
         return function (scope, element) {
             var footableTable = element.parents('table');

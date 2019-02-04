@@ -87,11 +87,11 @@ Class CartacreditoDAO {
 
 	//listar
 	function listar () {
-		$this->sql = "SELECT cc.*, ta.taxa as 'taxa', tt.descricao as 'modalidade'
+		$this->sql = "SELECT cc.*, ta.taxa as 'taxa', tt.id as 'idmodalidade', tt.descricao as 'modalidade'
 		from cartacredito cc
 		inner join taxaadministrativa ta on ta.id = cc.idtaxaadministrativa
 		inner join tipotaxa tt on tt.id = ta.idtipotaxa
-		order by cc.id";
+		order by cc.id desc";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();
@@ -114,7 +114,7 @@ Class CartacreditoDAO {
 		$where = "";
 		foreach ($filtros as $key => $value) {
 			// modalidade
-			if ($key === 'modalidade' && !empty($value)) $where .= " and cc.valor >=". $value;
+			if ($key === 'modalidade' && $value >0) $where .= " and tt.id =". $value;
 			// valor
 			if ($key === 'valoracima' && $value >0) $where .= " and cc.valor >=". $value;
 			if ($key === 'valorabaixo' && $value >0) $where .= " and cc.valor <=". $value;
@@ -134,7 +134,7 @@ Class CartacreditoDAO {
 		$where
 		order by cc.id";
 
-		echo $this->sql;exit;
+		// echo $this->sql;exit;
 // 
 		$result = mysqli_query($this->con, $this->sql);
 
