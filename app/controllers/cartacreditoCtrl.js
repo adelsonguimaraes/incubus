@@ -178,28 +178,29 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
             size: 'lg',
             backdrop: 'static',
             resolve: {
-                obj: function () {
+                carta: function () {
                     return obj;
                 },
                 parentScope: $scope
             }
         });
 
-        function simulacaoCartaCreditoCtrl($scope, $uibModalInstance, obj, parentScope) {
+        function simulacaoCartaCreditoCtrl($scope, $uibModalInstance, carta, parentScope) {
             $scope.obj = {
-                modalidade: obj.modalidade,
-                valor: formataValor(obj.valor),
-                entrada: formataValor(obj.entrada),
-                parcela: formataValor(obj.parcela),
+                modalidade: carta.modalidade,
+                valor: formataValor(carta.valor),
+                entrada: formataValor(carta.entrada),
+                parcela: formataValor(carta.parcela),
                 // negociado
-                valornegociado: formataValor(obj.valor),
-                taxa: obj.taxa+'%',
-                valorcomtaxa: calculaValorComTaxa(obj.valor, obj.taxa),
-                valorfinal: calculaValorFinal(obj.valor, obj.entrada),
+                valornegociado: formataValor(carta.valor),
+                taxa: carta.taxa+'%',
+                valorcomtaxa: calculaValorComTaxa(carta.valor, carta.taxa),
+                valorfinal: calculaValorFinal(carta.valor, carta.entrada),
                 parcelamento: calculaParcelamento(
-                    calculaValorFinal(obj.valor, obj.entrada), 
-                    obj.parcela
-                )
+                    calculaValorFinal(carta.valor, carta.entrada), 
+                    carta.parcela
+                ),
+                valorconsultor: calculaValorConsultor(carta.valor)
             };
             $scope.modalidades = parentScope.modalidades;
             $scope.cartas = parentScope.cartas;
@@ -217,6 +218,10 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                 valor = desformataValor(valor);
                 return (+valor/parcela).toFixed(0) + 'x de ' + formataValor(parcela);
             }
+            function calculaValorConsultor (valor) {
+                valor = desformataValor(valor);
+                return formataValor(Math.round(0.7/100*+valor));
+            }
 
             $scope.alteraValor = function (item, $event) {
                 // if (+desformataValor(item.valornegociado) < +obj.entrada) {
@@ -226,16 +231,18 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                 // }
 
                 // if (($event.keyCode>=48 && $event.keyCode<=57) || ($event.keyCode>=96 && $event.keyCode<=105)) {
-                    item.valorcomtaxa = calculaValorComTaxa(item.valornegociado, obj.taxa);
-                    item.valorfinal = calculaValorFinal(item.valornegociado, obj.entrada);
+                    item.valorcomtaxa = calculaValorComTaxa(item.valornegociado, carta.taxa);
+                    item.valorfinal = calculaValorFinal(item.valornegociado, carta.entrada);
                     item.parcelamento = calculaParcelamento(
                         item.valorfinal, 
-                        obj.parcela
+                        carta.parcela
                     );
                 // }
             }
 
             $scope.ok = function (obj) {
+
+                return false;
 
                 if (obj === undefined) {
                     SweetAlert.swal({ html: true, title: "Atenção", text: "Informe pelo menos um campo para filtrar", type: "error" });
@@ -301,7 +308,15 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                     return false;
                 }
 
-                var data = { "metodo": "filtrar", "data": obj, "class": "cartacredito", request: 'GET' };
+                var copy = angular.copy(obj);
+                copy.valoracima = desformataValor(obj.valoracima);
+                copy.valorabaixo = desformataValor(obj.valorabaixo);
+                copy.entradaacima = desformataValor(obj.entradaacima);
+                copy.entradaabaixo = desformataValor(obj.entradaabaixo);
+                copy.parcelaacima = desformataValor(obj.parcelaacima);
+                copy.parecelaabaixo = desformataValor(obj.parecelaabaixo);
+           
+                var data = { "metodo": "filtrar", "data": copy, "class": "cartacredito", request: 'GET' };
 
                 $rootScope.loadon();
 
