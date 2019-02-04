@@ -1,0 +1,47 @@
+<div class="">
+    <div ng-include="'app/views/common/header.html'"></div>
+    <section style="padding:10px;" ng-if="!novo">
+        <button class="btn btn-success" ng-click="cadNovo()">Novo</button>
+        <div style="display: grid; grid-template-columns: auto 40px;">
+            <input class="form-control" type="" name="" ng-model="filtros">
+            <button class="btn btn-default" ng-click="filtrar()"><i class="fa fa-filter"></i></button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <td align="center">ID</td>
+                        <td align="center">Taxa ADM</td>
+                        <td align="center">Modalidade</td>
+                        <td align="center">Valor</td>
+                        <td align="center">Entrada</td>
+                        <td align="center">Parcela</td>
+                        <td align="center">Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="obj in cartas">
+                        <td>{{obj.id}}</td>
+                        <td>{{obj.taxa}}%</td>
+                        <td>{{obj.modalidade}}</td>
+                        <td  align="right">{{obj.valor | moeda}}</td>
+                        <td  align="right">{{obj.entrada | moeda}}</td>
+                        <td  align="right">{{obj.parcela | moeda}}</td>
+                        <td>
+                            <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-danger"><i class="fa fa-calculator"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section style="padding:10px;" ng-if="novo">
+        <div class="row">
+            <div class="col-md-12">
+                Aqui temos uma fomr cadastro
+                <button class="btn btn-danger" ng-click="cancelaNovo()">Cancelar</button>
+            </div>    
+        </div>
+    </section>
+</div>
