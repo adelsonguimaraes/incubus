@@ -123,6 +123,39 @@ Class UsuarioDAO {
 
 		return $this->superdao->getResponse();
 	}
+
+	/* Logar */
+	function logar ( $email, $senha ) {
+
+		$this->sql = "SELECT * from usuario where email = '$email' and senha = '$senha'";
+		$result = mysqli_query( $this->con, $this->sql );
+
+		$this->superdao->resetResponse();
+		
+		if( !$result ) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'Logar' ) );
+		}else{
+			// caso não retorne objeto mysql result, usuario não encontrado
+			$usuario = '';
+			while( $row = mysqli_fetch_object( $result) ) {
+				$usuario = array(
+					'idusuario'=>$row->id,
+					'nome'=>$row->nome,
+					'email'=>$row->email,
+					'perfil'=>$row->perfil
+				);
+			}
+			if ( $usuario === '' ) {
+				$this->superdao->setMsg( "Usuário ou Senha incorretos!" );
+				return $this->superdao->getResponse();
+			}
+			
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $usuario );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	//deletar
 	function deletar (Usuario $obj) {
 		$this->superdao->resetResponse();

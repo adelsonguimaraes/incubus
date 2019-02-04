@@ -29,8 +29,8 @@ Class ClienteControl {
 	function buscarPorId () {
 		return $this->objDAO->buscarPorId($this->obj);
 	}
-	function listar () {
-		return $this->objDAO->listar();
+	function listar ($idusuario) {
+		return $this->objDAO->listar($idusuario);
 	}
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);

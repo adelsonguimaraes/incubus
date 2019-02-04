@@ -37,5 +37,14 @@ angular.module(module).controller('mainCtrl', function ($rootScope, $scope, auth
             'url': 'cartacredito'
         },
     ];
-    MyMenu.setMenuItens($rootScope.rotinas);
+
+    $rootScope.setValuesMyMenu = function () {
+        if ($rootScope.usuario) {
+            MyMenu.setNameinMenu($rootScope.usuario.nome);
+            MyMenu.setFooter('<span class="version"> v' + version + '</span><a onclick="angular.element(this).scope().logout()"><i class="fa fa-power-off"></i> Deslogar</a>');
+            MyMenu.setMenuItens($rootScope.rotinas);
+        }    
+    }
+    $rootScope.setValuesMyMenu();
+    
 });

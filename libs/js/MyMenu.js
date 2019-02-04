@@ -24,7 +24,7 @@ const MyMenu = {
         user.appendChild(img);
         divHeader.appendChild(user);
         var name = document.createElement('a');
-        name.innerHTML = 'Sistema Solverp';
+        name.innerHTML = 'User';
         name.id = 'menu-name';
         divHeader.appendChild(name);
         box.appendChild(divHeader);

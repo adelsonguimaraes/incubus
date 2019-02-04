@@ -33,11 +33,12 @@ switch ($_POST['metodo']) {
 
 function cadastrar () {
 	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
 	$obj = new Cliente(
 		NULL,
-		new Usuario($data['idusuario']),
+		new Usuario($usuario['idusuario']),
 		$data['nome'],
-		$data['cel'],
+		$data['celular'],
 		$data['email'],
 		$data['status']
 	);
@@ -52,8 +53,9 @@ function buscarPorId () {
 	echo json_encode($response);
 }
 function listar () {
-	$control = new ClienteControl(new Cliente);
-	$response = $control->listar();
+	$data = $_POST['data'];
+	$control = new ClienteControl();
+	$response = $control->listar($data['idusuario']);
 	echo json_encode($response);
 }
 function atualizar () {
@@ -62,7 +64,7 @@ function atualizar () {
 		$data['id'],
 		new Usuario($data['idusuario']),
 		$data['nome'],
-		$data['cel'],
+		$data['celular'],
 		$data['email'],
 		$data['status']
 	);

@@ -16,21 +16,22 @@ angular.module(module).service("authenticationAPI", function ($q, $location, $ro
 	function _createSession (data, infinity) {
 		//verifica se o cookie não foi marcado
 		if(!infinity) infinity = false;
-		//alimenta a variavel usuario com data;
+		//alimenta a variavel usuarioIncubus com data;
 		$rootScope.usuario = data;
+
 		//criar a sessionStorage com oss dados do data
-        sessionStorage["usuario"] = JSON.stringify(data);
+        sessionStorage["usuarioIncubus"] = JSON.stringify(data);
         //cria obj Date com a data atual
         var now = new Date();
-        //criar o obj do localStorage sessionCandidatoOficial
-        var sessionCandidatoOficial = {
-            "usuario": 	data, //alimenta os dados da session usuario
+        //criar o obj do localStorage sessionIncubus
+        var sessionIncubus = {
+            "usuarioIncubus": 	data, //alimenta os dados da session usuarioIncubus
             "infinity": infinity, //passa true ou false para o cookie infinito
             "dataExp": 	new Date(now.getTime()+50000) //passa a data atual + 1 minuto para dataExp
         };
 
         //cria o local storage
-        localStorage["sessionCandidatoOficial"] = JSON.stringify(sessionCandidatoOficial);
+        localStorage["sessionIncubus"] = JSON.stringify(sessionIncubus);
     }
 
 	function _sessionCtrl () {
@@ -41,23 +42,23 @@ angular.module(module).service("authenticationAPI", function ($q, $location, $ro
 		*/
 		function atualizaLocalStorage () {
 			//converte json string para obj e armazena em session.
-			var session = JSON.parse(localStorage['sessionCandidatoOficial']);
+			var session = JSON.parse(localStorage['sessionIncubus']);
 			//cria um novo obj de data atual
 			var now = new Date();
 			//atualiza o tempo da sessão, a hora atual +5 minutos
 			session.dataExp = new Date(now.getTime()+50000);
 			//atualiza a sessionStorage mynuvio cupom
-			localStorage['sessionCandidatoOficial'] = JSON.stringify(session);
+			localStorage['sessionIncubus'] = JSON.stringify(session);
 			//converte o obj em json string e salva em sessionStorage
-			sessionStorage['usuario'] = JSON.stringify(session.usuario);
-			//converte json string para obj e passa para o scopo usuario
-			$rootScope.usuario = JSON.parse(sessionStorage['usuario']);
+			sessionStorage['usuarioIncubus'] = JSON.stringify(session.usuarioIncubus);
+			//converte json string para obj e passa para o scopo usuarioIncubus
+			$rootScope.usuario = JSON.parse(sessionStorage['usuarioIncubus']);
 		}
 
 		/*
-			Verifica se existe sessionStore.usuario
+			Verifica se existe sessionStore.usuarioIncubus
 		*/
-		if(sessionStorage['usuario']) {
+		if(sessionStorage['usuarioIncubus'] && localStorage['sessionIncubus']) {
 
 			atualizaLocalStorage();
 			
@@ -68,12 +69,12 @@ angular.module(module).service("authenticationAPI", function ($q, $location, $ro
 			/*
 				Verifica se existe localStorage
 			*/
-			if(localStorage['sessionCandidatoOficial']) {
+			if(localStorage['sessionIncubus']) {
 				//converte json string para obj e armazena em session.
-				var session = JSON.parse(localStorage['sessionCandidatoOficial']);
+				var session = JSON.parse(localStorage['sessionIncubus']);
 				/*
 					Verifica se a sessão tem conf infinita,
-					sendo que o usuario está sempre logado
+					sendo que o usuarioIncubus está sempre logado
 				*/
 				if(session.infinity) {
 
@@ -106,12 +107,13 @@ angular.module(module).service("authenticationAPI", function ($q, $location, $ro
 	// logout global
     $rootScope.logout = function () {
 
-		window.sessionStorage.removeItem("usuario");
-		window.localStorage.removeItem("sessionCandidatoOficial");
+		window.sessionStorage.removeItem("usuarioIncubus");
+		window.localStorage.removeItem("sessionIncubus");
 		$rootScope.usuario = "";
 		
 		//delete $rootScope.menus;
-		$location.path("/home");
+		// $location.path("/home");
+		window.location.reload();
     }
 
     

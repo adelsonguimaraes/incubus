@@ -14,7 +14,7 @@ Class Cliente implements JsonSerializable {
 	private $id;
 	private $objusuario;
 	private $nome;
-	private $cel;
+	private $celular;
 	private $email;
 	private $status;
 	private $datacadastro;
@@ -26,7 +26,7 @@ Class Cliente implements JsonSerializable {
 		$id = NULL,
 		Usuario $objusuario = NULL,
 		$nome = NULL,
-		$cel = NULL,
+		$celular = NULL,
 		$email = NULL,
 		$status = NULL,
 		$datacadastro = NULL,
@@ -36,7 +36,7 @@ Class Cliente implements JsonSerializable {
 		$this->id	= $id;
 		$this->objusuario	= $objusuario;
 		$this->nome	= $nome;
-		$this->cel	= $cel;
+		$this->celular	= $celular;
 		$this->email	= $email;
 		$this->status	= $status;
 		$this->datacadastro	= $datacadastro;
@@ -65,11 +65,11 @@ Class Cliente implements JsonSerializable {
 		$this->nome = $nome;
 		return $this;
 	}
-	public function getCel() {
-		return $this->cel;
+	public function getCelular() {
+		return $this->celular;
 	}
-	public function setCel($cel) {
-		$this->cel = $cel;
+	public function setCelular($celular) {
+		$this->celular = $celular;
 		return $this;
 	}
 	public function getEmail() {
@@ -107,7 +107,7 @@ Class Cliente implements JsonSerializable {
 			"id"	=> $this->id,
 			"objusuario"	=> $this->objusuario,
 			"nome"	=> $this->nome,
-			"cel"	=> $this->cel,
+			"celular"	=> $this->celular,
 			"email"	=> $this->email,
 			"status"	=> $this->status,
 			"datacadastro"	=> $this->datacadastro,

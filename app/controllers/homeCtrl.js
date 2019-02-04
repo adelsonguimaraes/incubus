@@ -1,5 +1,6 @@
 angular.module(module).controller('homeCtrl', function ($rootScope, $scope, authenticationAPI, genericAPI, $location, $uibModal, $timeout) {
-    authenticationAPI.sessionCtrl();
+    //Verifica Sessao e permissão de acesso
+    if (!$rootScope.usuario) { $location.path("/login"); return false; }
 
     $rootScope.api = api;
 

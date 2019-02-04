@@ -25,11 +25,11 @@ Class ClienteDAO {
 
 	//cadastrar
 	function cadastrar (cliente $obj) {
-		$this->sql = sprintf("INSERT INTO cliente(idusuario, nome, cel, email, status)
-		VALUES(%d, %d, %d, '%s', '%s')",
+		$this->sql = sprintf("INSERT INTO cliente(idusuario, nome, celular, email, status)
+		VALUES(%d, '%s', '%s', '%s', '%s')",
 			mysqli_real_escape_string($this->con, $obj->getObjusuario()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getNome()),
-			mysqli_real_escape_string($this->con, $obj->getCel()),
+			mysqli_real_escape_string($this->con, $obj->getCelular()),
 			mysqli_real_escape_string($this->con, $obj->getEmail()),
 			mysqli_real_escape_string($this->con, $obj->getStatus()));
 
@@ -48,10 +48,10 @@ Class ClienteDAO {
 
 	//atualizar
 	function atualizar (Cliente $obj) {
-		$this->sql = sprintf("UPDATE cliente SET idusuario = %d, nome = %d, cel = %d, email = '%s', status = '%s', dataedicao = '%s' WHERE id = %d ",
+		$this->sql = sprintf("UPDATE cliente SET idusuario = %d, nome = '%s', celular = '%s', email = '%s', status = '%s', dataedicao = '%s' WHERE id = %d ",
 			mysqli_real_escape_string($this->con, $obj->getObjusuario()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getNome()),
-			mysqli_real_escape_string($this->con, $obj->getCel()),
+			mysqli_real_escape_string($this->con, $obj->getCelular()),
 			mysqli_real_escape_string($this->con, $obj->getEmail()),
 			mysqli_real_escape_string($this->con, $obj->getStatus()),
 			mysqli_real_escape_string($this->con, date('Y-m-d H:i:s')),
@@ -88,8 +88,8 @@ Class ClienteDAO {
 	}
 
 	//listar
-	function listar () {
-		$this->sql = "SELECT * FROM cliente";
+	function listar ($idusuario) {
+		$this->sql = "SELECT * FROM cliente where idusuario = $idusuario";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();

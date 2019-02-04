@@ -5,62 +5,61 @@
     </div>
     <div class="modal-body">
         <form name="simulacaoForm">
-            <h3>Valores da Carta</h3>
-            <hr>
-        	<div class="col-md-12">
-                <div class="row">
-        			<div class="col-sm-6">
-                        <label>Valor</label>
-                        <input class="form-control" type="tel" mascara-moeda name="valor" ng-model="obj.valor" readonly="true">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Valores da Carta</h3>
+                    <hr>        	
+                    <div class="row">
+            			<div class="col-sm-6">
+                            <label>Valor</label>
+                            <input class="form-control" type="tel" mascara-moeda name="valor" ng-model="obj.valor" readonly="true">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Entrada</label>
+                            <input class="form-control" type="tel" mascara-moeda name="entrada" ng-model="obj.entrada" readonly="true">
+                        </div>
+    				</div>
+            		<div class="row">
+            			<div class="col-sm-6">
+                            <label>Parcela</label>
+                            <input class="form-control" type="tel" mascara-moeda name="parcela" ng-model="obj.parcela" readonly="true">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Taxa</label>
+                            <input class="form-control" type="tel" name="taxa" ng-model="obj.taxa" readonly="true">
+                        </div>
+    				</div>
+        			<h3>Valor Negociado</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Valor Negociado</label>
+                            <input class="form-control" type="tel" mascara-moeda name="valornegociado" ng-keyup="alteraValor(obj, $event)" ng-model="obj.valornegociado">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Valor Total (Negociado + Taxa)</label>
+                            <input class="form-control" type="tel" mascara-moeda name="valorcomtaxa" ng-model="obj.valorcomtaxa" readonly="true">
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label>Entrada</label>
-                        <input class="form-control" type="tel" mascara-moeda name="entrada" ng-model="obj.entrada" readonly="true">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Valor Final (Total - Entrada)</label>
+                            <input class="form-control" type="tel" mascara-moeda name="valorfinal" ng-model="obj.valorfinal" readonly="true">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Parcelamento (Final / Parcela)</label>
+                            <input class="form-control" type="tel" name="parcelamento" ng-model="obj.parcelamento" readonly="true">
+                        </div>
                     </div>
-				</div>
-        		<div class="row">
-        			<div class="col-sm-6">
-                        <label>Parcela</label>
-                        <input class="form-control" type="tel" mascara-moeda name="parcela" ng-model="obj.parcela" readonly="true">
+                    <h3>Valores do Consultor</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Valor (Valor Carta + 0.7%)</label>
+                            <input class="form-control" type="tel" mascara-moeda name="valorconsultor" ng-model="obj.valorconsultor" readonly="true">
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label>Taxa</label>
-                        <input class="form-control" type="tel" name="taxa" ng-model="obj.taxa" readonly="true">
-                    </div>
-				</div>
-			</div>
-            <h3>Valor Negociado</h3>
-            <hr>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Valor Negociado</label>
-                        <input class="form-control" type="tel" mascara-moeda name="valornegociado" ng-keyup="alteraValor(obj, $event)" ng-model="obj.valornegociado">
-                    </div>
-                    <div class="col-sm-6">
-                        <label>Valor Total (Negociado + Taxa)</label>
-                        <input class="form-control" type="tel" mascara-moeda name="valorcomtaxa" ng-model="obj.valorcomtaxa" readonly="true">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Valor Final (Total - Entrada)</label>
-                        <input class="form-control" type="tel" mascara-moeda name="valorfinal" ng-model="obj.valorfinal" readonly="true">
-                    </div>
-                    <div class="col-sm-6">
-                        <label>Parcelamento (Final / Parcela)</label>
-                        <input class="form-control" type="tel" name="parcelamento" ng-model="obj.parcelamento" readonly="true">
-                    </div>
-                </div>
-            </div>
-            <h3>Valores do Consultor</h3>
-            <hr>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <label>Valor (Valor Carta + 0.7%)</label>
-                        <input class="form-control" type="tel" mascara-moeda name="valorconsultor" ng-model="obj.valorconsultor" readonly="true">
-                    </div>
+                    
                 </div>
             </div>
         </form>

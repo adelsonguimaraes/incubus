@@ -1,6 +1,6 @@
 angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $scope, $location, genericAPI, $uibModal, SweetAlert, $timeout, especialCharMask) {
     //Verifica Sessao e permissão de acesso
-    // if (!$rootScope.usuario) { $location.path("/login"); return false; }
+    if (!$rootScope.usuario) { $location.path("/login"); return false; }
 
     $scope.title = 'Cartas de Crédito';
 

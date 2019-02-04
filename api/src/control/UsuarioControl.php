@@ -35,6 +35,9 @@ Class UsuarioControl {
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);
 	}
+	function logar ($email, $senha) {
+		return $this->objDAO->logar($email, $senha);
+	}
 	function deletar () {
 		return $this->objDAO->deletar($this->obj);
 	}
