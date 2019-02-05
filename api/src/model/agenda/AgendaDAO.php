@@ -25,11 +25,13 @@ Class AgendaDAO {
 
 	//cadastrar
 	function cadastrar (agenda $obj) {
-		$this->sql = sprintf("INSERT INTO agenda(idcliente, datahora, tipo)
-		VALUES(%d, '%s', '%s')",
+		$this->sql = sprintf("INSERT INTO agenda(idusuario, idcliente, datahora, tipo, observacao)
+		VALUES(%d, %d, '%s', '%s', '%s')",
+			mysqli_real_escape_string($this->con, $obj->getObjusuario()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getObjcliente()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getDatahora()),
-			mysqli_real_escape_string($this->con, $obj->getTipo()));
+			mysqli_real_escape_string($this->con, $obj->getTipo()),
+			mysqli_real_escape_string($this->con, $obj->getObservacao()));
 
 		$this->superdao->resetResponse();
 
@@ -46,16 +48,34 @@ Class AgendaDAO {
 
 	//atualizar
 	function atualizar (Agenda $obj) {
-		$this->sql = sprintf("UPDATE agenda SET idcliente = %d, datahora = '%s', tipo = '%s', dataedicao = '%s' WHERE id = %d ",
+
+		$this->sql = sprintf("UPDATE agenda SET idusuario = %d, idcliente = %d, datahora = '%s', tipo = '%s', observacao = '%s', dataedicao = '%s' WHERE id = %d ",
+			mysqli_real_escape_string($this->con, $obj->getObjusuario()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getObjcliente()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getDatahora()),
 			mysqli_real_escape_string($this->con, $obj->getTipo()),
+			mysqli_real_escape_string($this->con, $obj->getObservacao()),
 			mysqli_real_escape_string($this->con, date('Y-m-d H:i:s')),
 			mysqli_real_escape_string($this->con, $obj->getId()));
 		$this->superdao->resetResponse();
 
 		if(!mysqli_query($this->con, $this->sql)) {
 			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'Atualizar' ) );
+		}else{
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( true );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	function desativar ($idagenda) {
+		$obj = new Agenda($idagenda);
+
+		$this->sql = "UPDATE agenda set ativo = 'NAO' where id = $idagenda";
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'desativar' ) );
 		}else{
 			$this->superdao->setSuccess( true );
 			$this->superdao->setData( true );
@@ -84,8 +104,11 @@ Class AgendaDAO {
 	}
 
 	//listar
-	function listar () {
-		$this->sql = "SELECT * FROM agenda";
+	function listar ($idusuario) {
+		$this->sql = "SELECT a.*, c.nome as 'cliente'
+		from agenda a
+		inner join cliente c on c.id = a.idcliente
+		where a.ativo = 'SIM' and a.idusuario = $idusuario";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();

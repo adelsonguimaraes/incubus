@@ -26,6 +26,9 @@ switch ($_POST['metodo']) {
 	case 'atualizar':
 		atualizar();
 		break;
+	case 'desativar':
+		desativar();
+		break;
 	case 'deletar':
 		deletar();
 		break;
@@ -33,11 +36,14 @@ switch ($_POST['metodo']) {
 
 function cadastrar () {
 	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
 	$obj = new Agenda(
 		NULL,
+		new Usuario($usuario['idusuario']),
 		new Cliente($data['idcliente']),
 		$data['datahora'],
-		$data['tipo']
+		$data['tipo'],
+		stripslashes(strip_tags(trim($data['observacao'])))
 	);
 	$control = new AgendaControl($obj);
 	$response = $control->cadastrar();
@@ -50,20 +56,31 @@ function buscarPorId () {
 	echo json_encode($response);
 }
 function listar () {
-	$control = new AgendaControl(new Agenda);
-	$response = $control->listar();
+	$usuario = $_POST['usuario'];
+	$control = new AgendaControl();
+	$response = $control->listar($usuario['idusuario']);
 	echo json_encode($response);
 }
 function atualizar () {
 	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
 	$obj = new Agenda(
 		$data['id'],
+		new Usuario($usuario['idusuario']),
 		new Cliente($data['idcliente']),
 		$data['datahora'],
-		$data['tipo']
+		$data['tipo'],
+		stripslashes(strip_tags(trim($data['observacao'])))
 	);
 	$control = new AgendaControl($obj);
 	$response = $control->atualizar();
+	echo json_encode($response);
+}
+function desativar () {
+	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
+	$control = new AgendaControl();
+	$response = $control->desativar($data['idagenda']);
 	echo json_encode($response);
 }
 function deletar () {

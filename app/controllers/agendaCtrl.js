@@ -1,22 +1,41 @@
-angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $location, genericAPI, $uibModal, SweetAlert, $timeout, especialCharMask) {
+angular.module(module).controller('agendaCtrl', function ($rootScope, $scope, $location, genericAPI, $uibModal, SweetAlert, $timeout, especialCharMask) {
     //Verifica Sessao e permissão de acesso
     if (!$rootScope.usuario) { $location.path("/login"); return false; }
 
-    $scope.title = 'Clientes';
+    $scope.title = 'Agenda';
 
     $scope.obj = {
         id: 0,
-        idusuario: 0,
-        nome: '',
-        celular: '',
-        email: '',
-        interesse: '',
-        valor: formataValor(0),
-        entrada: formataValor(0),
-        parcela: formataValor(0),
+        idcliente: 0,
+        data: new Date(),
+        horario: '',
+        tipo: 'CONTATO',
         observacao: '',
-        status: 'PROSPECTO'
     }
+
+
+    $scope.agendas = [];
+    $scope.listarAgendas = function () {
+        var dataRequest = {
+            idusuario: $rootScope.usuario.idusuario
+        };
+
+        // verificando se o filtro está preenchido
+        var data = { "metodo": "listar", "data": dataRequest, "class": "agenda", request: 'GET' };
+
+        genericAPI.generic(data)
+            .then(function successCallback(response) {
+                //se o sucesso === true
+                if (response.data.success == true) {
+                    $scope.agendas = response.data.data;
+                } else {
+                    SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                }
+            }, function errorCallback(response) {
+                //error
+            });
+    }
+    $scope.listarAgendas();
 
     $scope.clientes = [];
     $scope.listarClientes = function () {
@@ -27,14 +46,12 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
         // verificando se o filtro está preenchido
         var data = { "metodo": "listar", "data": dataRequest, "class": "cliente", request: 'GET' };
 
-        $rootScope.loadon();
-
         genericAPI.generic(data)
             .then(function successCallback(response) {
                 //se o sucesso === true
                 if (response.data.success == true) {
                     $scope.clientes = response.data.data;
-                    $rootScope.loadoff();
+                    $scope.obj.idcliente = $scope.clientes[0].id;
                 } else {
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
                 }
@@ -52,22 +69,17 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
         $scope.novo = false;
         $scope.obj = {
             id: 0,
-            idusuario: 0,
-            nome: '',
-            celular: '',
-            email: '',
-            interesse: '',
-            valor: formataValor(0),
-            entrada: formataValor(0),
-            parcela: formataValor(0),
+            idcliente: 0,
+            data: new Date(),
+            horario: '',
+            tipo: 'CONTATO',
             observacao: '',
-            status: 'PROSPECTO'
         }
     }
     $scope.salvarNovo = function (obj) {
         SweetAlert.swal({
             title: "Atenção",
-            text: "Deseja realmente prosseguir com a operação?",
+            text: "Deseja relamente prosseguir?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#5cb85c",
@@ -77,17 +89,15 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
             closeOnCancel: false
         },
             function (isConfirm) {
+                swal.close();
                 if (isConfirm) {
                     var copy = angular.copy(obj);
-                    copy.celular = obj.celular.replace(/[^\d]+/g,'');
-                    copy.valor = desformataValor(obj.valor);
-                    copy.entrada = desformataValor(obj.entrada);
-                    copy.parcela = desformataValor(obj.parcela);
+                    copy.datahora = moment(obj.data).format('YYYY-MM-DD') + ' ' + moment(obj.horario).format('HH:mm:ss');
                     
                     var metodo = "cadastrar";
                     if (copy.id>0) metodo = "atualizar";
 
-                    var data = { "metodo": metodo, "data": copy, "class": "cliente", request: 'POST' };
+                    var data = { "metodo": metodo, "data": copy, "class": "agenda", request: 'POST' };
 
                     $rootScope.loadon();
 
@@ -96,10 +106,10 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
                             //se o sucesso === true
                             if (response.data.success == true) {
                                 $rootScope.loadoff();
-                                SweetAlert.swal({ html: true, title: "Sucesso", text: 'Cliente salvo com sucesso!', type: "success" });
+                                SweetAlert.swal({ html: true, title: "Sucesso", text: 'Agenda salva com sucesso!', type: "success" });
 
                                 $scope.cancelaNovo();
-                                $scope.listarClientes();
+                                $scope.listarAgendas();
                             } else {
                                 SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
                             }
@@ -107,59 +117,63 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
                             //error
                         }); 
                 }
-            }); 
+            
+            });
+    }
+
+    $scope.desativar = function (obj) {
+        SweetAlert.swal({
+            title: "Atenção",
+            text: "Deseja realmente desativar esse agendamento?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#5cb85c",
+            confirmButtonText: "Sim, iniciar!",
+            cancelButtonText: "Não, cancele!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                swal.close();
+                if (isConfirm) {
+                    var dataRequest = {
+                        idagenda: obj.id
+                    }
+                    
+                    var data = { "metodo": 'desativar', "data": dataRequest, "class": "agenda", request: 'POST' };
+
+                    $rootScope.loadon();
+
+                    genericAPI.generic(data)
+                        .then(function successCallback(response) {
+                            //se o sucesso === true
+                            if (response.data.success == true) {
+                                $rootScope.loadoff();
+                                SweetAlert.swal({ html: true, title: "Sucesso", text: 'Agenda salva com sucesso!', type: "success" });
+
+                                $scope.listarAgendas();
+                            } else {
+                                SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                            }
+                        }, function errorCallback(response) {
+                            //error
+                        });
+                }
+
+            });
     }
 
     $scope.editar = function (obj) {
         $scope.novo = true;
         $scope.obj = {
             id: obj.id,
-            idusuario: obj.idusuario,
-            nome: obj.nome,
-            celular: obj.celular,
-            email: obj.email,
-            interesse: obj.interesse,
-            valor: formataValor(obj.valor | 0),
-            entrada: formataValor(obj.entrada | 0),
-            parcela: formataValor(obj.parcela | 0),
+            idcliente: obj.idcliente,
+            data: new Date(obj.datahora),
+            horario: new Date(obj.datahora),
+            tipo: obj.tipo,
             observacao: obj.observacao,
-            status: obj.status
         }
     }
-
-
-    // $scope.cadastrar = function (obj) {
-        
-    //     var data = { 
-    //         "metodo": "cadastrar", 
-    //         "data": obj,
-    //         "class": "visitante", 
-    //         request: 'POST' 
-    //     };
-
-    //     $rootScope.loadon();
-
-    //     genericAPI.generic(data)
-    //         .then(function successCallback(response) {
-    //             //se o sucesso === true
-    //             if (response.data.success == true) {
-    //                 $rootScope.loadoff();
-    //                 SweetAlert.swal({ html: true, title: "Sucesso", text: 'Visita cadastrada com sucesso!', type: "success" });
-
-    //                 $scope.obj = {
-    //                     idvisitante: 0,
-    //                     nome: '',
-    //                     cpfcnpj: '',
-    //                     data: '',
-    //                     horario: '',
-    //                 }
-    //             } else {
-    //                 SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
-    //             }
-    //         }, function errorCallback(response) {
-    //             //error
-    //         });	
-    // }
 
     $scope.filtrar = function () {
         var modalInstance = $uibModal.open({
