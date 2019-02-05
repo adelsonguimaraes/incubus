@@ -11,6 +11,9 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
         celular: '',
         email: '',
         interesse: '',
+        valor: formataValor(0),
+        entrada: formataValor(0),
+        parcela: formataValor(0),
         observacao: '',
         status: 'PROSPECTO'
     }
@@ -54,6 +57,9 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
             celular: '',
             email: '',
             interesse: '',
+            valor: formataValor(0),
+            entrada: formataValor(0),
+            parcela: formataValor(0),
             observacao: '',
             status: 'PROSPECTO'
         }
@@ -61,6 +67,9 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
     $scope.salvarNovo = function (obj) {
         var copy = angular.copy(obj);
         copy.celular = obj.celular.replace(/[^\d]+/g,'');
+        copy.valor = desformataValor(obj.valor);
+        copy.entrada = desformataValor(obj.entrada);
+        copy.parcela = desformataValor(obj.parcela);
         
         var metodo = "cadastrar";
         if (copy.id>0) metodo = "atualizar";
@@ -95,6 +104,9 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
             celular: obj.celular,
             email: obj.email,
             interesse: obj.interesse,
+            valor: formataValor(obj.valor | 0),
+            entrada: formataValor(obj.entrada | 0),
+            parcela: formataValor(obj.parcela | 0),
             observacao: obj.observacao,
             status: obj.status
         }
@@ -133,109 +145,6 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
     //             //error
     //         });	
     // }
-
-    $scope.simular = function (obj) {
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/views/modal/simulacao.html',
-            controller: simulacaoCartaCreditoCtrl,
-            size: 'lg',
-            backdrop: 'static',
-            resolve: {
-                carta: function () {
-                    return obj;
-                },
-                parentScope: $scope
-            }
-        });
-
-        function simulacaoCartaCreditoCtrl($scope, $uibModalInstance, carta, parentScope) {
-            $scope.obj = {
-                modalidade: carta.modalidade,
-                valor: formataValor(carta.valor),
-                entrada: formataValor(carta.entrada),
-                parcela: formataValor(carta.parcela),
-                // negociado
-                valornegociado: formataValor(carta.valor),
-                taxa: carta.taxa+'%',
-                valorcomtaxa: calculaValorComTaxa(carta.valor, carta.taxa),
-                valorfinal: calculaValorFinal(carta.valor, carta.entrada),
-                parcelamento: calculaParcelamento(
-                    calculaValorFinal(carta.valor, carta.entrada), 
-                    carta.parcela
-                ),
-                valorconsultor: calculaValorConsultor(carta.valor)
-            };
-            $scope.modalidades = parentScope.modalidades;
-            $scope.cartas = parentScope.cartas;
-           
-            function calculaValorComTaxa (valor, taxa) {
-                valor = desformataValor(valor);
-                return formataValor(+valor+(+taxa/100*+valor));
-            }
-            function calculaValorFinal (valor, entrada) {
-                valor = desformataValor(valor);
-                entrada = desformataValor(entrada);
-                return formataValor(+valor-entrada);
-            }
-            function calculaParcelamento (valor, parcela) {
-                valor = desformataValor(valor);
-                return (+valor/parcela).toFixed(0) + 'x de ' + formataValor(parcela);
-            }
-            function calculaValorConsultor (valor) {
-                valor = desformataValor(valor);
-                return formataValor(Math.round(0.7/100*+valor));
-            }
-
-            $scope.alteraValor = function (item, $event) {
-                // if (+desformataValor(item.valornegociado) < +obj.entrada) {
-                //     item.valornegociado = formataValor(obj.entrada);
-                //     SweetAlert.swal({ html: true, title: "Atenção", text: "Valor Negociado não pode ser abaixo do valor da Entrada!", type: "error" });
-                //     return false;
-                // }
-
-                // if (($event.keyCode>=48 && $event.keyCode<=57) || ($event.keyCode>=96 && $event.keyCode<=105)) {
-                    item.valorcomtaxa = calculaValorComTaxa(item.valornegociado, carta.taxa);
-                    item.valorfinal = calculaValorFinal(item.valornegociado, carta.entrada);
-                    item.parcelamento = calculaParcelamento(
-                        item.valorfinal, 
-                        carta.parcela
-                    );
-                // }
-            }
-
-            $scope.ok = function (obj) {
-
-                return false;
-
-                if (obj === undefined) {
-                    SweetAlert.swal({ html: true, title: "Atenção", text: "Informe pelo menos um campo para filtrar", type: "error" });
-                    return false;
-                }
-
-                var data = { "metodo": "filtrar", "data": obj, "class": "cartacredito", request: 'GET' };
-
-                $rootScope.loadon();
-
-                genericAPI.generic(data)
-                    .then(function successCallback(response) {
-                        //se o sucesso === true
-                        if (response.data.success == true) {
-                            parentScope.cartas = response.data.data;
-                            $rootScope.loadoff();
-                            $uibModalInstance.dismiss('cancel');
-                        } else {
-                            SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
-                        }
-                    }, function errorCallback(response) {
-                        //error
-                    }); 
-                
-            }
-            $scope.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
-            }
-        } 
-    }
 
     $scope.filtrar = function () {
         var modalInstance = $uibModal.open({

@@ -1,5 +1,5 @@
 function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdleProvider, KeepaliveProvider) {
-    $urlRouterProvider.otherwise("/login");
+    $urlRouterProvider.otherwise("/home");
 
     $ocLazyLoadProvider.config({
         // Set to true if you want to see what and when is dynamically loaded

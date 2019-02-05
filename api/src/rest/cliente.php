@@ -41,6 +41,9 @@ function cadastrar () {
 		stripslashes(strip_tags(trim($data['celular']))),
 		stripslashes(strip_tags(trim($data['email']))),
 		stripslashes(strip_tags(trim($data['interesse']))),
+		stripslashes(strip_tags(trim($data['valor']))),
+		stripslashes(strip_tags(trim($data['entrada']))),
+		stripslashes(strip_tags(trim($data['parcela']))),
 		stripslashes(strip_tags(trim($data['observacao']))),
 		stripslashes(strip_tags(trim($data['status'])))
 	);
@@ -69,6 +72,9 @@ function atualizar () {
 		stripslashes(strip_tags(trim($data['celular']))),
 		stripslashes(strip_tags(trim($data['email']))),
 		stripslashes(strip_tags(trim($data['interesse']))),
+		stripslashes(strip_tags(trim($data['valor']))),
+		stripslashes(strip_tags(trim($data['entrada']))),
+		stripslashes(strip_tags(trim($data['parcela']))),
 		stripslashes(strip_tags(trim($data['observacao']))),
 		stripslashes(strip_tags(trim($data['status'])))
 	);

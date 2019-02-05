@@ -17,6 +17,9 @@ Class Cliente implements JsonSerializable {
 	private $celular;
 	private $email;
 	private $interesse;
+	private $valor;
+	private $entrada;
+	private $parcela;
 	private $observacao;
 	private $status;
 	private $datacadastro;
@@ -31,6 +34,9 @@ Class Cliente implements JsonSerializable {
 		$celular = NULL,
 		$email = NULL,
 		$interesse = NULL,
+		$valor = NULL,
+		$entrada = NULL,
+		$parcela = NULL,
 		$observacao = NULL,
 		$status = NULL,
 		$datacadastro = NULL,
@@ -43,6 +49,9 @@ Class Cliente implements JsonSerializable {
 		$this->celular	= $celular;
 		$this->email	= $email;
 		$this->interesse = $interesse;
+		$this->valor = $valor;
+		$this->entrada = $entrada;
+		$this->parcela = $parcela;
 		$this->observacao = $observacao;
 		$this->status	= $status;
 		$this->datacadastro	= $datacadastro;
@@ -92,6 +101,27 @@ Class Cliente implements JsonSerializable {
 		$this->interesse = $interesse;
 		return $this;
 	}
+	public function getValor() {
+		return $this->valor;
+	}
+	public function setValor($valor) {
+		$this->valor = $valor;
+		return $this;
+	}
+	public function getEntrada() {
+		return $this->entrada;
+	}
+	public function setEntrada($entrada) {
+		$this->entrada = $entrada;
+		return $this;
+	}
+	public function getParcela() {
+		return $this->parcela;
+	}
+	public function setParcela($parcela) {
+		$this->parcela = $parcela;
+		return $this;
+	}
 	public function getObservacao() {
 		return $this->observacao;
 	}
@@ -130,6 +160,9 @@ Class Cliente implements JsonSerializable {
 			"celular"	=> $this->celular,
 			"email"	=> $this->email,
 			"interesse" => $this->interesse,
+			"valor" => $this->valor,
+			"entrada" => $this->entrada,
+			"parcela" => $this->parcela,
 			"observacao" => $this->observacao,
 			"status"	=> $this->status,
 			"datacadastro"	=> $this->datacadastro,

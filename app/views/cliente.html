@@ -38,31 +38,28 @@
             </table>
         </div>
     </section>
-    <section style="padding:10px;" ng-if="novo">
+    <section style="padding:10px;margin-bottom:50px;" ng-if="novo">
         <h3 align="center">Novo Cadastro</h3>
         <div class="row">
             <div class="col-md-12">
                 <form class="form" name="formCad">
+                    <h3>Dados Pessoais</h3>
+                    <hr>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <label>Nome <span class="importante">*</span></label>
                             <input type="text" class="form-control"  name="nome" id="nome" ng-model="obj.nome" placeholder="Qual o nome do cliente?" ng-required="true">
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <label>Celular <span class="importante">*</span></label>
-                            <input type="tel" class="form-control" mascara="(99) 99999-9999"  name="Celular" id="Celular" ng-model="obj.celular" placeholder="Qual o celular?" ng-required="true">
+                            <input type="tel" class="form-control" mascara="(99) 99999-9999" name="Celular" id="Celular" ng-model="obj.celular"
+                                placeholder="Qual o celular?" ng-required="true">
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <label>Email</label>
                             <input type="email" class="form-control" name="entrada" id="email" ng-model="obj.email" placeholder="Qual o e-mail?" ng-required="false">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>Interesse <span class="importante">*</span></label>
-                            <input type="text" class="form-control" name="entrada" id="interesse" ng-model="obj.interesse" placeholder="Qual interesse desse cliente?" ng-required="true">
                         </div>
                         <div class="col-sm-6">
                             <label>Status <span class="importante">*</span></label>
@@ -71,6 +68,32 @@
                                 <option value="DEFINITIVO">Definitivo</option>
                                 <option value="DESISTENTE">Desistente</option>
                             </select>
+                        </div>
+                    </div>
+                    <h3>Interesse</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Interesse <span class="importante">*</span></label>
+                            <input type="text" class="form-control" name="interesse" id="interesse" ng-model="obj.interesse" placeholder="Qual interesse desse cliente?"
+                                ng-required="true">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Valor</label>
+                            <input type="text" class="form-control" name="valor" id="valor" ng-model="obj.valor" mascara-moeda placeholder="Qual valor de interesse desse cliente?"
+                                ng-required="false">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Entrada</label>
+                            <input type="text" class="form-control" name="entrada" id="entrada" ng-model="obj.entrada" mascara-moeda placeholder="Qual a entrada de interesse dess cliente?"
+                                ng-required="false">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Parcela </label>
+                            <input type="tel" class="form-control" name="parcela" id="parcela" ng-model="obj.parcela" mascara-moeda placeholder="Qual a parcela de interesse dess cliente?"
+                                ng-required="false">
                         </div>
                     </div>
                     <div class="row">
