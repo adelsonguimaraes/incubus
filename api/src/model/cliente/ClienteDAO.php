@@ -53,7 +53,7 @@ Class ClienteDAO {
 
 	//atualizar
 	function atualizar (Cliente $obj) {
-		$this->sql = sprintf("UPDATE cliente SET idusuario = %d, nome = '%s', celular = '%s', email = '%s', interesse = '%s', valor = %f, entrada = %f, parcela = %f, observacao = '%s', status = '%s', dataedicao = '%s' WHERE id = %d ",
+		$this->sql = sprintf("UPDATE cliente SET idusuario = %d, nome = '%s', celular = '%s', email = '%s', interesse = '%s', valor = %f, entrada = %f, parcela = %f, observacao = '%s', status = '%s', verhome = '%s', dataedicao = '%s' WHERE id = %d ",
 			mysqli_real_escape_string($this->con, $obj->getObjusuario()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getNome()),
 			mysqli_real_escape_string($this->con, $obj->getCelular()),
@@ -64,6 +64,7 @@ Class ClienteDAO {
 			mysqli_real_escape_string($this->con, $obj->getParcela()),
 			mysqli_real_escape_string($this->con, $obj->getObservacao()),
 			mysqli_real_escape_string($this->con, $obj->getStatus()),
+			mysqli_real_escape_string($this->con, $obj->getVerhome()),
 			mysqli_real_escape_string($this->con, date('Y-m-d H:i:s')),
 			mysqli_real_escape_string($this->con, $obj->getId()));
 		$this->superdao->resetResponse();
@@ -107,7 +108,28 @@ Class ClienteDAO {
 		if(!$result) {
 			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'Listar' ) );
 		}else{
-			while($row = mysqli_fetch_object($result)) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$row['verhome'] = ($row['verhome']==='SIM' ? true : false);
+				array_push($this->lista, $row);
+			}
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $this->lista );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	//listar
+	function listarVerNaHome ($idusuario) {
+		$this->sql = "SELECT * FROM cliente where idusuario = $idusuario and verhome = 'SIM'";
+		$result = mysqli_query($this->con, $this->sql);
+
+		$this->superdao->resetResponse();
+
+		if(!$result) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'Listar' ) );
+		}else{
+			while($row = mysqli_fetch_assoc($result)) {
+				$row['verhome'] = ($row['verhome']==='SIM' ? true : false);
 				array_push($this->lista, $row);
 			}
 			$this->superdao->setSuccess( true );

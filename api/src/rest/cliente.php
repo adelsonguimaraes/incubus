@@ -23,6 +23,9 @@ switch ($_POST['metodo']) {
 	case 'listar':
 		listar();
 		break;
+	case 'listarVerNaHome':
+		listarVerNaHome();
+		break;
 	case 'atualizar':
 		atualizar();
 		break;
@@ -63,6 +66,12 @@ function listar () {
 	$response = $control->listar($data['idusuario']);
 	echo json_encode($response);
 }
+function listarVerNaHome () {
+	$data = $_POST['data'];
+	$control = new ClienteControl();
+	$response = $control->listarVerNaHome($data['idusuario']);
+	echo json_encode($response);
+}
 function atualizar () {
 	$data = $_POST['data'];
 	$obj = new Cliente(
@@ -76,7 +85,8 @@ function atualizar () {
 		stripslashes(strip_tags(trim($data['entrada']))),
 		stripslashes(strip_tags(trim($data['parcela']))),
 		stripslashes(strip_tags(trim($data['observacao']))),
-		stripslashes(strip_tags(trim($data['status'])))
+		stripslashes(strip_tags(trim($data['status']))),
+		($data['verhome'] ? 'SIM' : 'NAO')
 	);
 	$control = new ClienteControl($obj);
 	$response = $control->atualizar();

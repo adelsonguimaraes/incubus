@@ -32,6 +32,9 @@ Class ClienteControl {
 	function listar ($idusuario) {
 		return $this->objDAO->listar($idusuario);
 	}
+	function listarVerNaHome ($idusuario) {
+		return $this->objDAO->listarVerNaHome($idusuario);
+	}
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);
 	}

@@ -15,7 +15,7 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
         entrada: formataValor(0),
         parcela: formataValor(0),
         observacao: '',
-        status: 'PROSPECTO'
+        status: 'PROSPECTO',
     }
 
     $scope.clientes = [];
@@ -160,6 +160,52 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
     //             //error
     //         });	
     // }
+
+    $scope.verNaHome = function (obj) {
+        SweetAlert.swal({
+            title: "Atenção",
+            text: "Deseja realmente prosseguir com a operação?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#5cb85c",
+            confirmButtonText: "Sim, iniciar!",
+            cancelButtonText: "Não, cancele!",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    var copy = angular.copy(obj);
+                    copy.celular = obj.celular.replace(/[^\d]+/g, '');
+                    copy.valor = desformataValor(obj.valor);
+                    copy.entrada = desformataValor(obj.entrada);
+                    copy.parcela = desformataValor(obj.parcela);
+                    copy.verhome = obj.verhome;
+                    
+                    var data = { "metodo": "atualizar", "data": copy, "class": "cliente", request: 'POST' };
+
+                    $rootScope.loadon();
+
+                    genericAPI.generic(data)
+                        .then(function successCallback(response) {
+                            //se o sucesso === true
+                            if (response.data.success == true) {
+                                $rootScope.loadoff();
+                                SweetAlert.swal({ html: true, title: "Sucesso", text: 'Dados atualizados com sucesso!', type: "success" });
+
+                                $scope.cancelaNovo();
+                                $scope.listarClientes();
+                            } else {
+                                SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                            }
+                        }, function errorCallback(response) {
+                            //error
+                        });
+                }else{
+                    obj.verhome = !obj.verhome;
+                }
+            }); 
+    }
 
     $scope.filtrar = function () {
         var modalInstance = $uibModal.open({

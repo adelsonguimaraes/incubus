@@ -17,6 +17,7 @@
                         <!-- <td align="left">Email</td> -->
                         <td align="left">Observação</td>
                         <td align="left">Status</td>
+                        <td width=25><i class="fa fa-eye fa-2x"></i></td>
                         <td align="left">Ações</td>
                     </tr>
                 </thead>
@@ -29,6 +30,9 @@
                         <!-- <td>{{obj.email}}</td> -->
                         <td>{{obj.observacao}}</td>
                         <td>{{obj.status}}</td>
+                        <td align="center">
+                            <input style="display:block;width:25px;height:25px;" type="checkbox" name="mostrarhome" id="mostrarhome" ng-model="obj.verhome" ng-click="verNaHome(obj)">
+                        </td>
                         <td>
                             <button class="btn btn-warning" ng-click="editar(obj)"><i class="fa fa-pencil"></i></button>
                             <!-- <button class="btn btn-danger"  ng-click="simular(obj)"><i class="fa fa-calculator"></i></button> -->

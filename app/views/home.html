@@ -1,20 +1,43 @@
 <div ng-include="'app/views/common/header.html'"></div>
-<section style="padding:0px;">
-    <h4 align="center">Agendamentos</h4>
-    <div class="agendamentos">
-        <ul class="list-group">
+<section>
+    <div class="title">
+        Agenda
+        <a ng-click="toggle('agenda')"><i class="fa" ng-class="{'fa-minus': groups.agenda, 'fa-plus': !groups.agenda }"></i></a>
+    </div>
+    <ul class="list-group" ng-if="groups.agenda">
+        <div class="agendamentos">
             <li class="list-group-item" ng-repeat="obj in agendas">
                 <div><b>Data/Hora:</b> {{obj.datahora | datahora}}</div>
                 <div><b>Cliente:</b> {{obj.cliente}}</div>
                 <div><b>Tipo:</b> {{obj.tipo | nomeProprio}}</div>
                 <div><b>Observação:</b> {{obj.observacao}}</div>
             </li>
-        </ul>
-    </div>
+        </div>
+    </ul>
 </section>
-<div class="notification animated swing">
+<section>
+    <div class="title">
+        Clientes
+        <a ng-click="toggle('cliente')"><i class="fa fa-minus"></i></a>
+    </div>
+    <ul class="list-group" ng-if="groups.cliente">
+        <div class="agendamentos">
+            <li class="list-group-item" ng-repeat="obj in clientes">
+                <div><b>Nome:</b> {{obj.nome}}</div>
+                <div><b>Celular:</b> {{obj.celular | cel}}</div>
+                <div><b>Status:</b> {{obj.status | nomeProprio}}</div>
+                <div><b>Interesse:</b> {{obj.interesse}}</div>
+                <div><b>Valor:</b> {{obj.valor | moeda}}</div>
+                <div><b>Entrada:</b> {{obj.entrada | moeda}}</div>
+                <div><b>Parcela:</b> {{obj.parcela | moeda}}</div>
+                <div><b>Observação:</b> {{obj.observacao}}</div>
+            </li>
+        </div>
+    </ul>
+</section>
+<!-- <div class="notification animated swing">
     <a ng-click="clickNotification()">
         <span>3</span>
         <i class="fa fa-bell"></i>
     </a>
-</div>
+</div> -->

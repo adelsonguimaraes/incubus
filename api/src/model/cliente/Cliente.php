@@ -22,6 +22,7 @@ Class Cliente implements JsonSerializable {
 	private $parcela;
 	private $observacao;
 	private $status;
+	private $verhome;
 	private $datacadastro;
 	private $dataedicao;
 
@@ -39,6 +40,7 @@ Class Cliente implements JsonSerializable {
 		$parcela = NULL,
 		$observacao = NULL,
 		$status = NULL,
+		$verhome = NULL,
 		$datacadastro = NULL,
 		$dataedicao = NULL
 	)
@@ -54,6 +56,7 @@ Class Cliente implements JsonSerializable {
 		$this->parcela = $parcela;
 		$this->observacao = $observacao;
 		$this->status	= $status;
+		$this->verhome = $verhome;
 		$this->datacadastro	= $datacadastro;
 		$this->dataedicao	= $dataedicao;
 	}
@@ -136,6 +139,13 @@ Class Cliente implements JsonSerializable {
 		$this->status = $status;
 		return $this;
 	}
+	public function getVerhome() {
+		return $this->verhome;
+	}
+	public function SetVerhome($verhome) {
+		$this->verhome = $verhome;
+		return $this;
+	}
 	public function getDatacadastro() {
 		return $this->datacadastro;
 	}
@@ -165,6 +175,7 @@ Class Cliente implements JsonSerializable {
 			"parcela" => $this->parcela,
 			"observacao" => $this->observacao,
 			"status"	=> $this->status,
+			"verhome"	=> $this->verhome,
 			"datacadastro"	=> $this->datacadastro,
 			"dataedicao"	=> $this->dataedicao
 		];
