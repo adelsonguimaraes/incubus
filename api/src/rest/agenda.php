@@ -23,6 +23,9 @@ switch ($_POST['metodo']) {
 	case 'listar':
 		listar();
 		break;
+	case 'listarOrdenadoPorData':
+		listarOrdenadoPorData();
+		break;
 	case 'atualizar':
 		atualizar();
 		break;
@@ -59,6 +62,12 @@ function listar () {
 	$usuario = $_POST['usuario'];
 	$control = new AgendaControl();
 	$response = $control->listar($usuario['idusuario']);
+	echo json_encode($response);
+}
+function listarOrdenadoPorData () {
+	$usuario = $_POST['usuario'];
+	$control = new AgendaControl();
+	$response = $control->listarOrdenadoPorData($usuario['idusuario']);
 	echo json_encode($response);
 }
 function atualizar () {

@@ -32,6 +32,9 @@ Class AgendaControl {
 	function listar ($idusuario) {
 		return $this->objDAO->listar($idusuario);
 	}
+	function listarOrdenadoPorData ($idusuario) {
+		return $this->objDAO->listarOrdenadoPorData($idusuario);
+	}
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);
 	}

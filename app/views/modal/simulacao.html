@@ -51,9 +51,12 @@
                             <input class="form-control" type="tel" name="parcelamento" ng-model="obj.parcelamento" readonly="true">
                         </div>
                     </div>
-                    <h3>Valores do Consultor</h3>
+                    <h3>
+                        Valores do Consultor
+                        <small>Ocultar</small> <input type="checkbox" name="ocultar" id="ocultar" ng-model="obj.ocultar" checked>
+                    </h3> 
                     <hr>
-                    <div class="row">
+                    <div class="row" ng-if="!obj.ocultar">
                         <div class="col-sm-12">
                             <label>Valor (Valor Carta + 0.7%)</label>
                             <input class="form-control" type="tel" mascara-moeda name="valorconsultor" ng-model="obj.valorconsultor" readonly="true">

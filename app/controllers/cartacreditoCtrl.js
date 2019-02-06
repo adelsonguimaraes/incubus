@@ -200,6 +200,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                     calculaValorFinal(carta.valor, carta.entrada), 
                     carta.parcela
                 ),
+                ocultar: true,
                 valorconsultor: calculaValorConsultor(carta.valor)
             };
             $scope.modalidades = parentScope.modalidades;
