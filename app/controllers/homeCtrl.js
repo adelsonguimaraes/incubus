@@ -37,6 +37,32 @@ angular.module(module).controller('homeCtrl', function ($rootScope, $scope, auth
     }
     $scope.listarAgendas();
 
+    $scope.itemClickAgenda = function (obj) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/views/modal/detalhesAgenda.html',
+            controller: detalhesAgendaCtrl,
+            size: 'lg',
+            backdrop: 'static',
+            resolve: {
+                agenda: function () {
+                    return obj;
+                },
+                parentScope: $scope
+            }
+        });
+
+        function detalhesAgendaCtrl($scope, $uibModalInstance, agenda, parentScope) {
+            $scope.obj = agenda;
+            
+            $scope.ok = function (obj) {
+                $uibModalInstance.dismiss('cancel');
+            }
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            }
+        } 
+    }
+
     $scope.clientes = [];
     $scope.listarClientes = function () {
         var dataRequest = {

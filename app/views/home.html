@@ -6,7 +6,7 @@
     </div>
     <ul class="list-group" ng-if="groups.agenda">
         <div class="agendamentos">
-            <li class="list-group-item" ng-repeat="obj in agendas">
+            <li class="list-group-item" ng-repeat="obj in agendas" ng-click="itemClickAgenda(obj);">
                 <div><b>Data/Hora:</b> {{obj.datahora | datahora}}</div>
                 <div><b>Cliente:</b> {{obj.cliente}}</div>
                 <div><b>Tipo:</b> {{obj.tipo | nomeProprio}}</div>

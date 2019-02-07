@@ -127,7 +127,9 @@ Class AgendaDAO {
 
 	//listar
 	function listarOrdenadoPorData ($idusuario) {
-		$this->sql = "SELECT a.*, c.nome as 'cliente'
+		$this->sql = "SELECT a.*, 
+		c.nome as 'cliente', c.celular as 'clientecelular', c.`status` as 'clientestatus', c.interesse as 'clienteinteresse', 
+		c.valor as 'clientevalor', c.entrada as 'clienteentrada', c.parcela as 'clienteparcela', c.observacao as 'clienteobservacao'
 		from agenda a
 		inner join cliente c on c.id = a.idcliente
 		where a.ativo = 'SIM' and a.idusuario = $idusuario
