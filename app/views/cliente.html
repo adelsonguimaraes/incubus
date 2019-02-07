@@ -29,7 +29,15 @@
                         <td>{{obj.interesse}}</td>
                         <!-- <td>{{obj.email}}</td> -->
                         <td>{{obj.observacao}}</td>
-                        <td>{{obj.status}}</td>
+                        <!-- <td>{{obj.status}}</td> -->
+                        <td>
+                            <select style="width:inherit;" class="form-control" name="status" id="status" ng-model="obj.status" ng-change="setStatus(obj)" ng-required="true">
+                                <option value="PROSPECTO">Prospecto</option>
+                                <option value="RETORNO">Retorno</option>
+                                <option value="DEFINITIVO">Definitivo</option>
+                                <option value="DESISTENTE">Desistente</option>
+                            </select>
+                        </td>
                         <td align="center">
                             <input style="display:block;width:25px;height:25px;" type="checkbox" name="mostrarhome" id="mostrarhome" ng-model="obj.verhome" ng-click="verNaHome(obj)">
                         </td>
@@ -69,6 +77,7 @@
                             <label>Status <span class="importante">*</span></label>
                             <select class="form-control" name="status" id="status" ng-model="obj.status" ng-required="true">
                                 <option value="PROSPECTO">Prospecto</option>
+                                <option value="RETORNO">Retorno</option>
                                 <option value="DEFINITIVO">Definitivo</option>
                                 <option value="DESISTENTE">Desistente</option>
                             </select>

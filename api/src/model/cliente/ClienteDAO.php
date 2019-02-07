@@ -100,7 +100,9 @@ Class ClienteDAO {
 
 	//listar
 	function listar ($idusuario) {
-		$this->sql = "SELECT * FROM cliente where idusuario = $idusuario";
+		$this->sql = "SELECT * FROM cliente where
+		idusuario = $idusuario and (status = 'PROSPECTO' or status = 'RETORNO')
+		order by status = 'PROSPECT' asc, status = 'RETORNO'";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();
