@@ -87,7 +87,9 @@ Class TaxaadministrativaDAO {
 
 	//listar
 	function listar () {
-		$this->sql = "SELECT * FROM taxaadministrativa";
+		$this->sql = "SELECT ta.*, tt.descricao as 'modalidade'
+		FROM taxaadministrativa ta
+		INNER JOIN tipotaxa tt on tt.id = ta.idtipotaxa";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();

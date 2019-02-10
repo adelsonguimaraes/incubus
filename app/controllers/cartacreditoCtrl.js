@@ -6,6 +6,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
 
     $scope.obj = {
         id: 0,
+        idmodalidade: 0,
         idtaxaadministrativa: '',
         valor: '',
         entrada: '',
@@ -36,7 +37,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                 //error
             }); 
     }
-    $scope.listarModalidades();
+    // $scope.listarModalidades();
 
     $scope.taxas = [];
     $scope.listartaxas = function () {
@@ -85,6 +86,8 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
     $scope.novo = false;
     $scope.cadNovo = function () {
         $scope.novo = true;
+        $scope.obj.idmodalidade = $scope.modalidades[0].id;
+        $scope.obj.idtaxaadministrativa = $scope.taxas[0].id;
     }
     $scope.cancelaNovo = function () {
         $scope.novo = false;

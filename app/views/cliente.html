@@ -1,11 +1,17 @@
 <div class="">
     <div ng-include="'app/views/common/header.html'"></div>
     <section style="padding:10px;" ng-if="!novo">
-        <button class="btn btn-success" ng-click="cadNovo()">Novo</button>
+        <div style="padding:0 0 10px 0;">
+            <button class="btn btn-success" ng-click="cadNovo()">
+                <i class="fa fa-plus"></i>
+                <b>Novo</b>
+            </button>
+        </div>
         <!-- <div style="display: grid; grid-template-columns: auto 40px;">
             <input class="form-control" type="" name="" ng-model="filtros">
             <button class="btn btn-default" ng-click="filtrar()"><i class="fa fa-filter"></i></button>
         </div> -->
+        <input class="form-control" type="text" ng-model="filtro">
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead>
@@ -22,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="obj in clientes">
+                    <tr ng-repeat="obj in clientes | filter:filtro">
                         <td>{{obj.id}}</td>
                         <td>{{obj.nome}}</td>
                         <td>{{obj.celular  | cel}}</td>

@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label>Taxa</label>
-                            <select class="form-control" ng-options="obj.id as obj.codigo for obj in taxas" ng-model="obj.idtaxaadministrativa"></select>
+                            <select class="form-control" ng-options="obj.id as obj.codigo+' - '+obj.modalidade for obj in taxas" ng-model="obj.idtaxaadministrativa"></select>
                         </div>
                         <div class="col-sm-6">
                             <label>Valor</label>
