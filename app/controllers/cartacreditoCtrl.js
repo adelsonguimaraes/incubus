@@ -37,7 +37,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                 //error
             }); 
     }
-    // $scope.listarModalidades();
+    $scope.listarModalidades();
 
     $scope.taxas = [];
     $scope.listartaxas = function () {
