@@ -197,14 +197,15 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                 valornegociado: formataValor(carta.valor),
                 taxa: carta.taxa+'%',
                 valorcomtaxa: calculaValorComTaxa(carta.valor, carta.taxa),
-                valorfinal: calculaValorFinal(carta.valor, carta.entrada),
-                parcelamento: calculaParcelamento(
-                    calculaValorFinal(carta.valor, carta.entrada), 
-                    carta.parcela
-                ),
+                valorfinal: 0,
+                parcelamento: 0,
                 ocultar: true,
                 valorconsultor: calculaValorConsultor(carta.valor)
             };
+            $scope.obj.valorfinal = calculaValorFinal($scope.obj.valorcomtaxa, carta.entrada);
+            $scope.obj.parcelamento = calculaParcelamento($scope.obj.valorfinal, carta.parcela);
+
+
             $scope.modalidades = parentScope.modalidades;
             $scope.cartas = parentScope.cartas;
            
@@ -219,7 +220,8 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
             }
             function calculaParcelamento (valor, parcela) {
                 valor = desformataValor(valor);
-                return (+valor/parcela).toFixed(0) + 'x de ' + formataValor(parcela);
+                //Math.trunc pegando apenas a parte inteira do valor
+                return Math.trunc(+valor/parcela) + 'x de ' + formataValor(parcela);
             }
             function calculaValorConsultor (valor) {
                 valor = desformataValor(valor);
@@ -235,7 +237,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
 
                 // if (($event.keyCode>=48 && $event.keyCode<=57) || ($event.keyCode>=96 && $event.keyCode<=105)) {
                     item.valorcomtaxa = calculaValorComTaxa(item.valornegociado, carta.taxa);
-                    item.valorfinal = calculaValorFinal(item.valornegociado, carta.entrada);
+                    item.valorfinal = calculaValorFinal(item.valorcomtaxa, carta.entrada);
                     item.parcelamento = calculaParcelamento(
                         item.valorfinal, 
                         carta.parcela
