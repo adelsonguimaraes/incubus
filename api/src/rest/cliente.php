@@ -26,6 +26,9 @@ switch ($_POST['metodo']) {
 	case 'listarVerNaHome':
 		listarVerNaHome();
 		break;
+	case 'filtrar':
+		filtrar();
+		break;
 	case 'atualizar':
 		atualizar();
 		break;
@@ -70,6 +73,12 @@ function listarVerNaHome () {
 	$data = $_POST['data'];
 	$control = new ClienteControl();
 	$response = $control->listarVerNaHome($data['idusuario']);
+	echo json_encode($response);
+}
+function filtrar () {
+	$data = $_POST['data'];
+	$control = new ClienteControl();
+	$response = $control->filtrar($data);
 	echo json_encode($response);
 }
 function atualizar () {

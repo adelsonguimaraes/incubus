@@ -222,8 +222,8 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
 
     $scope.filtrar = function () {
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/views/modal/filtroCartaCredito.html',
-            controller: filtroCartaCreditoCtrl,
+            templateUrl: 'app/views/modal/filtroCliente.html',
+            controller: filtroClienteCtrl,
             size: 'lg',
             backdrop: 'static',
             resolve: {
@@ -234,18 +234,13 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
             }
         });
 
-        function filtroCartaCreditoCtrl($scope, $uibModalInstance, parentScope) {
+        function filtroClienteCtrl($scope, $uibModalInstance, parentScope) {
            $scope.obj = {
-                modalidade: '',
-                valoracima:'',
-                valorabaixo:'',
-                entradaacima:'',
-                entradaabaixo:'',
-                parcelaacima:'',
-                parecelaabaixo:''
-           };
-           $scope.modalidades = parentScope.modalidades;
-           $scope.obj.modalidade = $scope.modalidades[0].id;
+                nome: '',
+                celular: '',
+                status: 'PROSPECTO',
+                interesse: ''
+            };
 
             $scope.ok = function (obj) {
 
@@ -255,14 +250,7 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
                 }
 
                 var copy = angular.copy(obj);
-                copy.valoracima = desformataValor(obj.valoracima);
-                copy.valorabaixo = desformataValor(obj.valorabaixo);
-                copy.entradaacima = desformataValor(obj.entradaacima);
-                copy.entradaabaixo = desformataValor(obj.entradaabaixo);
-                copy.parcelaacima = desformataValor(obj.parcelaacima);
-                copy.parecelaabaixo = desformataValor(obj.parecelaabaixo);
-           
-                var data = { "metodo": "filtrar", "data": copy, "class": "cartacredito", request: 'GET' };
+                var data = { "metodo": "filtrar", "data": copy, "class": "cliente", request: 'GET' };
 
                 $rootScope.loadon();
 

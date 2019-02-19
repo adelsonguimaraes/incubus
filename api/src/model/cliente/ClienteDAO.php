@@ -102,7 +102,7 @@ Class ClienteDAO {
 	function listar ($idusuario) {
 		$this->sql = "SELECT * FROM cliente where
 		idusuario = $idusuario and (status = 'PROSPECTO' or status = 'RETORNO')
-		order by status = 'PROSPECT' asc, status = 'RETORNO'";
+		order by status = 'PROSPECT' asc, status = 'RETORNO', datacadastro desc";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();
@@ -123,6 +123,30 @@ Class ClienteDAO {
 	//listar
 	function listarVerNaHome ($idusuario) {
 		$this->sql = "SELECT * FROM cliente where idusuario = $idusuario and verhome = 'SIM'";
+		$result = mysqli_query($this->con, $this->sql);
+
+		$this->superdao->resetResponse();
+
+		if(!$result) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'Listar' ) );
+		}else{
+			while($row = mysqli_fetch_assoc($result)) {
+				$row['verhome'] = ($row['verhome']==='SIM' ? true : false);
+				array_push($this->lista, $row);
+			}
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $this->lista );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	//filtrar
+	function filtrar ($idusuario) {
+
+		
+		$this->sql = "SELECT * FROM cliente where
+		idusuario = $idusuario and (status = 'PROSPECTO' or status = 'RETORNO')
+		order by status = 'PROSPECT' asc, status = 'RETORNO', datacadastro desc";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();

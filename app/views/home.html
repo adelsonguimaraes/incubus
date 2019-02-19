@@ -5,8 +5,11 @@
         <a ng-click="toggle('agenda')"><i class="fa" ng-class="{'fa-minus': groups.agenda, 'fa-plus': !groups.agenda }"></i></a>
     </div>
     <ul class="list-group" ng-if="groups.agenda">
+        <div style="padding:5px;">
+            <input class="form-control" type="text" ng-model="filtroAgenda" placeholder="Filtro, mais agilidade nas suas buscas">
+        </div>
         <div class="agendamentos">
-            <li class="list-group-item" ng-repeat="obj in agendas" ng-click="itemClickAgenda(obj);">
+            <li class="list-group-item" ng-repeat="obj in agendas | filter:filtroAgenda" ng-click="itemClickAgenda(obj);">
                 <div><b>Data/Hora:</b> {{obj.datahora | datahora}}</div>
                 <div><b>Cliente:</b> {{obj.cliente}}</div>
                 <div><b>Tipo:</b> {{obj.tipo | nomeProprio}}</div>
@@ -21,8 +24,11 @@
         <a ng-click="toggle('cliente')"><i class="fa fa-minus"></i></a>
     </div>
     <ul class="list-group" ng-if="groups.cliente">
+        <div style="padding:5px;">
+            <input class="form-control" type="text" ng-model="filtroCliente" placeholder="Filtro, mais agilidade nas suas buscas">
+        </div>
         <div class="agendamentos">
-            <li class="list-group-item" ng-repeat="obj in clientes">
+            <li class="list-group-item" ng-repeat="obj in clientes | filter:filtroCliente">
                 <div><b>Nome:</b> {{obj.nome}}</div>
                 <div><b>Celular:</b> {{obj.celular | cel}}</div>
                 <div><b>Status:</b> {{obj.status | nomeProprio}}</div>
