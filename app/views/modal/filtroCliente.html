@@ -4,7 +4,7 @@
         <small class="font-bold">Filtro avançado para clientes</small>
     </div>
     <div class="modal-body">
-        <form name="formFilter">
+        <form name="formFilter" ng-submit="ok(obj)">
             <div class="row">
             	<div class="col-md-12">
 					<div class="row">
@@ -23,6 +23,7 @@
 						<div class="col-sm-12">
 							<label for="status">Status</label>
 							<select class="form-control" name="status" id="status" ng-model="obj.status" ng-required="true">
+								<option value="TODOS">Todos</option>
 								<option value="PROSPECTO">Prospecto</option>
 								<option value="RETORNO">Retorno</option>
 								<option value="DEFINITIVO">Definitivo</option>

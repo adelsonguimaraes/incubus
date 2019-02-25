@@ -238,7 +238,7 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
            $scope.obj = {
                 nome: '',
                 celular: '',
-                status: 'PROSPECTO',
+                status: 'TODOS',
                 interesse: ''
             };
 
@@ -258,7 +258,7 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
                     .then(function successCallback(response) {
                         //se o sucesso === true
                         if (response.data.success == true) {
-                            parentScope.cartas = response.data.data;
+                            parentScope.clientes = response.data.data;
                             $rootScope.loadoff();
                             $uibModalInstance.dismiss('cancel');
                         } else {

@@ -35,6 +35,9 @@ Class ClienteControl {
 	function listarVerNaHome ($idusuario) {
 		return $this->objDAO->listarVerNaHome($idusuario);
 	}
+	function filtrar ($idusuario, $data) {
+		return $this->objDAO->filtrar($idusuario, $data);
+	}	
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);
 	}
