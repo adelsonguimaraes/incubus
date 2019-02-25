@@ -7,8 +7,19 @@
         <form name="simulacaoForm">
             <div class="row">
                 <div class="col-md-12">
+                    <h3>
+                        Cliente
+                        <!-- <small>Sem cliente</small> <input type="checkbox" name="ocultar" id="ocultar" ng-model="obj.ocultar" checked> -->
+                    </h3>
+                    <small>* Selecione um cliente caso queirar salvar a simulação</small>
+                    <!-- <hr>        	 -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="cliente" ng-model="obj.idcliente" ng-options="obj.id as obj.nome for obj in clientes"></select>
+                        </div>
+                    </div>
                     <h3>Valores da Carta</h3>
-                    <hr>        	
+                    <hr>
                     <div class="row">
             			<div class="col-sm-6">
                             <label>Valor</label>

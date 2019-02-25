@@ -141,12 +141,19 @@ Class ClienteDAO {
 	}
 
 	//filtrar
-	function filtrar ($idusuario) {
+	function filtrar ($idusuario, $data) {
 
-		
+		$whereString = "";
+		if (!empty($data['nome'])) $whereString .= "and nome like '%" . $data['nome'] . "%'";
+		if (!empty($data['celular'])) $whereString .= " and celular = '" . $data['celular'] . "'";
+		if (!empty($data['interesse'])) $whereString .= " and interesse like '%" . $data['interesse'] . "%'";
+		if ($data['status']!=="TODOS") $whereString .= " and status = '" . $data['status'] . "'";
+
 		$this->sql = "SELECT * FROM cliente where
-		idusuario = $idusuario and (status = 'PROSPECTO' or status = 'RETORNO')
-		order by status = 'PROSPECT' asc, status = 'RETORNO', datacadastro desc";
+		idusuario = $idusuario
+		$whereString
+		order by datacadastro desc";
+
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();

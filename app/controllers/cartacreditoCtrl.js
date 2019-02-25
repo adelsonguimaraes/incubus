@@ -206,6 +206,29 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
             $scope.obj.parcelamento = calculaParcelamento($scope.obj.valorfinal, carta.parcela);
 
 
+            $scope.clientes = [];
+            $scope.listarClientes = function () {
+                // verificando se o filtro está preenchido
+                var data = { "metodo": "listar", "data": '', "class": "cliente", request: 'GET' };
+        
+                // $rootScope.loadon();
+        
+                genericAPI.generic(data)
+                    .then(function successCallback(response) {
+                        //se o sucesso === true
+                        if (response.data.success == true) {
+                            $scope.clientes = response.data.data;
+                            $scope.obj.idcliente = $scope.clientes[0].id;
+                            // $rootScope.loadoff();
+                        } else {
+                            SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                        }
+                    }, function errorCallback(response) {
+                        //error
+                    }); 
+            }
+            $scope.listarClientes();
+
             $scope.modalidades = parentScope.modalidades;
             $scope.cartas = parentScope.cartas;
            
@@ -247,30 +270,42 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
 
             $scope.ok = function (obj) {
 
-                return false;
+                SweetAlert.swal({
+                    title: "Atenção",
+                    text: "Deseja realmente salvar essa simulação para o cliente?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#5cb85c",
+                    confirmButtonText: "Sim, salvar!",
+                    cancelButtonText: "Não, cancele!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            console.log(obj);
+                            return false;
 
-                if (obj === undefined) {
-                    SweetAlert.swal({ html: true, title: "Atenção", text: "Informe pelo menos um campo para filtrar", type: "error" });
-                    return false;
-                }
+                            var data = { "metodo": "cadastrar", "data": obj, "class": "cartacredito", request: 'GET' };
 
-                var data = { "metodo": "filtrar", "data": obj, "class": "cartacredito", request: 'GET' };
+                            $rootScope.loadon();
 
-                $rootScope.loadon();
-
-                genericAPI.generic(data)
-                    .then(function successCallback(response) {
-                        //se o sucesso === true
-                        if (response.data.success == true) {
-                            parentScope.cartas = response.data.data;
-                            $rootScope.loadoff();
-                            $uibModalInstance.dismiss('cancel');
-                        } else {
-                            SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                            genericAPI.generic(data)
+                                .then(function successCallback(response) {
+                                    //se o sucesso === true
+                                    if (response.data.success == true) {
+                                        parentScope.cartas = response.data.data;
+                                        $rootScope.loadoff();
+                                        $uibModalInstance.dismiss('cancel');
+                                    } else {
+                                        SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                                    }
+                                }, function errorCallback(response) {
+                                    //error
+                                }); 
                         }
-                    }, function errorCallback(response) {
-                        //error
-                    }); 
+                    }
+                )
                 
             }
             $scope.cancel = function () {

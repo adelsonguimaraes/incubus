@@ -65,8 +65,9 @@ function buscarPorId () {
 }
 function listar () {
 	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
 	$control = new ClienteControl();
-	$response = $control->listar($data['idusuario']);
+	$response = $control->listar($usuario['idusuario']);
 	echo json_encode($response);
 }
 function listarVerNaHome () {
@@ -77,8 +78,9 @@ function listarVerNaHome () {
 }
 function filtrar () {
 	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
 	$control = new ClienteControl();
-	$response = $control->filtrar($data);
+	$response = $control->filtrar($usuario['idusuario'], $data);
 	echo json_encode($response);
 }
 function atualizar () {
