@@ -91,8 +91,9 @@ Class CartacreditoDAO {
 		from cartacredito cc
 		inner join taxaadministrativa ta on ta.id = cc.idtaxaadministrativa
 		inner join tipotaxa tt on tt.id = ta.idtipotaxa
-		#order by cc.id desc
-		order by cc.valor asc, cc.entrada asc, cc.parcela asc";
+		-- order by cc.id desc
+		-- order by cc.valor asc, cc.entrada asc, cc.parcela asc
+		order by ta.taxa";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();
@@ -134,7 +135,8 @@ Class CartacreditoDAO {
 		where cc.id >0
 		$where
 		#order by cc.id
-		order by cc.valor asc, cc.entrada asc, cc.parcela asc";
+		-- order by cc.valor asc, cc.entrada asc, cc.parcela asc
+		order by ta.taxa";
 
 		// echo $this->sql;exit;
 // 
