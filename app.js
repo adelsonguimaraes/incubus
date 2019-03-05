@@ -11,7 +11,7 @@ const version = '1.0.0';
         'pascalprecht.translate',       // Angular Translate
         'ngIdle',                       // Idle timer
         'ngSanitize',                    // ngSanitize
-        'ps.inputTime'
+        'ps.inputTime',
     ]);
 
     /* Service Worker */
