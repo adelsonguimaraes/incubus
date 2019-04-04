@@ -4,6 +4,7 @@ angular.module(module).service("genericAPI", function ($http, $rootScope) {
         return $http({
             method: 'POST',
             url: api + "src/rest/autoload.php",
+            timeout: (data.timeout!==undefined) ? data.timeout : 60,
             data: {
                 metodo: data.metodo,
                 data: data.data,

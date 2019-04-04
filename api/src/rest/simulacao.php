@@ -11,6 +11,27 @@
 
 //inclui autoload
 require_once 'autoload.php';
+set_time_limit(0);
+
+function loopExecution () {
+	$data = $_POST['data'];
+	$obj = new Simulacao(
+		NULL,
+		new Cliente(1)
+	);
+	$control = new SimulacaoControl($obj);
+	$resp = $control->cadastrar();
+	if ($resp['sucess']===false) die(json_encode($resp));
+}
+
+$x=0;
+while ($x<6) {
+	loopExecution();
+	sleep(10); // descansa a cada 60 segundos
+	$x++;
+}
+
+exit;
 
 //verifica requisição
 switch ($_POST['metodo']) {
@@ -83,7 +104,6 @@ function deletar () {
 	$control = new SimulacaoControl($banco);
 	echo json_encode($control->deletar());
 }
-
 
 // Classe gerada com BlackCoffeePHP 2.0 - by Adelson Guimarães
 ?>
