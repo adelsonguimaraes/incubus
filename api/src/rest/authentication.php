@@ -17,28 +17,29 @@ require_once 'autoload.php';
 	Verifica métodos requisitado
 */
 
-switch ($_POST['metodo']) {
-    case 'logar':
-        logar();
-        break;
+// switch ($_POST['metodo']) {
+    // case 'logar':
+    //     logar();
+    //     break;
         
-    case 'trocarempresa':
-       	trocarEmpresa();
-       	break;
-    case 'mudarsenha':
-        mudarSenha();
-        break;
+    // case 'trocarempresa':
+    //    	trocarEmpresa();
+    //    	break;
+    // case 'mudarsenha':
+    //     mudarSenha();
+    //     break;
 
-    case 'salvaempresafavorita':
-        salvaEmpresaFavorita();
-        break;
+    // case 'salvaempresafavorita':
+    //     salvaEmpresaFavorita();
+    //     break;
         
-    case 'listaempresasusuario': 
-    	listarEmpresasUsuario();
+    // case 'listaempresasusuario': 
+    // 	listarEmpresasUsuario();
 
-    default:
-        break;
-}
+    // default:
+    //     break;
+// }
+$_POST['metodo']();
 
 /*
 	Metodos
@@ -92,4 +93,11 @@ function mudarSenha() {
     $response = $usuarioControl->mudarSenha($idusuario, $senhaatual, $novasenha);
 
     echo json_encode( $response );
+}
+
+function auth () {
+    $usuario = $_POST['usuario'];
+    $control = new UsuarioControl();
+    if (empty($usuario['auth'])) die (json_encode(array("success"=>false, "msg"=>"Usuário não autenticado!")));
+    echo json_encode($control->auth($usuario['idusuario'], $usuario['auth']));
 }

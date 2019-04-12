@@ -1,7 +1,7 @@
 // configs
 const module = 'incubus';
 const api = "api/";
-const version = '1.0.0';
+const version = '1.0.1';
 
 (function () {
     angular.module(module, [

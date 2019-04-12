@@ -22,7 +22,6 @@ require_once("../../util/Conexao.php");
 */
 require_once("../../util/ResolveMysqlError.php");
 
-
 /*
 	Fun��o AutoLoad, Carrega as Classes quando
 	tenta-se criar uma nova instancia de uma Classe.

@@ -127,7 +127,9 @@ Class UsuarioDAO {
 	/* Logar */
 	function logar ( $email, $senha ) {
 
-		$this->sql = "SELECT * from usuario where email = '$email' and senha = '$senha'";
+		$this->sql = "SELECT * 
+		from usuario 
+		where email = '$email' and senha = '$senha'";
 		$result = mysqli_query( $this->con, $this->sql );
 
 		$this->superdao->resetResponse();
@@ -142,11 +144,66 @@ Class UsuarioDAO {
 					'idusuario'=>$row->id,
 					'nome'=>$row->nome,
 					'email'=>$row->email,
-					'perfil'=>$row->perfil
+					'perfil'=>$row->perfil,
+					'auth'=>$row->auth
 				);
 			}
 			if ( $usuario === '' ) {
 				$this->superdao->setMsg( "Usuário ou Senha incorretos!" );
+				return $this->superdao->getResponse();
+			}
+			
+			// atualizando Autenticação
+			$resp = $this->setAuth($usuario['idusuario']);
+			if ($resp['success']===false) return ($resp);
+			$usuario['auth'] = $resp['data']->auth;
+			
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $usuario );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	function setAuth ($idusuario) {
+		$this->sql = "UPDATE usuario u SET u.auth = MD5(CONCAT(u.nome, u.email, u.senha)) WHERE u.id = $idusuario";
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'setAuth' ) );
+		}else{
+			$id = mysqli_insert_id( $this->con );
+
+			$resp = $this->buscarPorId (new Usuario($idusuario));
+			if ($resp['success']===false) return ($resp);
+			$usuario = $resp['data'];
+
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $usuario );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	// verificando authenticação do usuário
+	function auth ($idusuario, $auth) {
+		
+		$this->sql = "SELECT u.* 
+		FROM usuario u
+		WHERE u.id = $idusuario AND u.auth = '$auth' AND u.ativo = 'SIM'";
+
+		$result = mysqli_query( $this->con, $this->sql );
+
+		$this->superdao->resetResponse();
+		
+		if( !$result ) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Usuário', 'Auth' ) );
+		}else{
+			// caso não retorne objeto mysql result, usuario não encontrado
+			$usuario = '';
+			while( $row = mysqli_fetch_object( $result) ) {
+				$usuario = $row;	
+			}
+			if ( $usuario === '' ) {
+				$this->superdao->setMsg( "Usuário não autenticado!" );
 				return $this->superdao->getResponse();
 			}
 			

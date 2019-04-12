@@ -38,6 +38,12 @@ Class UsuarioControl {
 	function logar ($email, $senha) {
 		return $this->objDAO->logar($email, $senha);
 	}
+	function setAuth ($idusuario) {
+		return $this->objDAO->logar($idusuario);
+	}
+	function auth ($idusuario, $auth) {
+		return $this->objDAO->auth($idusuario, $auth);
+	}
 	function deletar () {
 		return $this->objDAO->deletar($this->obj);
 	}
