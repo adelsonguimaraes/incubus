@@ -44,6 +44,9 @@ Class UsuarioControl {
 	function auth ($idusuario, $auth) {
 		return $this->objDAO->auth($idusuario, $auth);
 	}
+	function getMenu ($idusuario) {
+		return $this->objDAO->getMenu($idusuario);
+	}
 	function deletar () {
 		return $this->objDAO->deletar($this->obj);
 	}

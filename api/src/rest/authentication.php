@@ -101,3 +101,9 @@ function auth () {
     if (empty($usuario['auth'])) die (json_encode(array("success"=>false, "msg"=>"Usuário não autenticado!")));
     echo json_encode($control->auth($usuario['idusuario'], $usuario['auth']));
 }
+
+function getMenu() {
+    $usuario = $_POST["usuario"];
+    $usuarioControl = new UsuarioControl();
+    echo json_encode($usuarioControl->getMenu($usuario["idusuario"]));
+}

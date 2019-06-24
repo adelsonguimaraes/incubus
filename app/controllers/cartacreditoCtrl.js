@@ -336,7 +336,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                 entradaacima:'',
                 entradaabaixo:'',
                 parcelaacima:'',
-                parecelaabaixo:''
+                parcelaabaixo:''
            };
            $scope.modalidades = parentScope.modalidades;
            $scope.obj.modalidade = $scope.modalidades[0].id;
@@ -354,7 +354,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                 copy.entradaacima = desformataValor(obj.entradaacima);
                 copy.entradaabaixo = desformataValor(obj.entradaabaixo);
                 copy.parcelaacima = desformataValor(obj.parcelaacima);
-                copy.parecelaabaixo = desformataValor(obj.parecelaabaixo);
+                copy.parcelaabaixo = desformataValor(obj.parcelaabaixo);
            
                 var data = { "metodo": "filtrar", "data": copy, "class": "cartacredito", request: 'GET' };
 

@@ -125,7 +125,7 @@ Class CartacreditoDAO {
 			if ($key === 'entradaabaixo' && $value >0) $where .= " and cc.entrada <=". $value;
 			// parcela
 			if ($key === 'parcelaacima' && $value >0) $where .= " and cc.parcela >=". $value;
-			if ($key === 'parecelaabaixo' && $value >0) $where .= " and cc.parcela <=". $value;
+			if ($key === 'parcelaabaixo' && $value >0) $where .= " and cc.parcela <=". $value;
 		}
 			
 		$this->sql = "SELECT cc.*, ta.taxa as 'taxa', tt.descricao as 'modalidade'

@@ -157,6 +157,10 @@ Class UsuarioDAO {
 			$resp = $this->setAuth($usuario['idusuario']);
 			if ($resp['success']===false) return ($resp);
 			$usuario['auth'] = $resp['data']->auth;
+
+			// getando o menu do usuário
+			$resp = $this->getMenu ($usuario['idusuario']);
+			$usuario['menus'] = $resp['data'];
 			
 			$this->superdao->setSuccess( true );
 			$this->superdao->setData( $usuario );
@@ -209,6 +213,35 @@ Class UsuarioDAO {
 			
 			$this->superdao->setSuccess( true );
 			$this->superdao->setData( $usuario );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	function getMenu ($idusuario) {
+		$this->sql = "SELECT m.*
+		FROM menu_usuario mu
+		INNER JOIN menu m ON m.id = mu.idmenu
+		WHERE mu.idusuario = $idusuario";
+
+		$result = mysqli_query( $this->con, $this->sql );
+
+		$this->superdao->resetResponse();
+		
+		if( !$result ) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Usuário', 'getMenu' ) );
+		}else{
+			// caso não retorne objeto mysql result, usuario não encontrado
+			$menus = array();
+			while( $row = mysqli_fetch_object( $result) ) {
+				array_push($menus, $row);	
+			}
+			if ( empty($menus) ) {
+				$this->superdao->setMsg( "Usuário não tem menu!" );
+				return $this->superdao->getResponse();
+			}
+			
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $menus );
 		}
 		return $this->superdao->getResponse();
 	}

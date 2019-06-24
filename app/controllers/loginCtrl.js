@@ -43,19 +43,4 @@ angular.module(module).controller('loginCtrl', function ($rootScope, $scope, $lo
                 //error
             });	
     }
-
-    // $scope.startLoop = function () {
-    //     // verificando se o filtro está preenchido
-    //     var data = { "metodo": "loopExecution", "data": '', "class": "simulacao", request: 'GET', timeout: 10 };
-
-    //     genericAPI.generic(data)
-    //         .then(function successCallback(response) {
-    //             //se o sucesso === true
-    //             console.log('sucesso', response);
-    //         }, function errorCallback(response) {
-    //             console.log(response);
-    //             //error
-    //         });
-    // }
-    // $scope.startLoop();
 });

@@ -145,6 +145,37 @@ angular.module(module).service("authenticationAPI", function ($q, $location, $ro
 			});	;
 	}
 
+	$rootScope.getMenu = function () {
+		$rootScope.loadon();
+        
+        return $http({
+			method: 'POST',
+			url: api + "src/rest/autoload.php",
+			data: {
+				metodo: 'getMenu',
+				data: '',
+				class: 'authentication',
+				usuario: $rootScope.usuario
+			}
+		}).then(function successCallback(response) {
+			//se o sucesso === true
+			if (response.data.success == true) {
+				// alimentamos o menu
+				if (response.data.data.length>0) $rootScope.rotinas = response.data.data;
+
+				MyMenu.setNameinMenu($rootScope.usuario.nome);
+				MyMenu.setFooter('<span class="version"> v' + version + '</span><a onclick="angular.element(this).scope().logout()"><i class="fa fa-power-off"></i> Deslogar</a>');
+				MyMenu.setMenuItens($rootScope.rotinas);
+				$rootScope.loadoff();                    
+			} else {
+				$rootScope.loadoff();
+				// SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+			}
+		}, function errorCallback(response) {
+			//error
+		});	
+	}
+
 	// logout global
     $rootScope.logout = function () {
 
