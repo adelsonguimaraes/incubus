@@ -99,7 +99,7 @@ Class ClienteDAO {
 	}
 
 	//listar
-	function listar ($idusuario) {
+	function listarTudo ($idusuario) {
 		$this->sql = "SELECT * FROM cliente where
 		idusuario = $idusuario and (status = 'PROSPECTO' or status = 'RETORNO')
 		order by status = 'PROSPECT' asc, status = 'RETORNO', datacadastro desc";
@@ -108,7 +108,7 @@ Class ClienteDAO {
 		$this->superdao->resetResponse();
 
 		if(!$result) {
-			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'Listar' ) );
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'listarTudo' ) );
 		}else{
 			while($row = mysqli_fetch_assoc($result)) {
 				$row['verhome'] = ($row['verhome']==='SIM' ? true : false);
@@ -142,6 +142,8 @@ Class ClienteDAO {
 
 	//filtrar
 	function filtrar ($idusuario, $data) {
+		$start = $data["start"];
+		$limit = $data["limit"];
 
 		$whereString = "";
 		if (!empty($data['nome'])) $whereString .= "and nome like '%" . $data['nome'] . "%'";
@@ -152,7 +154,8 @@ Class ClienteDAO {
 		$this->sql = "SELECT * FROM cliente where
 		idusuario = $idusuario
 		$whereString
-		order by datacadastro desc";
+		order by datacadastro desc
+		limit  $start , $limit";
 
 		$result = mysqli_query($this->con, $this->sql);
 
@@ -172,22 +175,25 @@ Class ClienteDAO {
 	}
 
 	//listar paginado
-	function listarPaginado($start, $limit) {
-		$this->sql = "SELECT * FROM cliente limit " . $start . ", " . $limit;
+	function listarPaginado($idusuario, $start, $limit) {
+		$this->sql = "SELECT * FROM cliente where
+		idusuario = $idusuario and (status = 'PROSPECTO' or status = 'RETORNO')
+		order by status = 'PROSPECT' asc, status = 'RETORNO', datacadastro desc
+		limit  $start , $limit";
 		$result = mysqli_query ( $this->con, $this->sql );
 
 		$this->superdao->resetResponse();
 
-		if ( !$result ) {
-			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'ListarPaginado' ) );
+		if(!$result) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'Listar' ) );
 		}else{
-			while ( $row = mysqli_fetch_assoc ( $result ) ) {				array_push( $this->lista, $row);
+			while($row = mysqli_fetch_assoc($result)) {
+				$row['verhome'] = ($row['verhome']==='SIM' ? true : false);
+				array_push($this->lista, $row);
 			}
-
-			$this->superdao->setSuccess( true );			$this->superdao->setData( $this->lista );
-			$this->superdao->setTotal( $this->qtdTotal() );
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $this->lista );
 		}
-
 		return $this->superdao->getResponse();
 	}
 	//deletar

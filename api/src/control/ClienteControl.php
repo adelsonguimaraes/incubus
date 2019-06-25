@@ -29,8 +29,8 @@ Class ClienteControl {
 	function buscarPorId () {
 		return $this->objDAO->buscarPorId($this->obj);
 	}
-	function listar ($idusuario) {
-		return $this->objDAO->listar($idusuario);
+	function listarTudo ($idusuario) {
+		return $this->objDAO->listarTudo($idusuario);
 	}
 	function listarVerNaHome ($idusuario) {
 		return $this->objDAO->listarVerNaHome($idusuario);
@@ -44,8 +44,8 @@ Class ClienteControl {
 	function deletar () {
 		return $this->objDAO->deletar($this->obj);
 	}
-	function listarPaginado ($start, $limit) {
-	return $this->objDAO->listarPaginado($start, $limit);
+	function listarPaginado ($idusuario, $start, $limit) {
+	return $this->objDAO->listarPaginado($idusuario, $start, $limit);
 	}
 	function qtdTotal () {
 		return $this->objDAO->qtdTotal();

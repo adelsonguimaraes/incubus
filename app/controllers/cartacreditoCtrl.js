@@ -227,7 +227,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                         //error
                     }); 
             }
-            $scope.listarClientes();
+            // $scope.listarClientes();
 
             $scope.modalidades = parentScope.modalidades;
             $scope.cartas = parentScope.cartas;

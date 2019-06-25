@@ -59,15 +59,21 @@ function buscarPorId () {
 	echo json_encode($response);
 }
 function listar () {
+	$data = $_POST["data"];
 	$usuario = $_POST['usuario'];
+	$idusuario = $usuario["idusuario"];
+	if (!empty($data)) $idusuario = $data["idusuario"];
 	$control = new AgendaControl();
-	$response = $control->listar($usuario['idusuario']);
+	$response = $control->listar($idusuario);
 	echo json_encode($response);
 }
 function listarOrdenadoPorData () {
+	$data = $_POST["data"];
 	$usuario = $_POST['usuario'];
+	$idusuario = $usuario["idusuario"];
+	if (!empty($data)) $idusuario = $data["idusuario"];
 	$control = new AgendaControl();
-	$response = $control->listarOrdenadoPorData($usuario['idusuario']);
+	$response = $control->listarOrdenadoPorData($idusuario);
 	echo json_encode($response);
 }
 function atualizar () {

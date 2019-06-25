@@ -13,29 +13,7 @@
 require_once 'autoload.php';
 
 //verifica requisição
-switch ($_POST['metodo']) {
-	case 'cadastrar':
-		cadastrar();
-		break;
-	case 'buscarPorId':
-		buscarPorId();
-		break;
-	case 'listar':
-		listar();
-		break;
-	case 'listarVerNaHome':
-		listarVerNaHome();
-		break;
-	case 'filtrar':
-		filtrar();
-		break;
-	case 'atualizar':
-		atualizar();
-		break;
-	case 'deletar':
-		deletar();
-		break;
-}
+$_POST['metodo']();
 
 function cadastrar () {
 	$data = $_POST['data'];
@@ -63,11 +41,22 @@ function buscarPorId () {
 	$response = $control->buscarPorId();
 	echo json_encode($response);
 }
-function listar () {
-	$data = $_POST['data'];
+function listarTudo () {
+	$data = $_POST["data"];
 	$usuario = $_POST['usuario'];
+	$idusuario = $usuario["idusuario"];
+	if (!empty($data["idusuario"])) $idusuario = $data["idusuario"];
 	$control = new ClienteControl();
-	$response = $control->listar($usuario['idusuario']);
+	$response = $control->listarTudo($idusuario);
+	echo json_encode($response);
+}
+function listarPaginado () {
+	$data = $_POST["data"];
+	$usuario = $_POST['usuario'];
+	$idusuario = $usuario["idusuario"];
+	if (!empty($data["idusuario"])) $idusuario = $data["idusuario"];
+	$control = new ClienteControl();
+	$response = $control->listarPaginado($idusuario, $data["start"], $data["limit"]);
 	echo json_encode($response);
 }
 function listarVerNaHome () {

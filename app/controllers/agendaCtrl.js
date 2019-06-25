@@ -44,14 +44,14 @@ angular.module(module).controller('agendaCtrl', function ($rootScope, $scope, $l
         };
         
         // verificando se o filtro está preenchido
-        var data = { "metodo": "listar", "data": dataRequest, "class": "cliente", request: 'GET' };
+        var data = { "metodo": "listarTudo", "data": dataRequest, "class": "cliente", request: 'GET' };
 
         genericAPI.generic(data)
             .then(function successCallback(response) {
                 //se o sucesso === true
                 if (response.data.success == true) {
                     $scope.clientes = response.data.data;
-                    $scope.obj.idcliente = $scope.clientes[0].id;
+                    if ($scope.clientes.length>0) $scope.obj.idcliente = $scope.clientes[0].id;
                 } else {
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
                 }

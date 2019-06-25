@@ -1055,6 +1055,23 @@ function mascaraMoeda ($timeout) {
     }
 };
 
+function soNumeros() {
+    return {
+        restrict: "A",
+        require: "ngModel",
+        link: function (sc, el, att, model) {
+            el.bind("keyup", function (e) {
+                var input = model.$viewValue;
+                input = input.toString().replace(/^0|[\D]/g, "");
+                if (+input <= 0) input = 0;
+
+                model.$setViewValue(input);
+                model.$render();
+            });
+        }
+    }
+}
+
 /**
  *
  * Pass all functions into module
@@ -1090,6 +1107,7 @@ angular
     .directive('validarcep', validarCEP)
     .directive('mascara', mascara)
     .directive('mascaraMoeda', mascaraMoeda)
+    .directive('soNumeros', soNumeros)
     .directive('reiniciarFootable', function () {
         return function (scope, element) {
             var footableTable = element.parents('table');

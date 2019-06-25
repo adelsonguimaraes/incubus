@@ -18,14 +18,27 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
         status: 'PROSPECTO',
     }
 
+    $scope.ordenador = "id";
+    $scope.reverse = "false";
+    $scope.ordernar = function (column) {
+        $scope.ordenador = column;
+        $scope.reverse = !$scope.reverse;
+    }
+
+    $scope.pagination = {
+        start: 0,
+        limit: 20
+    };
     $scope.clientes = [];
     $scope.listarClientes = function () {
         var dataRequest = {
-            idusuario: $rootScope.usuario.idusuario
+            idusuario: $rootScope.usuario.idusuario,
+            start: $scope.pagination.start,
+            limit: $scope.pagination.limit
         };
         
         // verificando se o filtro está preenchido
-        var data = { "metodo": "listar", "data": dataRequest, "class": "cliente", request: 'GET' };
+        var data = { "metodo": "listarPaginado", "data": dataRequest, "class": "cliente", request: 'GET' };
 
         $rootScope.loadon();
 
@@ -239,7 +252,9 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
                 nome: '',
                 celular: '',
                 status: 'TODOS',
-                interesse: ''
+                interesse: '',
+                start: parentScope.pagination.start,
+                limit: parentScope.pagination.limit,
             };
 
             $scope.ok = function (obj) {

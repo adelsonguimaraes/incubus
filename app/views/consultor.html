@@ -2,17 +2,20 @@
 <div class="sub-menu">
     <div class="filtro">
         <div>
-            <select class="form-control" name="consultor" ng-options="obj.id as obj.nome for obj in consultores" ng-model="obj.consultor"></select>
+            <select class="form-control" name="idconsultor" ng-options="obj.id as obj.nome for obj in consultores" ng-model="obj.idconsultor" ng-disabled="view.length>0"></select>
         </div>
         <div>
-            <select class="form-control" name="alvo" ng-model="obj.alvo">
+            <select class="form-control" name="alvo" ng-model="obj.alvo" ng-disabled="view.length>0">
                 <option value="cliente">Clientes</option>
                 <option value="agenda">Agendas</option>
             </select>
         </div>
         <div>
-            <button type="submit" class="btn btn-default" ng-click="filtrar(obj)">
-                <i class="fa fa-filter"></i>
+            <button type="submit" class="btn btn-info" ng-click="filtrar(obj)" ng-if="view.length<=0">
+                <i class="fa fa-search"></i>
+            </button>
+            <button type="submit" class="btn btn-danger" ng-click="limparFiltro(obj)" ng-if="view.length>0">
+                <i class="fa fa-times"></i>
             </button>
         </div>
     </div>

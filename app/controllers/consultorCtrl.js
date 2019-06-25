@@ -5,11 +5,11 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
     $scope.title = 'Consultores';
 
     $scope.obj = {
-        consultor: "",
+        idconsultor: "",
         alvo: "cliente"
     }
 
-    $scope.view;
+    $scope.view = "";
 
     // listando consultores
     $scope.consultores = [];
@@ -24,7 +24,7 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
                 //se o sucesso === true
                 if (response.data.success == true) {
                     $scope.consultores = response.data.data;
-                    if ($scope.consultores.length) $scope.obj.consultor = $scope.consultores[0].id;
+                    if ($scope.consultores.length) $scope.obj.idconsultor = $scope.consultores[0].id;
                     $rootScope.loadoff();
                 } else {
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
@@ -36,7 +36,11 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
     $scope.listarConsultores();
 
     $scope.filtrar = function (obj) {
-        $scope.view = `app/views/${obj.alvo}.html`; 
+        sessionStorage.setItem("consultor_criterios", JSON.stringify(obj));
+        $scope.view = `app/views/consultor_${obj.alvo}.html`;
     }
-
+    $scope.limparFiltro = function (obj) {
+        sessionStorage.removeItem("consultor_criterios");
+        $scope.view = "";
+    }
 });

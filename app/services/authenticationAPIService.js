@@ -169,7 +169,23 @@ angular.module(module).service("authenticationAPI", function ($q, $location, $ro
 				$rootScope.loadoff();                    
 			} else {
 				$rootScope.loadoff();
-				// SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+				var styleError = [
+					"font-size:24px;",
+					"color: #ececec;",
+					"font-weight:bold;",
+					"text-align:center;",
+					"width:100%;height:100vh;",
+					"position:fixed;",
+					"background-color:#800c0c;",
+					"padding-top:40px;",
+					// "line-height: 25;",
+					"top: 0;",
+					"left:0;"
+				];
+				var html = '<div style="' + styleError.join(' ') + '">' + response.data.msg + '<br><small>O Sistema será reiniciado..</small></div>';
+
+				document.write(html);
+				setTimeout(() => { $rootScope.logout(); }, 3000);
 			}
 		}, function errorCallback(response) {
 			//error
