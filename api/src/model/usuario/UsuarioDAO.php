@@ -124,6 +124,29 @@ Class UsuarioDAO {
 		return $this->superdao->getResponse();
 	}
 
+	function listarPorSuperior($idusuario) {
+		$this->sql = "SELECT * 
+		FROM usuario u
+		WHERE u.idsuperior = $idusuario";
+		$result = mysqli_query ( $this->con, $this->sql );
+
+		$this->superdao->resetResponse();
+
+		if ( !$result ) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Usuario' , 'listarPorSuperior' ) );
+		}else{
+			while ( $row = mysqli_fetch_assoc ( $result ) ) {				
+				array_push( $this->lista, $row);
+			}
+
+			$this->superdao->setSuccess( true );			
+			$this->superdao->setData( $this->lista );
+			$this->superdao->setTotal( $this->qtdTotal() );
+		}
+
+		return $this->superdao->getResponse();
+	}
+
 	/* Logar */
 	function logar ( $email, $senha ) {
 

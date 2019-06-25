@@ -1,0 +1,22 @@
+<div ng-include="'app/views/common/header.html'"></div>
+<div class="sub-menu">
+    <div class="filtro">
+        <div>
+            <select class="form-control" name="consultor" ng-options="obj.id as obj.nome for obj in consultores" ng-model="obj.consultor"></select>
+        </div>
+        <div>
+            <select class="form-control" name="alvo" ng-model="obj.alvo">
+                <option value="cliente">Clientes</option>
+                <option value="agenda">Agendas</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-default" ng-click="filtrar(obj)">
+                <i class="fa fa-filter"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<section>
+    <div ng-include="view"></div>
+</section>

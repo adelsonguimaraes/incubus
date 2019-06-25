@@ -13,23 +13,8 @@
 require_once 'autoload.php';
 
 //verifica requisição
-switch ($_POST['metodo']) {
-	case 'cadastrar':
-		cadastrar();
-		break;
-	case 'buscarPorId':
-		buscarPorId();
-		break;
-	case 'listar':
-		listar();
-		break;
-	case 'atualizar':
-		atualizar();
-		break;
-	case 'deletar':
-		deletar();
-		break;
-}
+$_POST['metodo']();
+
 
 function cadastrar () {
 	$data = $_POST['data'];
@@ -54,6 +39,11 @@ function listar () {
 	$control = new UsuarioControl(new Usuario);
 	$response = $control->listar();
 	echo json_encode($response);
+}
+function listarPorSuperior () {
+	$usuario = $_POST["usuario"];
+	$usuarioControl = new UsuarioControl();
+	echo json_encode($usuarioControl->listarPorSuperior($usuario["idusuario"]));
 }
 function atualizar () {
 	$data = $_POST['data'];

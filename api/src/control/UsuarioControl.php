@@ -32,6 +32,9 @@ Class UsuarioControl {
 	function listar () {
 		return $this->objDAO->listar();
 	}
+	function listarPorSuperior ($idusuario) {
+		return $this->objDAO->listarPorSuperior($idusuario);
+	}
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);
 	}
