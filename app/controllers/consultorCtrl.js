@@ -43,4 +43,15 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
         sessionStorage.removeItem("consultor_criterios");
         $scope.view = "";
     }
+
+    $scope.novo = false;
+    $scope.cadastrar = function () {
+        $scope.novo = true;
+    }
+    $scope.cancelar = function () {
+        $scope.novo = false;
+    }
+    $scope.cadastar = function () {
+        
+    }
 });

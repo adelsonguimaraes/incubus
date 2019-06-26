@@ -1,14 +1,15 @@
 .sub-menu {
     width: 100%;
-    padding: 3px;
-    background: #cecece;
+    padding: 2px;
+    /* background: #cecece; */
+    /* position: fixed; */
 }
 .sub-menu .filtro {
     display: flex;
 }
-.sub-menu .filtro div:nth-child(1) {
+.sub-menu .filtro div:nth-child(2) {
     flex:1;
 }
-.sub-menu .filtro div:nth-child(2) {
+/* .sub-menu .filtro div:nth-child(2) {
     flex:0.5;
-}
+} */
