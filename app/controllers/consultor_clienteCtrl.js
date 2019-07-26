@@ -9,7 +9,7 @@ angular.module(module).controller('consultor_clienteCtrl', function ($rootScope,
     $scope.listarClientes = function () {
         var criterios = JSON.parse(sessionStorage.getItem("consultor_criterios"));
         var dataRequest = { 
-            idusuario: criterios.idconsultor,
+            idusuario: criterios.consultor.id,
             start: $scope.pagination.start,
             limit: $scope.pagination.limit
         };

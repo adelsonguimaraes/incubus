@@ -1,16 +1,16 @@
 <div ng-include="'app/views/common/header.html'"></div>
-<div class="sub-menu">
+<div class="sub-menu" ng-if="!novo">
     <div class="filtro">
         <div class="btn-group">
-            <button type="submit" class="btn btn-default" ng-click="cadastrar()">
+            <button type="submit" class="btn btn-default" ng-click="novoCadastro()">
                 <i class=" fa fa-plus"></i>
             </button>
-            <button type="submit" class="btn btn-default" ng-click="editar(obj)">
+            <button type="submit" class="btn btn-default" ng-click="editar(obj.consultor)">
                 <i class=" fa fa-edit"></i>
             </button>
         </div>
         <div>
-            <select class="form-control" name="idconsultor" ng-options="obj.id as obj.nome for obj in consultores" ng-model="obj.idconsultor" ng-disabled="view.length>0"></select>
+            <select class="form-control" name="consultor" ng-options="obj as  '(' + obj.id + ') ' +obj.nome for obj in consultores" ng-model="obj.consultor" ng-disabled="view.length>0"></select>
         </div>
         <div>
             <select class="form-control" name="alvo" ng-model="obj.alvo" ng-disabled="view.length>0">
@@ -29,23 +29,32 @@
     </div>
 </div>
 <section style="padding:10px;background: #fff;border-radius: 5px;" ng-if="novo">
-    <form class="form">
+    <form name="formCad" class="form">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label for="email">Email</label>
-                <input class="form-control" type="email" name="email" ng-model="obj.email" placeholder="Informe o email do consultor">
+                <input class="form-control" type="email" name="email" ng-model="objcad.email" placeholder="Informe o email do consultor" ng-required="true">
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label for="nome">Nome</label>
-                <input class="form-control" type="text" name="nome" ng-model="obj.nome" placeholder="Informe o nome do consultor">
+                <input class="form-control" type="text" name="nome" ng-model="objcad.nome" placeholder="Informe o nome do consultor" ng-required="true">
+            </div>
+            <div class="col-sm-4">
+                <label for="nome">Porcentagem</label>
+                <input class="form-control" type="tel" name="porcentagem" mascara-moeda ng-model="objcad.porcentagem" placeholder="Informe a porcentagem do consultor"
+                    ng-required="true">
             </div>
         </div>
-            <br/>
+        <br/>
+        <div style="display: inline-block; width: 100%;">
             <div class="btn-group pull-right">
-                <button class="btn btn-danger">Cancelar</button>
-                <button class="btn btn-success">Salvar</button>
+                <button class="btn btn-danger" ng-click="cancelar()">Cancelar</button>
+                <button class="btn btn-success" ng-click="salvar(objcad)" ng-disabled="formCad.$invalid">Salvar</button>
             </div>
+        </div>
     </form>
+    <br/>
+    <div style="color:rgb(172, 30, 30);">OBS: A senha padrão dos usuários é <b>incubus@123</b></div>
 </section>
 <section>
     <div ng-include="view"></div>

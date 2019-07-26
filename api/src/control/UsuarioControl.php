@@ -47,6 +47,9 @@ Class UsuarioControl {
 	function auth ($idusuario, $auth) {
 		return $this->objDAO->auth($idusuario, $auth);
 	}
+	function setMenuConsultor ($idusuario) {
+		return $this->objDAO->setMenuConsultor($idusuario);
+	}
 	function getMenu ($idusuario) {
 		return $this->objDAO->getMenu($idusuario);
 	}

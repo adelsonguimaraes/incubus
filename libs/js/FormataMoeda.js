@@ -1,5 +1,7 @@
 function formataValor ( val ) {
     
+   if (val == undefined) return 'R$ 0.00';
+
     val = this.trataValor( val ); // limita a 30 caracteres
 
     var polaridade = (val.toString().indexOf('-') === -1) ? '' : '-';

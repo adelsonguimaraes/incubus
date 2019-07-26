@@ -5,7 +5,7 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
     $scope.title = 'Consultores';
 
     $scope.obj = {
-        idconsultor: "",
+        consultor: "",
         alvo: "cliente"
     }
 
@@ -24,7 +24,7 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
                 //se o sucesso === true
                 if (response.data.success == true) {
                     $scope.consultores = response.data.data;
-                    if ($scope.consultores.length) $scope.obj.idconsultor = $scope.consultores[0].id;
+                    if ($scope.consultores.length) $scope.obj.consultor = $scope.consultores[0];
                     $rootScope.loadoff();
                 } else {
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
@@ -45,13 +45,62 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
     }
 
     $scope.novo = false;
-    $scope.cadastrar = function () {
+    $scope.novoCadastro = function () {
         $scope.novo = true;
+        reset();
     }
     $scope.cancelar = function () {
         $scope.novo = false;
+        reset();
     }
-    $scope.cadastar = function () {
-        
+
+    function reset() {
+        $scope.objcad = {
+            id: "",
+            email: "",
+            nome: "",
+            procentagem: "",
+        }
+    }  
+    reset();
+
+    $scope.editar = function (obj) {
+        $scope.novo = true;
+        reset();
+        $scope.objcad = {
+            id: obj.id,
+            email: obj.email,
+            nome: obj.nome,
+            porcentagem: obj.porcentagem
+        }
+    }
+
+    $scope.salvar = function (objcad) {
+
+        objcopy = angular.copy(objcad);
+        objcopy.porcentagem = desformataValor(objcopy.porcentagem);
+
+        var data = { 
+            "metodo": (+objcad.id<=0) ? "cadastrar" : "atualizar",
+            "data": objcopy, 
+            "class": "usuario",
+            request: 'POST' 
+        };
+
+        $rootScope.loadon();
+
+        genericAPI.generic(data)
+            .then(function successCallback(response) {
+                //se o sucesso === true
+                if (response.data.success == true) {
+                    $scope.listarConsultores();
+                    $scope.cancelar();
+                    $rootScope.loadoff();
+                } else {
+                    SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                }
+            }, function errorCallback(response) {
+                //error
+            });
     }
 });

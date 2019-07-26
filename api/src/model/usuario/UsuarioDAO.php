@@ -25,12 +25,13 @@ Class UsuarioDAO {
 
 	//cadastrar
 	function cadastrar (usuario $obj) {
-		$this->sql = sprintf("INSERT INTO usuario(perfil, nome, celular, email)
-		VALUES('%s', '%s', '%s', '%s')",
-			mysqli_real_escape_string($this->con, $obj->getPerfil()),
+		$this->sql = sprintf("INSERT INTO usuario(idsuperior, nome, email, senha, porcentagem)
+		VALUES(%d, '%s', '%s', md5('%s'), %f)",
+			mysqli_real_escape_string($this->con, $obj->getObjusuario()),
 			mysqli_real_escape_string($this->con, $obj->getNome()),
-			mysqli_real_escape_string($this->con, $obj->getCelular()),
-			mysqli_real_escape_string($this->con, $obj->getEmail()));
+			mysqli_real_escape_string($this->con, $obj->getEmail()),
+			mysqli_real_escape_string($this->con, $obj->getSenha()),
+			mysqli_real_escape_string($this->con, $obj->getPorcentagem()));
 
 		$this->superdao->resetResponse();
 
@@ -47,11 +48,10 @@ Class UsuarioDAO {
 
 	//atualizar
 	function atualizar (Usuario $obj) {
-		$this->sql = sprintf("UPDATE usuario SET perfil = '%s', nome = '%s', celular = '%s', email = '%s', dataedicao = '%s' WHERE id = %d ",
-			mysqli_real_escape_string($this->con, $obj->getPerfil()),
+		$this->sql = sprintf("UPDATE usuario SET nome = '%s', email = '%s', porcentagem = %f, dataedicao = '%s' WHERE id = %d ",
 			mysqli_real_escape_string($this->con, $obj->getNome()),
-			mysqli_real_escape_string($this->con, $obj->getCelular()),
 			mysqli_real_escape_string($this->con, $obj->getEmail()),
+			mysqli_real_escape_string($this->con, $obj->getPorcentagem()),
 			mysqli_real_escape_string($this->con, date('Y-m-d H:i:s')),
 			mysqli_real_escape_string($this->con, $obj->getId()));
 		$this->superdao->resetResponse();
@@ -236,6 +236,24 @@ Class UsuarioDAO {
 			
 			$this->superdao->setSuccess( true );
 			$this->superdao->setData( $usuario );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	function setMenuConsultor ($idusuario) {
+		$this->sql = "INSERT INTO menu_usuario (idmenu, idusuario) 
+		SELECT m.id, $idusuario
+		FROM menu m
+		WHERE m.perfil = 'VENDEDOR'";
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'setMenuConsultor' ) );
+		}else{
+			$id = mysqli_insert_id( $this->con );
+
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( true );
 		}
 		return $this->superdao->getResponse();
 	}

@@ -21,15 +21,16 @@ function loopExecution () {
 	);
 	$control = new SimulacaoControl($obj);
 	$resp = $control->cadastrar();
-	if ($resp['sucess']===false) die(json_encode($resp));
+	if ($resp['success']===false) die(json_encode($resp));
 }
 
-$x=0;
-while ($x<6) {
-	loopExecution();
-	sleep(10); // descansa a cada 60 segundos
-	$x++;
-}
+// $x=0;
+// while ($x<6) {
+	// loopExecution();
+// 	sleep(10); // descansa a cada 60 segundos
+// 	$x++;
+// }
+loopExecution();
 
 exit;
 

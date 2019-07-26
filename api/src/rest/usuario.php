@@ -18,15 +18,24 @@ $_POST['metodo']();
 
 function cadastrar () {
 	$data = $_POST['data'];
-	$obj = new Usuario(
-		NULL,
-		$data['perfil'],
-		$data['nome'],
-		$data['celular'],
-		$data['email']
-	);
+	$usuario = $_POST["usuario"];
+	
+	$obj = new Usuario();
+	$obj->setObjusuario($usuario["idusuario"])
+		->setNome($data['nome'])
+		->setEmail($data['email'])
+		->setSenha("incubus@123")
+		->setPorcentagem($data['porcentagem']);
 	$control = new UsuarioControl($obj);
 	$response = $control->cadastrar();
+	if ($response["success"]===false) die (json_encode($response));
+	$idconsultor = $response['data'];
+
+	// cadastrando os menus do consultor
+	$control = new UsuarioControl();
+	$resp = $control->setMenuConsultor($idconsultor);
+	if ($resp["success"]===false) die (json_decode($resp));
+
 	echo json_encode($response);
 }
 function buscarPorId () {
@@ -47,13 +56,12 @@ function listarPorSuperior () {
 }
 function atualizar () {
 	$data = $_POST['data'];
-	$obj = new Usuario(
-		$data['id'],
-		$data['perfil'],
-		$data['nome'],
-		$data['celular'],
-		$data['email']
-	);
+	$obj = new Usuario();
+	$obj->setId($data['id'])
+		->setNome($data['nome'])
+		->setEmail($data['email'])
+		->setSenha("incubus@123")
+		->setPorcentagem($data['porcentagem']);
 	$control = new UsuarioControl($obj);
 	$response = $control->atualizar();
 	echo json_encode($response);

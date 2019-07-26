@@ -4,18 +4,23 @@
 /*
 	Projeto: INCUBUS - Controle de Consultoria.
 	Project Owner: Raquel Araújo Queiroz.
-	Desenvolvedor: Adelson Guimarães Monteiro.
-	Data de início: 2019-02-02T18:48:29.166Z.
-	Data Atual: 02/02/2019.
+	Gerente de Projeto: Adelson Guimarães Monteiro.
+	Data de início: 2019-02-02T18:18:31.633Z.
+	Data Atual: 26/07/2019.
 */
 
 Class Usuario implements JsonSerializable {
 	//atributos
 	private $id;
+	private $objusuario;
 	private $perfil;
 	private $nome;
 	private $celular;
 	private $email;
+	private $senha;
+	private $porcentagem;
+	private $ativo;
+	private $auth;
 	private $datacadastro;
 	private $dataedicao;
 
@@ -23,19 +28,29 @@ Class Usuario implements JsonSerializable {
 	public function __construct
 	(
 		$id = NULL,
+		Usuario $objusuario = NULL,
 		$perfil = NULL,
 		$nome = NULL,
 		$celular = NULL,
 		$email = NULL,
+		$senha = NULL,
+		$porcentagem = NULL,
+		$ativo = NULL,
+		$auth = NULL,
 		$datacadastro = NULL,
 		$dataedicao = NULL
 	)
 	{
 		$this->id	= $id;
+		$this->objusuario	= $objusuario;
 		$this->perfil	= $perfil;
 		$this->nome	= $nome;
 		$this->celular	= $celular;
 		$this->email	= $email;
+		$this->senha	= $senha;
+		$this->porcentagem	= $porcentagem;
+		$this->ativo	= $ativo;
+		$this->auth	= $auth;
 		$this->datacadastro	= $datacadastro;
 		$this->dataedicao	= $dataedicao;
 	}
@@ -46,6 +61,13 @@ Class Usuario implements JsonSerializable {
 	}
 	public function setId($id) {
 		$this->id = $id;
+		return $this;
+	}
+	public function getObjusuario() {
+		return $this->objusuario;
+	}
+	public function setObjusuario($objusuario) {
+		$this->objusuario = $objusuario;
 		return $this;
 	}
 	public function getPerfil() {
@@ -76,6 +98,34 @@ Class Usuario implements JsonSerializable {
 		$this->email = $email;
 		return $this;
 	}
+	public function getSenha() {
+		return $this->senha;
+	}
+	public function setSenha($senha) {
+		$this->senha = $senha;
+		return $this;
+	}
+	public function getPorcentagem() {
+		return $this->porcentagem;
+	}
+	public function setPorcentagem($porcentagem) {
+		$this->porcentagem = $porcentagem;
+		return $this;
+	}
+	public function getAtivo() {
+		return $this->ativo;
+	}
+	public function setAtivo($ativo) {
+		$this->ativo = $ativo;
+		return $this;
+	}
+	public function getAuth() {
+		return $this->auth;
+	}
+	public function setAuth($auth) {
+		$this->auth = $auth;
+		return $this;
+	}
 	public function getDatacadastro() {
 		return $this->datacadastro;
 	}
@@ -95,10 +145,15 @@ Class Usuario implements JsonSerializable {
 	public function JsonSerialize () {
 		return [
 			"id"	=> $this->id,
+			"objusuario"	=> $this->objusuario,
 			"perfil"	=> $this->perfil,
 			"nome"	=> $this->nome,
 			"celular"	=> $this->celular,
 			"email"	=> $this->email,
+			"senha"	=> $this->senha,
+			"porcentagem"	=> $this->porcentagem,
+			"ativo"	=> $this->ativo,
+			"auth"	=> $this->auth,
 			"datacadastro"	=> $this->datacadastro,
 			"dataedicao"	=> $this->dataedicao
 		];

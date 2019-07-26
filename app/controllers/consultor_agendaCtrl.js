@@ -5,7 +5,7 @@ angular.module(module).controller('consultor_agendaCtrl', function ($rootScope, 
     $scope.agendas = [];
     $scope.listarAgendas = function () {
         var criterios = JSON.parse(sessionStorage.getItem("consultor_criterios"));
-        var dataRequest = { "idusuario": criterios.idconsultor};
+        var dataRequest = { "idusuario": criterios.consultor.id};
 
         // verificando se o filtro está preenchido
         var data = { "metodo": "listar", "data": dataRequest, "class": "agenda", request: 'GET' };
