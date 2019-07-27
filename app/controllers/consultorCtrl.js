@@ -98,6 +98,7 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
                     $rootScope.loadoff();
                 } else {
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                    $rootScope.loadoff();
                 }
             }, function errorCallback(response) {
                 //error
