@@ -85,6 +85,25 @@ Class UsuarioDAO {
 		return $this->superdao->getResponse();
 	}
 
+	//buscarPorId
+	function buscarPorEmail ($email) {
+		$this->sql = "SELECT * FROM usuario WHERE email = '$email'";
+		$result = mysqli_query($this->con, $this->sql);
+
+		$this->superdao->resetResponse();
+
+		if(!$result) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'buscarPorEmail' ) );
+		}else{
+			while($row = mysqli_fetch_object($result)) {
+				$this->obj = $row;
+			}
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $this->obj );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	//listar
 	function listar () {
 		$this->sql = "SELECT * FROM usuario";

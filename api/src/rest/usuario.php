@@ -19,6 +19,16 @@ $_POST['metodo']();
 function cadastrar () {
 	$data = $_POST['data'];
 	$usuario = $_POST["usuario"];
+
+	// verificando se o email já está cadastrado
+	$control = new UsuarioControl();
+	$resp = $control->buscarPorEmail($data['email']);
+	if ($resp['success']===false) die (json_encode($resp));
+	if (!empty($resp['data'])) {
+		$resp['success'] = false;
+		$resp['msg'] = "Este email já está uso no sistema";
+		die (json_encode($resp));
+	}
 	
 	$obj = new Usuario();
 	$obj->setObjusuario($usuario["idusuario"])
