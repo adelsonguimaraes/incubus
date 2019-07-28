@@ -164,7 +164,7 @@ angular.module(module).service("authenticationAPI", function ($q, $location, $ro
 				if (response.data.data.length>0) $rootScope.rotinas = response.data.data;
 
 				MyMenu.setNameinMenu($rootScope.usuario.nome); // nome do usuario
-				MyMenu.setMenuProfile(api + $rootScope.usuario.foto + '?' + moment().valueOf()); // foto do usuario
+				if ($rootScope.usuario.foto!=null && $rootScope.usuario.foto!=undefined) MyMenu.setMenuProfile(api + $rootScope.usuario.foto + '?' + moment().valueOf()); // foto do usuario
 				// rodape
 				MyMenu.setFooter('<span class="version"> v' + version + '</span><a onclick="angular.element(this).scope().logout()"><i class="fa fa-power-off"></i> Deslogar</a>');
 				MyMenu.setMenuItens($rootScope.rotinas); // itens do menu
