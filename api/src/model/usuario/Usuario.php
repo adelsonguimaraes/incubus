@@ -21,6 +21,7 @@ Class Usuario implements JsonSerializable {
 	private $porcentagem;
 	private $ativo;
 	private $auth;
+	private $foto;
 	private $datacadastro;
 	private $dataedicao;
 
@@ -37,6 +38,7 @@ Class Usuario implements JsonSerializable {
 		$porcentagem = NULL,
 		$ativo = NULL,
 		$auth = NULL,
+		$foto = NULL,
 		$datacadastro = NULL,
 		$dataedicao = NULL
 	)
@@ -51,6 +53,7 @@ Class Usuario implements JsonSerializable {
 		$this->porcentagem	= $porcentagem;
 		$this->ativo	= $ativo;
 		$this->auth	= $auth;
+		$this->foto = $foto;
 		$this->datacadastro	= $datacadastro;
 		$this->dataedicao	= $dataedicao;
 	}
@@ -126,6 +129,13 @@ Class Usuario implements JsonSerializable {
 		$this->auth = $auth;
 		return $this;
 	}
+	public function getFoto() {
+		return $this->foto;
+	}
+	public function setFoto($foto) {
+		$this->foto = $foto;
+		return $this;
+	}
 	public function getDatacadastro() {
 		return $this->datacadastro;
 	}
@@ -154,6 +164,7 @@ Class Usuario implements JsonSerializable {
 			"porcentagem"	=> $this->porcentagem,
 			"ativo"	=> $this->ativo,
 			"auth"	=> $this->auth,
+			"foto"	=> $this->foto,
 			"datacadastro"	=> $this->datacadastro,
 			"dataedicao"	=> $this->dataedicao
 		];

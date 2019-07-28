@@ -65,6 +65,28 @@ Class UsuarioDAO {
 		return $this->superdao->getResponse();
 	}
 
+	//atualizar meus dados
+	function atualizarMeusDados (Usuario $obj) {
+
+		$this->sql = "UPDATE usuario SET nome = '" . $obj->getNome() . "'";
+		$this->sql .= ", email = '" . $obj->getEmail() . "'";
+		$this->sql .= ", celular = '" . $obj->getCelular() . "'";
+		if (!empty($obj->getSenha())) $this->sql .= ", senha = '" . $obj->getSenha() . "'";
+		if (!empty($obj->getFoto())) $this->sql .= ", foto = '" . $obj->getFoto() . "'";
+		$this->sql .= ", dataedicao = '" . date('Y-m-d H:i:s') . "'";
+		$this->sql .= " WHERE id = " . $obj->getId();
+
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'Atualizar' ) );
+		}else{
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( true );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	//buscarPorId
 	function buscarPorId (Usuario $obj) {
 		$this->sql = sprintf("SELECT * FROM usuario WHERE id = %d",
@@ -186,7 +208,9 @@ Class UsuarioDAO {
 					'idusuario'=>$row->id,
 					'nome'=>$row->nome,
 					'email'=>$row->email,
+					'celular'=>$row->celular,
 					'perfil'=>$row->perfil,
+					'foto'=>$row->foto,
 					'auth'=>$row->auth
 				);
 			}

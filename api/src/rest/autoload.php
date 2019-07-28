@@ -10,17 +10,14 @@
 
 /* Trata $_POST */
 if(!$_POST){ $_POST =  file_get_contents ( "php://input" ); }
-$_POST = json_decode ($_POST, true);
+if (gettype($_POST) != "array") $_POST = json_decode ($_POST, true);
 
 /*
-	Require da Conex�o
+	Requires
 */
-require_once("../../util/Conexao.php");
-
-/*
-	Require da Resolve
-*/
-require_once("../../util/ResolveMysqlError.php");
+require_once("../../util/Conexao.php"); // Conexao
+require_once("../../util/ResolveMysqlError.php"); // Resolve erros mysql
+require_once("../../util/uploadFiles.php"); //Upload images
 
 /*
 	Fun��o AutoLoad, Carrega as Classes quando

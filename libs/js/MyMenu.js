@@ -16,10 +16,12 @@ const MyMenu = {
         var box = document.createElement('div'); // box
         box.classList = 'box';
         var divHeader = document.createElement('div'); // header
+        divHeader.id = "menu-header";
         divHeader.classList = 'header';
         var user = document.createElement('div');
         user.classList = 'user';
         var img = document.createElement('img');
+        img.id = "menu-profile";
         img.src = './libs/img/icons/icon-512x512.png';
         user.appendChild(img);
         divHeader.appendChild(user);
@@ -71,6 +73,12 @@ const MyMenu = {
             var menuName = document.querySelector('#mymenu #menu-name');
             menuName.innerHTML = name;
         }, 1000);
+    },
+    setMenuProfile: function (img) {
+        setTimeout(()=> {
+            var menuProfile = document.querySelector('#mymenu #menu-profile');
+            menuProfile.src = img;
+        });
     },
     open: function () {
         this.my.classList += ' mymenu-show';

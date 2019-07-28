@@ -76,6 +76,39 @@ function atualizar () {
 	$response = $control->atualizar();
 	echo json_encode($response);
 }
+
+function atualizarMeusDados () {
+	$files = null;
+	if (!empty($_POST['files'])) $files = json_decode($_POST['files']);
+
+	$data = (array) json_decode($_POST['data']);
+
+	// função responsável por upload de arquivos
+	$uploadFiles = new uploadFiles();
+	if ($files === NULL) {
+		// upload fia $_files
+		$resp = $uploadFiles->upload();
+	}else{
+		// upload via base64
+		$resp = $uploadFiles->upload2($files, $data['email']);
+	}
+	
+	// $resp = $uploadFiles->upload();
+	$filesFeed = $resp['data']; // getando o retorno de arquivos enviados
+	$foto = empty($filesFeed) ? "" : $filesFeed[0]; // verifica se houve fotos enviadas
+
+	$obj = new Usuario();
+	$obj->setId($data['id'])
+		->setNome($data['nome'])
+		->setEmail($data['email'])
+		->setCelular($data['celular'])
+		->setSenha($data['senha'])
+		->setFoto($foto);
+	
+	$control = new UsuarioControl($obj);
+	$resp = $control->atualizarMeusDados();
+	echo json_encode($resp);
+}
 function deletar () {
 	$data = $_POST['data'];
 	$banco = new Usuario();

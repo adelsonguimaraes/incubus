@@ -46,6 +46,7 @@
     /* background: blueviolet; */
     border-bottom: 1px solid #ccc;
     padding: 20px;
+    cursor: pointer;
 }
 .mymenu .user {
     margin: 0 auto;
