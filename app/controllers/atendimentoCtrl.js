@@ -31,4 +31,40 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
     }
     if ($stateParams.consultor.length>0) $scope.buscarInfoPageConsultor();
 
+    var coord = { lat: '-3.0889928', lon: '-60.0228449' };
+    var carregaMapa = function (coord) {
+        if (coord) {
+            setTimeout(function () {
+                var container = L.DomUtil.get('map');
+                if (container != null) {
+                    container._leaflet_id = null;
+                }
+
+                var map = L.map('map').setView([coord.lat, coord.lon], 16);
+
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                    maxZoom: 18,
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    id: 'mapbox.streets',
+                    accessToken: 'pk.eyJ1IjoibnV2aW9zb2x1Y29lcyIsImEiOiJjamp1OXYyNjU4d3F2M3FyNThlM3NqNjN0In0.2PBDsYj0P2Slvf_ybDqWKQ' // api key nuvio
+                }).addTo(map);
+
+                map.removeControl(map.zoomControl);
+                map.scrollWheelZoom.disable();
+                map.dragging.disable();
+                
+                L.marker([coord.lat, coord.lon]).addTo(map)
+                    .bindPopup('A/Santos Representaçoes/ Newbens</small>')
+                    .openPopup();
+            }, 100);
+        }
+    }
+    carregaMapa(coord);
+
+    $scope.rota = function () {
+        window.open("https://www.google.com/maps/dir/?api=1&origin=my+location&destination=" + coord.lat + "," + coord.lon, "_blank");
+    }
+
 });

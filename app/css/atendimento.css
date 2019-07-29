@@ -77,3 +77,43 @@ body {
     display: block;
     font-weight: bold;
 }
+
+/*informativos*/
+.informativos {
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    background: rgba(239, 233, 255, 0.904);
+}
+.informativos a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background: maroon;
+    font-weight: bold;
+}
+
+/*localizacao*/
+.localizacao {
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    background: rgba(239, 233, 255, 0.904);
+}
+.localizacao .endereco {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+}
+.localizacao .como-chegar {
+    display: block;
+    margin: 5px;
+}
+.localizacao .como-chegar a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background: maroon;
+    font-weight: bold;
+}
