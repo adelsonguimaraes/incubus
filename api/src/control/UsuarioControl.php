@@ -32,6 +32,9 @@ Class UsuarioControl {
 	function buscarPorEmail ($email) {
 		return $this->objDAO->buscarPorEmail($email);
 	}
+	function buscarInfoPageConsultor ($id) {
+		return $this->objDAO->buscarInfoPageConsultor($id);
+	}
 	function listar () {
 		return $this->objDAO->listar();
 	}

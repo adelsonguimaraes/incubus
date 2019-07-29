@@ -1,0 +1,46 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.consultor {
+    padding: 10px;
+    background: #f2f1f4;
+    /* display: flex; */
+    text-align: center;
+}
+.profile {
+    width: 120px;
+    height: 120px;
+    border-radius: 100px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.profile img {
+    max-width: 100%;
+}
+.consultor .info {
+    padding: 10px;
+    /* width: 70%; */
+}
+.consultor .nome {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+.consultor .cargo {
+    text-decoration: none;
+    color: rgb(87, 87, 87);
+    display: block;
+}
+.consultor .celular {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background: maroon;
+    font-weight: bold;
+    display: block;
+}
+.consultor .celular i {
+    font-size: 18px;
+}

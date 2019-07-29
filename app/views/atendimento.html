@@ -1,0 +1,26 @@
+<div class="main-atendimento">
+    <div style="text-align:center;">
+        <img style="width: 100%;" src="./libs/img/banner-consorcio.jpg" alt="">
+    </div>
+    <section class="consultor">
+        <div class="profile">
+            <img src="{{api + consultor.foto}}" alt="">
+        </div>
+        <div class="info">
+           <a class="nome">{{consultor.nome}}</a>
+           <a class="cargo">Supervisor de Vendas</a>
+           <a href="tel:{{consultor.celular}}" class="celular btn btn-default">
+               <i class="fa fa-phone"></i> 
+               {{consultor.celular | cel}}
+            </a>
+            <a href="https://api.whatsapp.com/send?phone={{consultor.cel}}&text=Quero%uma%simulação" class="celular btn btn-default">
+                <i class="fa fa-whatsapp"></i> 
+                Whatsapp
+            </a>
+            <a href="mailto:{{consultor.email}}" class="celular btn btn-default">
+                <i class="fa fa-envelope"></i> 
+                {{consultor.email}}
+            </a>
+        </div>
+    </section>
+</div>

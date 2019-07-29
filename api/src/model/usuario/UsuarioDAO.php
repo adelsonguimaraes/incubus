@@ -126,6 +126,25 @@ Class UsuarioDAO {
 		return $this->superdao->getResponse();
 	}
 
+	//buscarPorId
+	function buscarInfoPageConsultor ($id) {
+		$this->sql = "SELECT nome, email, celular, foto FROM usuario WHERE id = $id";
+		$result = mysqli_query($this->con, $this->sql);
+
+		$this->superdao->resetResponse();
+
+		if(!$result) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'buscarInfoPageConsultor' ) );
+		}else{
+			while($row = mysqli_fetch_object($result)) {
+				$this->obj = $row;
+			}
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $this->obj );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	//listar
 	function listar () {
 		$this->sql = "SELECT * FROM usuario";
