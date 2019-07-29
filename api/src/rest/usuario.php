@@ -69,7 +69,7 @@ function buscarPorId () {
 function buscarInfoPageConsultor () {
 	$data = $_POST['data'];
 	$control = new UsuarioControl();
-	$response = $control->buscarInfoPageConsultor($data);
+	$response = $control->buscarInfoPageConsultor($data['usuario'], $data['identificador']);
 	echo json_encode($response);
 }
 function listar () {

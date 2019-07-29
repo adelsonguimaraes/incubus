@@ -2,9 +2,22 @@
     padding: 0;
     margin: 0;
 }
+body {
+    background-image: url(../../libs/img/background.jpg);
+    background-size: cover;
+    position: fixed;
+    width: 100%;
+}
+.main-atendimento {
+    position: relative;
+    /* background-color: rgba(239, 233, 255, 0.795); */
+    height: 100vh;
+    overflow: auto;
+}
 .consultor {
     padding: 10px;
-    background: #f2f1f4;
+    margin: 10px;
+    background-color: rgba(239, 233, 255, 0.904);
     /* display: flex; */
     text-align: center;
 }
@@ -14,6 +27,7 @@
     border-radius: 100px;
     overflow: hidden;
     margin: 0 auto;
+    box-shadow: 1px 2px 4px 2px #505050;
 }
 .profile img {
     max-width: 100%;
@@ -31,7 +45,7 @@
 }
 .consultor .cargo {
     text-decoration: none;
-    color: rgb(87, 87, 87);
+    color: rgba(0, 0, 0, 0.829);
     display: block;
 }
 .consultor .celular {
@@ -43,4 +57,23 @@
 }
 .consultor .celular i {
     font-size: 18px;
+}
+
+/* Simulacao */
+.simulacao {
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    background: rgba(239, 233, 255, 0.904);
+}
+.simulacao a {
+    width: 100px;
+    padding: 15px;
+    margin: 2px;
+}
+.simulacao i {
+    color: black;
+    font-size: 35px;
+    display: block;
+    font-weight: bold;
 }

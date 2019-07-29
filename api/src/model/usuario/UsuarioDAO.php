@@ -127,14 +127,17 @@ Class UsuarioDAO {
 	}
 
 	//buscarPorId
-	function buscarInfoPageConsultor ($id) {
-		$this->sql = "SELECT nome, email, celular, foto FROM usuario WHERE id = $id";
+	function buscarInfoPageConsultor ($usuario, $identificador) {
+		$this->sql = "SELECT nome, email, celular, foto 
+		FROM usuario 
+		WHERE CONCAT('@', REPLACE(LOWER(nome), ' ', '')) = '$usuario'
+		AND CONCAT('&', MD5(id)) = '$identificador'";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();
 
 		if(!$result) {
-			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'buscarInfoPageConsultor' ) );
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), "UsuarioDAO", 'buscarInfoPageConsultor' ) );
 		}else{
 			while($row = mysqli_fetch_object($result)) {
 				$this->obj = $row;

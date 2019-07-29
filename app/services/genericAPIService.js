@@ -32,6 +32,6 @@ angular.module(module).service("genericAPI", function ($http, $rootScope, authen
 
     return {
         generic: _generic,
-        public: _generic
+        public: _public
     };
 });

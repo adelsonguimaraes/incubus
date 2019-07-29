@@ -4,12 +4,19 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
     // listando consultores
     $scope.consultor = [];
     $scope.buscarInfoPageConsultor = function () {
+        var posA = $stateParams.consultor.indexOf('@');
+        var posE = $stateParams.consultor.indexOf('&');
+        var dataRequest = {
+            usuario: $stateParams.consultor.substring(posA, posE),
+            identificador: $stateParams.consultor.substring(posE)
+        };
+    
         // verificando se o filtro está preenchido
-        var data = { "metodo": "buscarInfoPageConsultor", "data": $stateParams.consultor.substring($stateParams.consultor.length-1), "class": "usuario", request: 'POST' };
+        var data = { "metodo": "buscarInfoPageConsultor", "data": dataRequest, "class": "usuario", request: 'POST' };
 
         $rootScope.loadon();
 
-        genericAPI.generic(data)
+        genericAPI.public(data)
             .then(function successCallback(response) {
                 //se o sucesso === true
                 if (response.data.success == true) {
@@ -22,6 +29,6 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
                 //error
             });	
     }
-    $scope.buscarInfoPageConsultor();
+    if ($stateParams.consultor.length>0) $scope.buscarInfoPageConsultor();
 
 });
