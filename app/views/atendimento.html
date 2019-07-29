@@ -1,27 +1,29 @@
 <div class="main-atendimento">
-    <div style="text-align:center;">
+    <div style="border-bottom: 3px solid #fff;">
         <img style="width: 100%;" src="./libs/img/banner-consorcio.jpg" alt="">
     </div>
     <section class="consultor">
         <h3>Fale Comigo</h3>
-        <div class="profile">
-            <img src="{{api + consultor.foto}}" alt="">
-        </div>
-        <div class="info">
-           <a class="nome">{{consultor.nome}}</a>
-           <a class="cargo">Supervisor de Vendas</a>
-           <a href="tel:{{consultor.celular}}" class="celular btn btn-default">
-               <i class="fa fa-phone"></i> 
-               {{consultor.celular | cel}}
-            </a>
-            <a href="https://api.whatsapp.com/send?phone=55{{consultor.celular}}&text=Ol%C3%A1%2C%20visitei%20seu%20site%20e%20gostaria%20de%20uma%20simula%C3%A7%C3%A3o" class="celular btn btn-default">
-                <i class="fa fa-whatsapp"></i> 
-                Whatsapp
-            </a>
-            <a href="mailto:{{consultor.email}}" class="celular btn btn-default">
-                <i class="fa fa-envelope"></i> 
-                {{consultor.email}}
-            </a>
+        <div>
+            <div class="profile">
+                <img src="{{api + consultor.foto}}" alt="">
+            </div>
+            <div class="info">
+                <a class="nome">{{consultor.nome}}</a>
+                <a class="cargo">{{consultor.perfil | cargo}}</a>
+                <a href="tel:{{consultor.celular}}" class="celular btn btn-default">
+                    <i class="fa fa-phone"></i> 
+                    {{consultor.celular | cel}}
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=55{{consultor.celular}}&text=Ol%C3%A1%2C%20visitei%20seu%20site%20e%20gostaria%20de%20uma%20simula%C3%A7%C3%A3o" class="celular btn btn-default">
+                    <i class="fa fa-whatsapp"></i> 
+                    Whatsapp
+                </a>
+                <a href="mailto:{{consultor.email}}" class="celular btn btn-default">
+                    <i class="fa fa-envelope"></i> 
+                    {{consultor.email}}
+                </a>
+            </div>
         </div>
     </section>
     <section class="simulacao">
@@ -51,6 +53,22 @@
         <h3>Informativos</h3>
         <a class="btn btn-default">Como Funciona</a>
         <a class="btn btn-default">Quais as Vantagens</a>
+    </section>
+    <section class="social">
+        <h3>Redes Sociais</h3>
+        <a href="https://www.facebook.com/raquelconsultoradevendas/?ref=aymt_homepage_panel&eid=ARCPHmON0KQSu7cyKgW2Kuo5_6m5ARE3PxLwZFOpVQ-uVE9m9pB8d6diIk-yVzPuTh61EpbZbp1t0tKL"
+            target="_blank" class="btn btn-default">
+            <i class="fa fa-facebook"></i>
+            Facebook
+        </a>
+        <a href="https://www.instagram.com/raquelqueiroz84/" target="_blank" class="btn btn-default">
+            <i class="fa fa-instagram"></i>
+            Instagram
+        </a>
+    </section>
+    <section class="localizacao">
+        <h3>Horário de Funcionamento</h3>
+        <a class="endereco"> Seg. à Sex. de 08:00h às 18:00h</a>
     </section>
     <section class="localizacao">
         <h3>Faça uma Visita</h3>

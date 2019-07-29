@@ -8,7 +8,8 @@ angular.module(module).controller('meusdadosCtrl', function ($rootScope, $scope,
         email: $rootScope.usuario.email,
         newsenha: "",
         celular: $rootScope.usuario.celular,
-        foto: api + $rootScope.usuario.foto
+        foto: api + $rootScope.usuario.foto,
+        link: window.location.href.substring(0, window.location.href.lastIndexOf('#')) + '#/atendimento/' + '@' + $rootScope.usuario.nome.toLowerCase().replace(' ', '') + '&' + MD5($rootScope.usuario.idusuario)
     }
     if ($rootScope.usuario.foto === null) $scope.obj.foto = './libs/img/icons/icon-512x512.png';
 
@@ -104,5 +105,13 @@ angular.module(module).controller('meusdadosCtrl', function ($rootScope, $scope,
         xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // configurando o cabeçalho da requisição
 
         xhttp.send(formData);
+    }
+
+    // copy link
+    $scope.copyLink = function () {
+        var clipboard = document.querySelector('#clipboard');
+        clipboard.select();
+        document.execCommand("copy");
+        MyToast.show('Copiado para a área de transferência.', 3);
     }
 });

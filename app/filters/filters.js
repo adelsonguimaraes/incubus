@@ -185,6 +185,15 @@ function indefinido () {
     }
 }
 
+// incubus
+function cargo () {
+    return function (input) {
+        if (!input) return 'Indefinido';
+        if (input === 'LIDER') return 'Supervisor(a) de Vendas';
+        if (input === 'VENDEDOR') return 'Consultor(a) de Vendas';
+    }
+}
+
 angular
     .module(module)
     .filter('string30', string30)
@@ -212,3 +221,4 @@ angular
     .filter('aplicandoHighlighter', aplicandoHighlighter)
     .filter('aplicandoH1', aplicandoH1)
     .filter('aplicandoQuebraLinha', aplicandoQuebraLinha)
+    .filter('cargo', cargo);
