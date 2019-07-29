@@ -6,7 +6,7 @@ angular.module(module).controller('meusdadosCtrl', function ($rootScope, $scope,
         id: $rootScope.usuario.idusuario,
         nome: $rootScope.usuario.nome,
         email: $rootScope.usuario.email,
-        senha: "",
+        newsenha: "",
         celular: $rootScope.usuario.celular,
         foto: api + $rootScope.usuario.foto
     }
@@ -57,7 +57,7 @@ angular.module(module).controller('meusdadosCtrl', function ($rootScope, $scope,
     $scope.salvar = function (obj) {
         
         objcopy = angular.copy(obj);
-        if (objcopy.senha != "") objcopy.senha = MD5(obj.senha); // caso a senha seja diferente de vazio
+        if (objcopy.newsenha != "") objcopy.newsenha = MD5(obj.newsenha); // caso a senha seja diferente de vazio
 
         $rootScope.loadon();
 

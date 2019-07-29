@@ -291,7 +291,7 @@ Class UsuarioDAO {
 		$this->superdao->resetResponse();
 
 		if(!mysqli_query($this->con, $this->sql)) {
-			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'setMenuConsultor' ) );
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), "UsuarioDAO", 'setMenuConsultor' ) );
 		}else{
 			$id = mysqli_insert_id( $this->con );
 

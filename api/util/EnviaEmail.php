@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists("PHPMailer")) {
 	// require_once('PHPMailer_5.2.2/class.phpmailer.php');
 	require_once("phpmailer/PHPMailerAutoload.php");
@@ -6,7 +7,7 @@ if (!function_exists("PHPMailer")) {
 
 class EnviaEmail {
 	// atributos
-	private $usuario = 'incubus@adelsonguimaraes.com.br';
+	private $usuario = 'incubus=adelsonguimaraes.com.br';
 	private $senha = 'incubus@2019';
 	private $remetente;
 	private $emails;
@@ -90,27 +91,27 @@ class EnviaEmail {
 		$mail->IsSMTP(); // telling the class to use SMTP
 
 
-		// $mail->SMTPOptions = array(
-		//     'ssl' => array(
-		//         'verify_peer' => false,
-		//         'verify_peer_name' => false,
-		//         'allow_self_signed' => true
-		//     )
-		// );
+		$mail->SMTPOptions = array(
+		    'ssl' => array(
+		        'verify_peer' => false,
+		        'verify_peer_name' => false,
+		        'allow_self_signed' => true
+		    )
+		);
 
 		$mail->Host = $Host; // SMTP server
-		$mail->SMTPDebug = 1; // enables SMTP debug information (for testing)
+		// $mail->SMTPDebug = 1; // enables SMTP debug information (for testing)
 		// 1 = errors and messages1
 		// 2 = messages only
 		$mail->SMTPAuth = true; // enable SMTP authentication
-		// $mail->AuthType = 'PLAIN';
+		$mail->AuthType = 'PLAIN';
 		$mail->SMTPSecure = "";
 		$mail->Port = $Port; // set the SMTP port for the service server
 		$mail->Username = $Username; // account username
 		$mail->Password = $Password; // account password
 		$mail->CharSet = 'UTF-8';
 
-		$mail->SetFrom( $this->usuario, $this->remetente );
+		$mail->SetFrom( str_replace("=", "@", $this->usuario), $this->remetente );
 		$mail->Subject = $this->assunto;
 		$mail->MsgHTML($body);
 		
@@ -134,8 +135,29 @@ class EnviaEmail {
 
 }
 
-$obj = new EnviaEmail( 'Incubus - Teste Email', 'Teste de Envio de Email Sem SSL', array('adelsonguimaraes@gmail.com'), 'Teste de Email Incubus' );
-echo $obj->enviar();
+// $data = array(
+// 	"nome"=>"Adelson Guimarães",
+// 	"email"=>"adelsonguimaraes@gmail.com",
+// 	"celular"=>"92991905809"
+// );
+
+// $usuario = array("nome"=>"Raquel Queiroz");
+
+// enviando menu informando consultor
+// require_once "../src/email/boasvindas" . ".php";
+// $html = ob_get_contents();
+// ob_end_clean();
+
+// echo $html;
+// exit;
+
+// como usar
+// $obj = new EnviaEmail();
+// $obj->setRemetente('Incubus')
+// 	->setAssunto('Consultoria de Vendas')
+// 	->setEmails(array('adelsonguimaraes@gmail.com', 'raquelaraujoqueiroz1@gmail.com'))
+// 	->setMensagem($html);
+// echo $obj->enviar();
 
 
 ?>

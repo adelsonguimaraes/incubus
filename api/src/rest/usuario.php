@@ -44,7 +44,19 @@ function cadastrar () {
 	// cadastrando os menus do consultor
 	$control = new UsuarioControl();
 	$resp = $control->setMenuConsultor($idconsultor);
-	if ($resp["success"]===false) die (json_decode($resp));
+	if ($resp["success"]===false) die (json_encode($resp));
+
+	// enviando menu informando consultor
+	require_once "../email/boasvindas.php";
+	$html = ob_get_contents();
+	ob_end_clean();
+
+	$obj = new EnviaEmail();
+	$obj->setRemetente('Incubus')
+	->setAssunto('Consultoria de Vendas') 
+	->setEmails(array($data['email']))
+	->setMensagem($html);
+	$obj->enviar();
 
 	echo json_encode($response);
 }
@@ -102,7 +114,7 @@ function atualizarMeusDados () {
 		->setNome($data['nome'])
 		->setEmail($data['email'])
 		->setCelular($data['celular'])
-		->setSenha($data['senha'])
+		->setSenha($data['newsenha'])
 		->setFoto($foto);
 	
 	$control = new UsuarioControl($obj);

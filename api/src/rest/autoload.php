@@ -18,6 +18,7 @@ if (gettype($_POST) != "array") $_POST = json_decode ($_POST, true);
 require_once("../../util/Conexao.php"); // Conexao
 require_once("../../util/ResolveMysqlError.php"); // Resolve erros mysql
 require_once("../../util/uploadFiles.php"); //Upload images
+require_once("../../util/EnviaEmail.php"); //Envia Email
 
 /*
 	Fun��o AutoLoad, Carrega as Classes quando
