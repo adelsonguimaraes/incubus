@@ -29,6 +29,9 @@ Class ClienteControl {
 	function buscarPorId () {
 		return $this->objDAO->buscarPorId($this->obj);
 	}
+	function buscarClienteExistente ($email, $celular) {
+		return $this->objDAO->buscarClienteExistente($email, $celular);
+	}
 	function listarTudo ($idusuario) {
 		return $this->objDAO->listarTudo($idusuario);
 	}

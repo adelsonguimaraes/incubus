@@ -139,6 +139,12 @@
     font-size: 30px;
     display: block;
 }
+/* .main-atendimento .irs, .irs-with-grid {
+    background: #fff !important;
+} */
+/* .main-atendimento .irs-slider{
+    
+} */
 
 @media (min-width: 1020px) {
     .main-atendimento section {

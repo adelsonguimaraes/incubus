@@ -138,13 +138,18 @@ class EnviaEmail {
 // $data = array(
 // 	"nome"=>"Adelson Guimarães",
 // 	"email"=>"adelsonguimaraes@gmail.com",
-// 	"celular"=>"92991905809"
+// 	"celular"=>"92991905809",
+// 	"interesse"=>"IMOVEL",
+// 	"valor"=>25000.00,
+// 	"entrada"=>100,
+// 	"parcela"=>400
 // );
 
-// $usuario = array("nome"=>"Raquel Queiroz");
+// $consultor = array("nome"=>"Raquel Queiroz", "perfil"=>"LIDER", "celular"=>92999999999);
 
 // enviando menu informando consultor
-// require_once "../src/email/boasvindas" . ".php";
+// require_once "../util/GenericFunctions.php";
+// require_once "../src/email/avisa_consultor_cadastro_atendimento.php";
 // $html = ob_get_contents();
 // ob_end_clean();
 

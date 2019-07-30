@@ -28,23 +28,25 @@
     </section>
     <section class="simulacao">
         <h3>Solicite uma Simulação</h3>
-        <a class="btn btn-default">
+        <!-- <input ion-range-slider ng-model="someNumber" range-options="{min: 25000, max: 100000, step: 500, type: 'single', 
+        hasGrid: true, prefix: 'R$ ', from: 25000, skin: 'big'}"> -->
+        <a class="btn btn-default" ng-click="simulacao('AUTOMOVEL')">
             <i class="fa fa-car"></i>
             Automóveis
         </a>
-        <a class="btn btn-default">
+        <a class="btn btn-default" ng-click="simulacao('IMOVEL')">
             <i class="fa fa-home"></i>
             Imóveis
         </a>
-        <a class="btn btn-default">
+        <a class="btn btn-default" ng-click="simulacao('MOTO')">
             <i class="fa fa-motorcycle"></i>
             Motos
         </a>
-        <a class="btn btn-default">
+        <a class="btn btn-default" ng-click="simulacao('SERVICO')">
             <i class="fa fa-cog"></i>
             Serviços
         </a>
-        <a class="btn btn-default">
+        <a class="btn btn-default" ng-click="simulacao('PESADO')">
             <i class="fa fa-truck"></i>
             Pesados
         </a>

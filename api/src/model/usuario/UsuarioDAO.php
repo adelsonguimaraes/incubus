@@ -128,7 +128,7 @@ Class UsuarioDAO {
 
 	//buscarPorId
 	function buscarInfoPageConsultor ($usuario, $identificador) {
-		$this->sql = "SELECT nome, email, celular, foto, perfil
+		$this->sql = "SELECT id, nome, email, celular, foto, perfil
 		FROM usuario 
 		WHERE CONCAT('@', REPLACE(LOWER(nome), ' ', '')) = '$usuario'
 		AND CONCAT('&', MD5(id)) = '$identificador'";

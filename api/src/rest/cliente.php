@@ -35,6 +35,73 @@ function cadastrar () {
 	$response = $control->cadastrar();
 	echo json_encode($response);
 }
+
+// auto cadastro do cliente via pagina de atendimento do consultor
+function cadastroViaAtendimento () {
+	$data = $_POST['data'];
+	
+	// verifcando se o email e telefone já foram cadastrados no sistema
+	$clienteControl = new ClienteControl();
+	$resp = $clienteControl->buscarClienteExistente ($data['email'], $data['celular']);
+	if ($resp['success']===false) die (json_encode($resp));
+	if (!empty($resp['data'])) {
+		$resp['success'] = false;
+		$resp['msg'] = "Seus dados já foram registados no nosso sistema, em breve entraremos em contato.";
+		die (json_encode($resp));
+	}
+
+	$obj = new Cliente(
+		NULL,
+		new Usuario($data['idusuario']),
+		stripslashes(strip_tags(trim($data['nome']))),
+		stripslashes(strip_tags(trim($data['celular']))),
+		stripslashes(strip_tags(trim($data['email']))),
+		stripslashes(strip_tags(trim($data['interesse']))),
+		stripslashes(strip_tags(trim($data['valor']))),
+		stripslashes(strip_tags(trim($data['entrada']))),
+		stripslashes(strip_tags(trim($data['parcela']))),
+		stripslashes(strip_tags(trim("CADASTRO VIA PAGINA ATENDIMENTO")))
+	);
+	$control = new ClienteControl($obj);
+	$resp = $control->cadastrar();
+	if ($resp['success']===false) die (json_encode($resp));
+
+	// consultor
+	$controlUsuario = new UsuarioControl(new Usuario($data['idusuario']));
+	$resp = $controlUsuario->buscarPorId();
+	if ($resp['success']===false) die (json_encode($resp));
+	$consultor = (array) $resp['data'];
+
+	// envia email cliente
+	if (!empty($data['email'])) {
+		// enviando menu informando consultor
+		require_once "../email/cliente_cadastro_atendimento.php";
+		$html = ob_get_contents();
+		ob_end_clean();
+
+		$obj = new EnviaEmail();
+		$obj->setRemetente('Incubus')
+		->setAssunto('ATENDIMENTO - SOLICITAÇÃO RECEBIDA')
+		->setEmails(array($data['email']))
+		->setMensagem($html);
+		$obj->enviar();
+	}
+
+	// enviando email informando consultor
+	require_once "../email/avisa_consultor_cadastro_atendimento.php";
+	$html = ob_get_contents();
+	ob_end_clean();
+
+	$obj = new EnviaEmail();
+	$obj->setRemetente('Incubus')
+	->setAssunto('ATENDIMENTO - NOVA SIMULAÇÃO')
+	->setEmails(array($data['email']))
+	->setMensagem($html);
+	$obj->enviar();
+
+	echo json_encode($resp);
+}
+
 function buscarPorId () {
 	$data = $_POST['data'];
 	$control = new ClienteControl(new Cliente($data['id']));

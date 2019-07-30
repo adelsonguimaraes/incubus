@@ -97,6 +97,25 @@ Class ClienteDAO {
 		}
 		return $this->superdao->getResponse();
 	}
+	
+	//buscarPorId
+	function buscarClienteExistente ($email, $celular) {
+		$this->sql = "SELECT * FROM cliente WHERE email = '$email' AND celular = '$celular'";
+		$result = mysqli_query($this->con, $this->sql);
+
+		$this->superdao->resetResponse();
+
+		if(!$result) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'BuscarPorId' ) );
+		}else{
+			while($row = mysqli_fetch_object($result)) {
+				$this->obj = $row;
+			}
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $this->obj );
+		}
+		return $this->superdao->getResponse();
+	}
 
 	//listar
 	function listarTudo ($idusuario) {

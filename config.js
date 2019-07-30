@@ -325,6 +325,9 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                         },
                         {
                             files: ['libs/js/plugins/jasny/jasny-bootstrap.min.js']
+                        },
+                        {
+                            files: ['libs/css/plugins/ionRangeSlider/ion.rangeSlider.css','libs/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css','libs/js/plugins/ionRangeSlider/ion.rangeSlider.min.js']
                         }
                     ]);
                 

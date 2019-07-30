@@ -19,6 +19,7 @@ require_once("../../util/Conexao.php"); // Conexao
 require_once("../../util/ResolveMysqlError.php"); // Resolve erros mysql
 require_once("../../util/uploadFiles.php"); //Upload images
 require_once("../../util/EnviaEmail.php"); //Envia Email
+require_once("../../util/GenericFunctions.php"); //Functions
 
 /*
 	Fun��o AutoLoad, Carrega as Classes quando
