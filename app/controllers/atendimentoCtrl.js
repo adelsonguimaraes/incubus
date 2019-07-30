@@ -99,6 +99,7 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
                 $scope.obj.valor = document.querySelector('#valor').value;
                 $scope.obj.entrada = document.querySelector('#entrada').value;
                 $scope.obj.parcela = document.querySelector('#parcela').value;
+                $scope.obj.celular = $scope.obj.celular.toString().replace(/^0|[\D]/g, "");
                 
                 // verificando se o filtro está preenchido
                 var data = { "metodo": "cadastroViaAtendimento", "data": $scope.obj, "class": "cliente", request: 'POST' };
@@ -120,6 +121,59 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
                         //error
                     });
             }
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            }
+        }
+    }
+
+    $scope.informativo = function (info) {
+
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/views/modal/atendimento_informativos.html',
+            controller: informativoAtendimentoCtrl,
+            size: 'lg',
+            backdrop: 'static',
+            resolve: {
+                info: function () {
+                    return info;
+                },
+                parentScope: $scope
+            }
+        });
+
+        function informativoAtendimentoCtrl($scope, $uibModalInstance, info, parentScope) {
+            $scope.info = info;
+
+            $scope.infos = {
+                'comofunciona': {
+                    header: `Informativos`,
+                    small: `Informativo de como funciona`,
+                    title: `Como funcionamos?`,
+                    body: `Minha empresa é uma administradora de valores que entra com a parte financeira compra o seu bem à vista.<br>
+                        Trabalhamos com um valor de entrada que vária conforme o valor do bem do seu interesse<br>
+                        e parcelas restantes no boleto bancário para a empresa.
+                        <br><br>
+                        ➡Temos crédiario próprio⬅`
+                },
+                'vantagens': {
+                    header: `Informativos`,
+                    small: `Informativo de vantagens`,
+                    title: `Vantagens`,
+                    body: `&#8227; SEM JUROS;<br><br>
+                            &#8227; COMPRA PLANEJADA;<br><br>
+                            &#8227; MENOS BUROCRACIA;<br><br>
+                            &#8227; INVESTIMENTO SEGURO;<br><br>
+                            &#8227; RENDE ATÉ QUATRO VEZES MAIS QUE A POUPANÇA;<br><br>
+                            &#8227; SEM PARCELAS SUBSIDIARIAS;<br><br>
+                            &#8227; DOIS MILHÕES DE CONTEMPLADOS;<br><br>
+                            &#8227; UTILIZAÇÃO DO FGTS COMO LANCE PARA ABATIMENTO DE PARCELAS;<br><br>
+                            &#8227; LIBERDADE NA COMPRA;<br><br>
+                            &#8227; PAGAMENTO PARCELADO NO BOLETO BANCÁRIO;<br>`
+                }
+            };
+
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             }

@@ -25,8 +25,8 @@ Class ClienteDAO {
 
 	//cadastrar
 	function cadastrar (cliente $obj) {
-		$this->sql = sprintf("INSERT INTO cliente(idusuario, nome, celular, email, interesse, valor, entrada, parcela, observacao, status)
-		VALUES(%d, '%s', '%s', '%s', '%s', %f, %f, %f, '%s', '%s')",
+		$this->sql = sprintf("INSERT INTO cliente(idusuario, nome, celular, email, interesse, valor, entrada, parcela, observacao)
+		VALUES(%d, '%s', '%s', '%s', '%s', %f, %f, %f, '%s')",
 			mysqli_real_escape_string($this->con, $obj->getObjusuario()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getNome()),
 			mysqli_real_escape_string($this->con, $obj->getCelular()),
@@ -35,8 +35,7 @@ Class ClienteDAO {
 			mysqli_real_escape_string($this->con, $obj->getValor()),
 			mysqli_real_escape_string($this->con, $obj->getEntrada()),
 			mysqli_real_escape_string($this->con, $obj->getParcela()),
-			mysqli_real_escape_string($this->con, $obj->getObservacao()),
-			mysqli_real_escape_string($this->con, $obj->getStatus()));
+			mysqli_real_escape_string($this->con, $obj->getObservacao()));
 
 		$this->superdao->resetResponse();
 

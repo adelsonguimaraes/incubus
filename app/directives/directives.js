@@ -1072,6 +1072,45 @@ function soNumeros() {
     }
 }
 
+function celular () {
+    return {
+        restrict: "A",
+        require: "ngModel",
+        link: function (sc, el, att, model) {
+
+            function format (input) {
+                input = input.toString().replace(/^0|[\D]/g, "");
+                input = input.substring(0, 11); // limitando a 11 digitos
+
+                if (input.length >= 1 && input.length <= 2) {
+                    input = '(' + input.substr(0, 2);
+                } else if (input.length >= 3 && input.length <= 6) {
+                    input = '(' + input.substr(0, 2) + ') ' + input.substr(2, 4);
+                } else if (input.length >= 7 && input.length <= 10) {
+                    input = '(' + input.substr(0, 2) + ') ' + input.substr(2, 4) + '-' + input.substr(6, 10);
+                } else if (input.length >= 7 && input.length <= 11) {
+                    input = '(' + input.substr(0, 2) + ') ' + input.substr(2, 5) + '-' + input.substr(7, 11);
+                }
+                return input;
+            }
+
+            el.bind("keyup", function (e) {
+                var input = model.$viewValue;
+                if(input.length<=0) return false;
+                model.$setViewValue(format(input));
+                model.$render();
+            });
+
+            el.bind("focus", function (e) {
+                var input = model.$viewValue;
+                if (input.length <= 0) return false;
+                model.$setViewValue(format(input));
+                model.$render();
+            });
+        }
+    }
+}
+
 /**
  *
  * Pass all functions into module
@@ -1108,6 +1147,7 @@ angular
     .directive('mascara', mascara)
     .directive('mascaraMoeda', mascaraMoeda)
     .directive('soNumeros', soNumeros)
+    .directive('celular', celular)
     .directive('reiniciarFootable', function () {
         return function (scope, element) {
             var footableTable = element.parents('table');

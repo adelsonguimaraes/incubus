@@ -59,7 +59,8 @@ angular.module(module).controller('meusdadosCtrl', function ($rootScope, $scope,
         
         objcopy = angular.copy(obj);
         if (objcopy.newsenha != "") objcopy.newsenha = MD5(obj.newsenha); // caso a senha seja diferente de vazio
-
+        objcopy.celular = objcopy.celular.toString().replace(/^0|[\D]/g, "");
+        
         $rootScope.loadon();
 
         var formData = new FormData();

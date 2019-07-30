@@ -92,7 +92,7 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
             function (isConfirm) {
                 if (isConfirm) {
                     var copy = angular.copy(obj);
-                    copy.celular = obj.celular.replace(/[^\d]+/g,'');
+                    copy.celular = obj.celular.toString().replace(/[^\d]+/g,'');
                     copy.valor = desformataValor(obj.valor | 0);
                     copy.entrada = desformataValor(obj.entrada | 0);
                     copy.parcela = desformataValor(obj.parcela) | 0;
