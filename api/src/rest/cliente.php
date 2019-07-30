@@ -65,6 +65,7 @@ function cadastroViaAtendimento () {
 	$control = new ClienteControl($obj);
 	$resp = $control->cadastrar();
 	if ($resp['success']===false) die (json_encode($resp));
+	$idcliente = $resp['data'];
 
 	// consultor
 	$controlUsuario = new UsuarioControl(new Usuario($data['idusuario']));
@@ -81,7 +82,7 @@ function cadastroViaAtendimento () {
 
 		$obj = new EnviaEmail();
 		$obj->setRemetente('Incubus')
-		->setAssunto('ATENDIMENTO - SOLICITAÇÃO RECEBIDA')
+		->setAssunto('ATENDIMENTO - SOLICITAÇÃO RECEBIDA - COD. ' . $idcliente)
 		->setEmails(array($data['email']))
 		->setMensagem($html);
 		$obj->enviar();
@@ -94,8 +95,8 @@ function cadastroViaAtendimento () {
 
 	$obj = new EnviaEmail();
 	$obj->setRemetente('Incubus')
-	->setAssunto('ATENDIMENTO - NOVA SIMULAÇÃO')
-	->setEmails(array($data['email']))
+	->setAssunto('ATENDIMENTO - NOVA SIMULAÇÃO - COD. ' . $idcliente)
+	->setEmails(array($consultor['email']))
 	->setMensagem($html);
 	$obj->enviar();
 
