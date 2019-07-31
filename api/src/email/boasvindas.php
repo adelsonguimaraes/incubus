@@ -1,11 +1,6 @@
 <?php
     header('Content-Type: text/html; charset=utf-8');
     ob_start();
-
-
-    function formatCel($cel) {
-        return "(" .substr($cel, 0, 2). ") " . substr($cel, 2, 5) . "-" . substr($cel, 7, 4); 
-    }
 ?>
 
 <a href="https://www.adelsonguimaraes.com.br/incubus/" style="text-decoration:none;">
