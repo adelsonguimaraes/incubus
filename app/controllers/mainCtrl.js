@@ -58,5 +58,4 @@ angular.module(module).controller('mainCtrl', function ($rootScope, $scope, auth
         }    
     }
     $rootScope.setValuesMyMenu();
-    
 });
