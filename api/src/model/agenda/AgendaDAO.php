@@ -68,6 +68,20 @@ Class AgendaDAO {
 		return $this->superdao->getResponse();
 	}
 
+	// importar
+	function importar ($idusuario, $idusuarioantigo) {
+		$this->sql = "UPDATE cliente SET idusuario = $idusuario WHERE idusuario = $idusuarioantigo";
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), "Agenda", 'importar' ) );
+		}else{
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( true );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	function desativar ($idagenda) {
 		$obj = new Agenda($idagenda);
 

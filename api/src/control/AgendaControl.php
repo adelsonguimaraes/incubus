@@ -38,6 +38,9 @@ Class AgendaControl {
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);
 	}
+	function importar ($idusuario, $idusuarioantigo) {
+		return $this->objDAO->importar ($idusuario, $idusuarioantigo);
+	}
 	function desativar ($idagenda) {
 		return $this->objDAO->desativar($idagenda);
 	}

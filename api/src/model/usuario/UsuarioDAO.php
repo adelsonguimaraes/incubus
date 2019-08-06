@@ -131,7 +131,9 @@ Class UsuarioDAO {
 		$this->sql = "SELECT id, nome, email, celular, foto, perfil
 		FROM usuario 
 		WHERE CONCAT('@', REPLACE(LOWER(nome), ' ', '')) = '$usuario'
-		AND CONCAT('&', MD5(id)) = '$identificador'";
+		AND CONCAT('&', MD5(id)) = '$identificador'
+		AND ativo = 'SIM'";
+
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();
@@ -190,7 +192,8 @@ Class UsuarioDAO {
 	function listarPorSuperior($idusuario) {
 		$this->sql = "SELECT * 
 		FROM usuario u
-		WHERE u.idsuperior = $idusuario";
+		WHERE u.idsuperior = $idusuario
+		AND u.ativo = 'SIM'";
 		$result = mysqli_query ( $this->con, $this->sql );
 
 		$this->superdao->resetResponse();
@@ -369,6 +372,23 @@ Class UsuarioDAO {
 
 		if ( !$result ) {
 			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'Deletar' ));
+			return $this->superdao->getResponse();
+		}
+
+		$this->superdao->setSuccess( true );
+		$this->superdao->setData( true );
+
+		return $this->superdao->getResponse();
+	}
+
+	function desativar ($idusuario) {
+		$this->superdao->resetResponse();
+
+		$this->sql = "UPDATE usuario SET ativo = 'NAO' WHERE id = $idusuario";
+		$result = mysqli_query($this->con, $this->sql);
+
+		if ( !$result ) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'Desativar' ));
 			return $this->superdao->getResponse();
 		}
 

@@ -135,6 +135,28 @@ function deletar () {
 	echo json_encode($control->deletar());
 }
 
+function desativar () {
+	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
+
+	$control = new UsuarioControl();
+	$resp = $control->desativar($data['idusuario']);
+	if ($resp['success'] === false) die (json_encode($resp));
+
+	// verificando se o usuário desaja importar os dados
+	if ($data['importar'] === "SIM") {
+		$controlCliente = new ClienteControl();
+		$resp = $controlCliente->importar($usuario['idusuario'], $data['idusuario']);
+		if ($resp['success'] === false) die (json_encode($resp));
+
+		$controlAgenda = new AgendaControl();
+		$resp = $controlAgenda->importar($usuario['idusuario'], $data['idusuario']);
+		if ($resp['success'] === false) die (json_encode($resp));
+	}
+
+	echo json_encode($resp);
+}
+
 
 // Classe gerada com BlackCoffeePHP 2.0 - by Adelson Guimarães
 ?>

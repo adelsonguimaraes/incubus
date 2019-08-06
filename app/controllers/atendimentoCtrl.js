@@ -20,6 +20,12 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
             .then(function successCallback(response) {
                 //se o sucesso === true
                 if (response.data.success == true) {
+                    if (response.data.data === null) {
+                        $stateParams.consultor = "@disponível&8e296a067a37563370ded05f5a3bf3ec";
+                        window.location.replace(window.location.href.substr(0, window.location.href.lastIndexOf('@')) + "@disponível&8e296a067a37563370ded05f5a3bf3ec");
+                        $scope.buscarInfoPageConsultor();
+                        return false;
+                    }
                     $scope.consultor = response.data.data;
                     $rootScope.loadoff();
                 } else {
@@ -29,7 +35,12 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
                 //error
             });
     }
-    if ($stateParams.consultor.length>0) $scope.buscarInfoPageConsultor();
+    if ($stateParams.consultor.length>0) {
+        $scope.buscarInfoPageConsultor();
+    }else{
+        $stateParams.consultor = "@disponível&8e296a067a37563370ded05f5a3bf3ec";
+        $scope.buscarInfoPageConsultor();
+    }
 
     var coord = { lat: '-3.0889928', lon: '-60.0228449' };
     var carregaMapa = function (coord) {

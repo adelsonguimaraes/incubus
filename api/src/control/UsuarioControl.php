@@ -65,6 +65,9 @@ Class UsuarioControl {
 	function deletar () {
 		return $this->objDAO->deletar($this->obj);
 	}
+	function desativar ($idusuario) {
+		return $this->objDAO->desativar($idusuario);
+	}
 	function listarPaginado ($start, $limit) {
 	return $this->objDAO->listarPaginado($start, $limit);
 	}

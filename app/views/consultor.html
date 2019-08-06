@@ -2,15 +2,15 @@
 <div class="sub-menu" ng-if="!novo">
     <div class="filtro">
         <div class="btn-group">
-            <button type="submit" class="btn btn-default" ng-click="novoCadastro()">
+            <button type="submit" class="btn btn-default" ng-click="novoCadastro()" ng-disabled="view.length>0">
                 <i class=" fa fa-plus"></i>
             </button>
-            <button type="submit" class="btn btn-default" ng-click="editar(obj.consultor)">
+            <button type="submit" class="btn btn-default" ng-click="editar(obj.consultor)" ng-disabled="view.length>0">
                 <i class=" fa fa-edit"></i>
             </button>
         </div>
         <div>
-            <select class="form-control" name="consultor" ng-options="obj as  '(' + obj.id + ') ' +obj.nome for obj in consultores" ng-model="obj.consultor" ng-disabled="view.length>0"></select>
+            <select class="form-control" name="consultor" ng-options="obj as obj.id + '. ' +obj.nome for obj in consultores" ng-model="obj.consultor" ng-disabled="view.length>0"></select>
         </div>
         <div>
             <select class="form-control" name="alvo" ng-model="obj.alvo" ng-disabled="view.length>0">
@@ -44,6 +44,15 @@
                 <input class="form-control" type="tel" name="porcentagem" mascara-moeda ng-model="objcad.porcentagem" placeholder="Informe a porcentagem do consultor"
                     ng-required="true">
             </div>
+        </div>
+        <div style="margin:10px;padding:15px; text-align: center; border: 1px solid #cccccc;background: bisque;" ng-if="objcad.id>0">
+            <br>
+            <button class="btn btn-default" ng-click="desativar(objdes, objcad)">Desativar Usuário</button>
+            <h4>Importar Dados?<br><small>Clientes e Agendas</small></h4>
+            <label for="">Sim</label>
+            <input type="radio" name="importar" id="importar" ng-model="objdes.importar" value="SIM">
+            <label for="">Não</label>
+            <input type="radio" name="importar" id="importar" ng-model="objdes.importar" value="NAO">
         </div>
         <br/>
         <div style="display: inline-block; width: 100%;">

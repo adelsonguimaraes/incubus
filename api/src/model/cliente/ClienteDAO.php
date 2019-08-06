@@ -77,6 +77,34 @@ Class ClienteDAO {
 		return $this->superdao->getResponse();
 	}
 
+	// atualizar ver na home
+	function atualizarVerHome ($id) {
+		$this->sql = "UPDATE cliente SET verhome = 'SIM' WHERE id = $id";
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), get_class( $obj ), 'Atualizar' ) );
+		}else{
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( true );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	// importar
+	function importar ($idusuario, $idusuarioantigo) {
+		$this->sql = "UPDATE cliente SET idusuario = $idusuario  WHERE idusuario = $idusuarioantigo";
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), "Cliente", 'importar' ) );
+		}else{
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( true );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	//buscarPorId
 	function buscarPorId (Cliente $obj) {
 		$this->sql = sprintf("SELECT * FROM cliente WHERE id = %d",

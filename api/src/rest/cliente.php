@@ -67,6 +67,11 @@ function cadastroViaAtendimento () {
 	if ($resp['success']===false) die (json_encode($resp));
 	$idcliente = $resp['data'];
 
+	// atualiza para cliente aparecer na home do consultor
+	$control = new ClienteControl();
+	$resp = $control->atualizarVerHome($idcliente);
+	if ($resp['success']===false) die (json_encode($resp));
+
 	// consultor
 	$controlUsuario = new UsuarioControl(new Usuario($data['idusuario']));
 	$resp = $controlUsuario->buscarPorId();

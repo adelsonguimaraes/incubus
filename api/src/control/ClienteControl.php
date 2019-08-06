@@ -26,6 +26,15 @@ Class ClienteControl {
 	function cadastrar () {
 		return $this->objDAO->cadastrar($this->obj);
 	}
+	function atualizar () {
+		return $this->objDAO->atualizar($this->obj);
+	}
+	function atualizarVerHome ($id) {
+		return $this->objDAO->atualizarVerHome($id);
+	}
+	function importar ($idusuario, $idusuarioantigo) {
+		return $this->objDAO->importar ($idusuario, $idusuarioantigo);
+	}
 	function buscarPorId () {
 		return $this->objDAO->buscarPorId($this->obj);
 	}
@@ -41,9 +50,6 @@ Class ClienteControl {
 	function filtrar ($idusuario, $data) {
 		return $this->objDAO->filtrar($idusuario, $data);
 	}	
-	function atualizar () {
-		return $this->objDAO->atualizar($this->obj);
-	}
 	function deletar () {
 		return $this->objDAO->deletar($this->obj);
 	}

@@ -104,4 +104,54 @@ angular.module(module).controller('consultorCtrl', function ($rootScope, $scope,
                 //error
             });
     }
+
+    // desativar usuario e importar dados
+    $scope.objdes = {
+        importar: "SIM"
+    }
+    $scope.desativar = function (obj, user) {
+        SweetAlert.swal({
+            title: "Atenção",
+            text: "Deseja realmente prosseguir com a operação?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#5cb85c",
+            confirmButtonText: "Sim, desativar!",
+            cancelButtonText: "Não, cancele!",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    var objcopy = angular.copy(obj);
+                    objcopy.idusuario = user.id;
+                    
+                    var data = {
+                        "metodo": "desativar",
+                        "data": objcopy,
+                        "class": "usuario",
+                        request: 'POST'
+                    };
+
+                    $rootScope.loadon();
+
+                    genericAPI.generic(data)
+                        .then(function successCallback(response) {
+                            //se o sucesso === true
+                            if (response.data.success == true) {
+                                $scope.listarConsultores();
+                                $scope.cancelar();
+                                $rootScope.loadoff();
+
+                                SweetAlert.swal({ html: true, title: "Sucesso", text: 'O consultor foi desativado!', type: "success" });
+                            } else {
+                                SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                                $rootScope.loadoff();
+                            }
+                        }, function errorCallback(response) {
+                            //error
+                        });
+                }
+            });
+    }
 });
