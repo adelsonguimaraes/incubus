@@ -127,6 +127,14 @@ class EnviaEmail {
 			$response = $mail->ErrorInfo;
 		} else {
 			$response = true;
+			// salvando no log
+			$control = new LogemailControl();
+			$resp = $control->cadastrar(
+				new Logemail(
+					NULL,
+					
+				)
+			);
 		}
 
 		return $response;
@@ -160,9 +168,16 @@ class EnviaEmail {
 // $obj = new EnviaEmail();
 // $obj->setRemetente('Incubus')
 // 	->setAssunto('Consultoria de Vendas')
-// 	->setEmails(array('adelsonguimaraes@gmail.com', 'raquelaraujoqueiroz1@gmail.com'))
-// 	->setMensagem($html);
+// 	->setEmails(array('adelsonguimaraes@gmail.coma'))
+	// ->setMensagem($html);
 // echo $obj->enviar();
+
+// como tratar o erro
+// if ($obj->enviar()===true) {
+// 	echo "enviado com sucesso";
+// }else{
+// 	echo "erro";
+// }
 
 
 ?>
