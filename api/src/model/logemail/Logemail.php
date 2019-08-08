@@ -4,9 +4,9 @@
 /*
 	Projeto: INCUBUS - Gestão de Consultoria de Vendas.
 	Project Owner: Raquel Queiroz.
-	Desenvolvedor: Adelson Guimaraes Monteiro.
-	Data de início: 2019-08-07T21:19:55.838Z.
-	Data Atual: 07/08/2019.
+	Desenvolvedor: Adelson Guimarães Monteiro.
+	Data de início: 2019-08-07T23:16:08.179Z.
+	Data Atual: 08/08/2019.
 */
 
 Class Logemail implements JsonSerializable {
@@ -14,9 +14,11 @@ Class Logemail implements JsonSerializable {
 	private $id;
 	private $idclasse;
 	private $classe;
+	private $assunto;
+	private $conteudo;
 	private $destinatario;
 	private $status;
-	private $observacao;
+	private $retorno;
 	private $datacadastro;
 
 	//constutor
@@ -25,18 +27,22 @@ Class Logemail implements JsonSerializable {
 		$id = NULL,
 		$idclasse = NULL,
 		$classe = NULL,
+		$assunto = NULL,
+		$conteudo = NULL,
 		$destinatario = NULL,
 		$status = NULL,
-		$observacao = NULL,
+		$retorno = NULL,
 		$datacadastro = NULL
 	)
 	{
 		$this->id	= $id;
 		$this->idclasse	= $idclasse;
 		$this->classe	= $classe;
+		$this->assunto	= $assunto;
+		$this->conteudo	= $conteudo;
 		$this->destinatario	= $destinatario;
 		$this->status	= $status;
-		$this->observacao	= $observacao;
+		$this->retorno	= $retorno;
 		$this->datacadastro	= $datacadastro;
 	}
 
@@ -62,6 +68,20 @@ Class Logemail implements JsonSerializable {
 		$this->classe = $classe;
 		return $this;
 	}
+	public function getAssunto() {
+		return $this->assunto;
+	}
+	public function setAssunto($assunto) {
+		$this->assunto = $assunto;
+		return $this;
+	}
+	public function getConteudo() {
+		return $this->conteudo;
+	}
+	public function setConteudo($conteudo) {
+		$this->conteudo = $conteudo;
+		return $this;
+	}
 	public function getDestinatario() {
 		return $this->destinatario;
 	}
@@ -76,11 +96,11 @@ Class Logemail implements JsonSerializable {
 		$this->status = $status;
 		return $this;
 	}
-	public function getObservacao() {
-		return $this->observacao;
+	public function getRetorno() {
+		return $this->retorno;
 	}
-	public function setObservacao($observacao) {
-		$this->observacao = $observacao;
+	public function setRetorno($retorno) {
+		$this->retorno = $retorno;
 		return $this;
 	}
 	public function getDatacadastro() {
@@ -97,9 +117,11 @@ Class Logemail implements JsonSerializable {
 			"id"	=> $this->id,
 			"idclasse"	=> $this->idclasse,
 			"classe"	=> $this->classe,
+			"assunto"	=> $this->assunto,
+			"conteudo"	=> $this->conteudo,
 			"destinatario"	=> $this->destinatario,
 			"status"	=> $this->status,
-			"observacao"	=> $this->observacao,
+			"retorno"	=> $this->retorno,
 			"datacadastro"	=> $this->datacadastro
 		];
 	}

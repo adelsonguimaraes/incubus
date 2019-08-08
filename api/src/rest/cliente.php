@@ -50,6 +50,38 @@ function cadastroViaAtendimento () {
 		die (json_encode($resp));
 	}
 
+	// consultor
+	$controlUsuario = new UsuarioControl(new Usuario($data['idusuario']));
+	$resp = $controlUsuario->buscarPorId();
+	if ($resp['success']===false) die (json_encode($resp));
+	$consultor = (array) $resp['data'];
+
+	// envia email cliente
+	if (!empty($data['email'])) {
+		// enviando menu informando consultor
+		require_once "../email/cliente_cadastro_atendimento.php";
+		$html = ob_get_contents();
+		ob_end_clean();
+
+		$obj = new EnviaEmail();
+		$obj->setRemetente('Incubus')
+		->setAssunto('ATENDIMENTO - SOLICITAÇÃO RECEBIDA')
+		->setEmails(array($data['email']))
+		->setMensagem($html);
+		
+		// verificando se o envio do email irá gerar erro
+		if ($obj->enviar()!==true) {
+			$resp['success'] = false;
+			$resp['msg'] = "Email informado não é válido.";
+			die (json_encode($resp));
+		}
+	}else{
+		$resp['success'] = false;
+		$resp['msg'] = "Email informado não é válido.";
+		die (json_encode($resp));
+	}
+
+
 	$obj = new Cliente(
 		NULL,
 		new Usuario($data['idusuario']),
@@ -71,27 +103,6 @@ function cadastroViaAtendimento () {
 	$control = new ClienteControl();
 	$resp = $control->atualizarVerHome($idcliente);
 	if ($resp['success']===false) die (json_encode($resp));
-
-	// consultor
-	$controlUsuario = new UsuarioControl(new Usuario($data['idusuario']));
-	$resp = $controlUsuario->buscarPorId();
-	if ($resp['success']===false) die (json_encode($resp));
-	$consultor = (array) $resp['data'];
-
-	// envia email cliente
-	if (!empty($data['email'])) {
-		// enviando menu informando consultor
-		require_once "../email/cliente_cadastro_atendimento.php";
-		$html = ob_get_contents();
-		ob_end_clean();
-
-		$obj = new EnviaEmail();
-		$obj->setRemetente('Incubus')
-		->setAssunto('ATENDIMENTO - SOLICITAÇÃO RECEBIDA - COD. ' . $idcliente)
-		->setEmails(array($data['email']))
-		->setMensagem($html);
-		$obj->enviar();
-	}
 
 	// enviando email informando consultor
 	require_once "../email/avisa_consultor_cadastro_atendimento.php";

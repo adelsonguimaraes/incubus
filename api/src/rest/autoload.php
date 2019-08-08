@@ -15,11 +15,13 @@ if (gettype($_POST) != "array") $_POST = json_decode ($_POST, true);
 /*
 	Requires
 */
-require_once("../../util/Conexao.php"); // Conexao
-require_once("../../util/ResolveMysqlError.php"); // Resolve erros mysql
-require_once("../../util/uploadFiles.php"); //Upload images
-require_once("../../util/EnviaEmail.php"); //Envia Email
-require_once("../../util/GenericFunctions.php"); //Functions
+
+
+require_once(__DIR__ . "/../../util/Conexao.php"); // Conexao
+require_once(__DIR__ . "/../../util/ResolveMysqlError.php"); // Resolve erros mysql
+require_once(__DIR__ . "/../../util/uploadFiles.php"); //Upload images
+require_once(__DIR__ . "/../../util/EnviaEmail.php"); //Envia Email
+require_once(__DIR__ . "/../../util/GenericFunctions.php"); //Functions
 
 /*
 	Fun��o AutoLoad, Carrega as Classes quando
@@ -33,7 +35,7 @@ function carregaClasses($class){
 //  	if(strripos($class, "Control")) {
 	if(strrpos($class, "Control")) {
  		/*	require na Control */ 
- 		require_once("../control/".$class.".php");
+ 		require_once __DIR__ . "/../control/".$class.".php";
  	}
  	/*
 		Verifica se existe "Control" no nome da classe
@@ -42,7 +44,7 @@ function carregaClasses($class){
  		/* Monta o nome da Bean */
  		$bean = strtolower(substr($class, 0, strrpos($class, "DAO")));
  		/*	require na DAO */
- 		require_once "../model/".$bean."/".$class.".php";
+ 		require_once __DIR__ . "/../model/".$bean."/".$class.".php";
  	/*
 		Se n�o for DAO nem Control � Model.
 	*/
@@ -50,7 +52,7 @@ function carregaClasses($class){
  		/* Monta o nome da Bean */
  		$bean = strtolower($class);
  		/*	require na model */
- 		require_once "../model/".$bean."/".$class.".php";
+ 		require_once __DIR__ . "/../model/".$bean."/".$class.".php";
  	}
 }
 

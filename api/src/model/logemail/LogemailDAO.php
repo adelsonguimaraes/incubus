@@ -4,9 +4,9 @@
 /*
 	Projeto: INCUBUS - Gestão de Consultoria de Vendas.
 	Project Owner: Raquel Queiroz.
-	Desenvolvedor: Adelson Guimaraes Monteiro.
-	Data de início: 2019-08-07T21:19:55.838Z.
-	Data Atual: 07/08/2019.
+	Desenvolvedor: Adelson Guimarães Monteiro.
+	Data de início: 2019-08-07T23:16:08.179Z.
+	Data Atual: 08/08/2019.
 */
 
 Class LogemailDAO {
@@ -25,13 +25,15 @@ Class LogemailDAO {
 
 	//cadastrar
 	function cadastrar (logemail $obj) {
-		$this->sql = sprintf("INSERT INTO logemail(idclasse, classe, destinatario, status, observacao)
-		VALUES(%d, '%s', '%s', '%s', '%s')",
+		$this->sql = sprintf("INSERT INTO logemail(idclasse, classe, assunto, conteudo, destinatario, status, retorno)
+		VALUES(%d, '%s', '%s', '%s', '%s', '%s', '%s')",
 			mysqli_real_escape_string($this->con, $obj->getIdclasse()),
 			mysqli_real_escape_string($this->con, $obj->getClasse()),
+			mysqli_real_escape_string($this->con, $obj->getAssunto()),
+			mysqli_real_escape_string($this->con, $obj->getConteudo()),
 			mysqli_real_escape_string($this->con, $obj->getDestinatario()),
 			mysqli_real_escape_string($this->con, $obj->getStatus()),
-			mysqli_real_escape_string($this->con, $obj->getObservacao()));
+			mysqli_real_escape_string($this->con, $obj->getRetorno()));
 
 		$this->superdao->resetResponse();
 
@@ -48,12 +50,14 @@ Class LogemailDAO {
 
 	//atualizar
 	function atualizar (Logemail $obj) {
-		$this->sql = sprintf("UPDATE logemail SET idclasse = %d, classe = '%s', destinatario = '%s', status = '%s', observacao = '%s' WHERE id = %d ",
+		$this->sql = sprintf("UPDATE logemail SET idclasse = %d, classe = '%s', assunto = '%s', conteudo = '%s', destinatario = '%s', status = '%s', retorno = '%s' WHERE id = %d ",
 			mysqli_real_escape_string($this->con, $obj->getIdclasse()),
 			mysqli_real_escape_string($this->con, $obj->getClasse()),
+			mysqli_real_escape_string($this->con, $obj->getAssunto()),
+			mysqli_real_escape_string($this->con, $obj->getConteudo()),
 			mysqli_real_escape_string($this->con, $obj->getDestinatario()),
 			mysqli_real_escape_string($this->con, $obj->getStatus()),
-			mysqli_real_escape_string($this->con, $obj->getObservacao()),
+			mysqli_real_escape_string($this->con, $obj->getRetorno()),
 			mysqli_real_escape_string($this->con, $obj->getId()));
 		$this->superdao->resetResponse();
 

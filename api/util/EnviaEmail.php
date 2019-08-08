@@ -5,6 +5,8 @@ if (!function_exists("PHPMailer")) {
 	require_once("phpmailer/PHPMailerAutoload.php");
 }
 
+require_once(__DIR__ . "/../src/rest/autoload.php");
+
 class EnviaEmail {
 	// atributos
 	private $usuario = 'incubus=adelsonguimaraes.com.br';
@@ -123,18 +125,31 @@ class EnviaEmail {
 			$mail->AddAddress( trim($key), "" );
 		}
 
-		if(!$mail->Send()) {
+		// chamando a classe de email log
+		$obj = new Logemail();
+		$obj->setAssunto($this->assunto)
+			->setConteudo($this->mensagem)
+			->setDestinatario(implode(', ', $this->emails));
+
+		if(!$mail->Send()) { // caso de erro
 			$response = $mail->ErrorInfo;
-		} else {
-			$response = true;
+
 			// salvando no log
-			$control = new LogemailControl();
-			$resp = $control->cadastrar(
-				new Logemail(
-					NULL,
-					
-				)
-			);
+			$obj->setStatus('ERRO')
+				->setRetorno($mail->ErrorInfo);
+			$control = new LogemailControl($obj);
+			$resp = $control->cadastrar();
+			if ($resp['success']==false) return $resp;
+
+		} else { // caso sucesso no envio
+			$response = true;
+			
+			// salvando no log
+			$obj->setStatus('ENVIADO')
+				->setRetorno("Email enviado com sucesso");
+			$control = new LogemailControl($obj);
+			$resp = $control->cadastrar();
+			if ($resp['success']==false) return $resp;
 		}
 
 		return $response;
@@ -164,12 +179,12 @@ class EnviaEmail {
 // echo $html;
 // exit;
 
-// como usar
+// // como usar
 // $obj = new EnviaEmail();
 // $obj->setRemetente('Incubus')
 // 	->setAssunto('Consultoria de Vendas')
-// 	->setEmails(array('adelsonguimaraes@gmail.coma'))
-	// ->setMensagem($html);
+// 	->setEmails(array('adelsonguimaraes@gmail.com'))
+// 	->setMensagem($html);
 // echo $obj->enviar();
 
 // como tratar o erro

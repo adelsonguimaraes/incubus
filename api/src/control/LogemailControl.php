@@ -4,9 +4,9 @@
 /*
 	Projeto: INCUBUS - Gestão de Consultoria de Vendas.
 	Project Owner: Raquel Queiroz.
-	Desenvolvedor: Adelson Guimaraes Monteiro.
-	Data de início: 2019-08-07T21:19:55.838Z.
-	Data Atual: 07/08/2019.
+	Desenvolvedor: Adelson Guimarães Monteiro.
+	Data de início: 2019-08-07T23:16:08.179Z.
+	Data Atual: 08/08/2019.
 */
 
 Class LogemailControl {
