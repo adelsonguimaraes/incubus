@@ -290,4 +290,111 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
         }    
     }
 
+    // compartilhamento de cliente
+    $scope.compartilhar = function () {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/views/modal/compartilharCliente.html',
+            controller: compartilharClienteCtrl,
+            size: 'lg',
+            backdrop: 'static',
+            resolve: {
+                // obj: function () {
+                //     return obj;
+                // }
+                parentScope: $scope
+            }
+        });
+
+        function compartilharClienteCtrl($scope, $uibModalInstance, parentScope) {
+           $scope.obj = {
+                idusuario: '',
+                clientes: []
+            };
+
+            // listando consultores
+            function listarConsultores () {
+                $scope.consultores = [];
+                var data = { "metodo": "listarPorSuperior", "data": "", "class": "usuario", request: 'GET' };
+
+                    $rootScope.loadon();
+
+                    genericAPI.generic(data)
+                        .then(function successCallback(response) {
+                            //se o sucesso === true
+                            if (response.data.success == true) {
+                                $scope.consultores = response.data.data;
+                                $scope.obj.idusuario = response.data.data[0].id;
+                                $rootScope.loadoff();
+                            } else {
+                                $rootScope.loadoff();
+                                SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                            }
+                        }, function errorCallback(response) {
+                            //error
+                        });
+            }
+            listarConsultores();
+
+            $scope.clientes = [];
+            // listando clientes para compartilhar
+            $scope.listarClientes = function (obj) {
+console.log(obj);
+                var dataRequest = {
+                    idusuario: obj.idusuario
+                };
+                var data = { "metodo": "listarParaCompartilhar", "data": dataRequest, "class": "cliente", request: 'GET' };
+
+                    $rootScope.loadon();
+
+                    genericAPI.generic(data)
+                        .then(function successCallback(response) {
+                            //se o sucesso === true
+                            if (response.data.success == true) {
+                                $scope.clientes = response.data.data;
+                                $rootScope.loadoff();
+                            } else {
+                                $rootScope.loadoff();
+                                SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                            }
+                        }, function errorCallback(response) {
+                            //error
+                        });
+            }
+
+            $scope.ok = function (obj) {
+
+                console.log(obj);
+                return false;
+
+                if (obj === undefined) {
+                    SweetAlert.swal({ html: true, title: "Atenção", text: "Informe pelo menos um campo para filtrar", type: "error" });
+                    return false;
+                }
+
+                var copy = angular.copy(obj);
+                var data = { "metodo": "filtrar", "data": copy, "class": "cliente", request: 'GET' };
+
+                $rootScope.loadon();
+
+                genericAPI.generic(data)
+                    .then(function successCallback(response) {
+                        //se o sucesso === true
+                        if (response.data.success == true) {
+                            parentScope.clientes = response.data.data;
+                            $rootScope.loadoff();
+                            $uibModalInstance.dismiss('cancel');
+                        } else {
+                            SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                        }
+                    }, function errorCallback(response) {
+                        //error
+                    }); 
+                
+            }
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            }
+        }   
+    }
+
 });

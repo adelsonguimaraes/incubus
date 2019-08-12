@@ -186,6 +186,27 @@ Class ClienteDAO {
 		return $this->superdao->getResponse();
 	}
 
+	// listarParaCompartilhar
+	function listarParaCompartilhar ($idusuario) {
+		$this->sql = "SELECT * 
+		FROM cliente c
+		WHERE c.idusuariocompartilhado IS NULL OR c.idusuariocompartilhado = $idusuario";
+		$result = mysqli_query($this->con, $this->sql);
+
+		$this->superdao->resetResponse();
+
+		if(!$result) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'listarParaCompartilhar' ) );
+		}else{
+			while($row = mysqli_fetch_assoc($result)) {
+				array_push($this->lista, $row);
+			}
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $this->lista );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	//filtrar
 	function filtrar ($idusuario, $data) {
 		$start = $data["start"];

@@ -1,0 +1,28 @@
+<div class="inmodal">
+    <div class="modal-header">
+        <h4 class="modal-title">Comrtilhar Clientes</h4>
+        <small>Gerencie o compartilhamento de clientes</small>
+    </div>
+    <div class="modal-body">
+        <form name="simulacaoForm">
+            <div class="row">
+                <div class="col-md-12">
+                    <select class="form-control" name="idusuario" id="idusuario" ng-model="obj.idusuario" ng-options="obj.id as obj.nome for obj in consultores" ng-change="listarClientes(obj)"></select>
+                </div>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control" type="checkbox" name="" id=""></td>
+                            <td>Nome</td>
+                            <td>Celular</td>
+                            <td>Interesse</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" ng-click="ok(obj)">Fechar</button>
+    </div>
+</div>

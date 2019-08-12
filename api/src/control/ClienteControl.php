@@ -47,6 +47,9 @@ Class ClienteControl {
 	function listarVerNaHome ($idusuario) {
 		return $this->objDAO->listarVerNaHome($idusuario);
 	}
+	function listarParaCompartilhar ($idusuario) {
+		return $this->objDAO->listarParaCompartilhar ($idusuario);
+	}
 	function filtrar ($idusuario, $data) {
 		return $this->objDAO->filtrar($idusuario, $data);
 	}	

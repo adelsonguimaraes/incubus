@@ -149,6 +149,13 @@ function listarVerNaHome () {
 	$response = $control->listarVerNaHome($data['idusuario']);
 	echo json_encode($response);
 }
+function listarParaCompartilhar ($idusuario) {
+	$data = $_POST['data'];
+	var_dump($data);exit;
+	$control = new ClienteControl();
+	$response = $control->listarParaCompartilhar($data['idusuario']);
+	echo json_encode($response);
+}
 function filtrar () {
 	$data = $_POST['data'];
 	$usuario = $_POST['usuario'];
