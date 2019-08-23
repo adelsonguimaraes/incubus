@@ -7,15 +7,51 @@
         <form name="simulacaoForm">
             <div class="row">
                 <div class="col-md-12">
-                    <select class="form-control" name="idusuario" id="idusuario" ng-model="obj.idusuario" ng-options="obj.id as obj.nome for obj in consultores" ng-change="listarClientes(obj)"></select>
+                    <label for="">Consultor</label>
+                    <select class="form-control" name="idconsultor" id="idconsultor" ng-model="obj.idconsultor" ng-options="obj.id as obj.nome for obj in consultores" ng-change="listarClientes(obj)"></select>
                 </div>
-                <table class="table table-striped">
+            </div>
+            <br>
+            <h4>Clientes Compartilhados</h4>
+            <div class="table-responsive">
+                <table class="table">
                     <tbody>
                         <tr>
-                            <td><input class="form-control" type="checkbox" name="" id=""></td>
+                            <td></td>
                             <td>Nome</td>
                             <td>Celular</td>
                             <td>Interesse</td>
+                        </tr>
+                        <tr ng-repeat="obj in clientesChecados">
+                            <td><input type="checkbox" name="" id="" ng-model="obj.checked" ng-click="addCliente(obj)"></td>
+                            <td>{{obj.nome}}</td>
+                            <td>{{obj.celular}}</td>
+                            <td>{{obj.interesse}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <h4>Clientes</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <input class="form-control" type="text" placeholder="Filtre rapidamente..." ng-model="filtro">
+                </div>
+            </div>
+            <div class="table-responsive" style="height:250px; overflow: auto;">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>Nome</td>
+                            <td>Celular</td>
+                            <td>Interesse</td>
+                        </tr>
+                        <tr ng-repeat="obj in clientes | filter:filtro">
+                            <td><input type="checkbox" name="" id="" ng-model="obj.checked" ng-click="addCliente(obj)"></td>
+                            <td>{{obj.nome}}</td>
+                            <td>{{obj.celular}}</td>
+                            <td>{{obj.interesse}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -23,6 +59,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" ng-click="ok(obj)">Fechar</button>
+        <button type="button" class="btn btn-danger" ng-click="cancel()">Fechar</button>
+        <button type="button" class="btn btn-default" ng-click="ok(obj)">Salvar</button>
     </div>
 </div>

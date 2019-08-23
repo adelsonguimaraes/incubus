@@ -32,6 +32,12 @@ Class ClienteControl {
 	function atualizarVerHome ($id) {
 		return $this->objDAO->atualizarVerHome($id);
 	}
+	function compartilhar ($idusuario, $idconsultor, $idcliente) {
+		return $this->objDAO->compartilhar ($idusuario, $idconsultor, $idcliente);
+	}
+	function descompartilhar ($idusuario, $idconsultor, $idcliente) {
+		return $this->objDAO->descompartilhar ($idusuario, $idconsultor, $idcliente);
+	}
 	function importar ($idusuario, $idusuarioantigo) {
 		return $this->objDAO->importar ($idusuario, $idusuarioantigo);
 	}
@@ -47,8 +53,8 @@ Class ClienteControl {
 	function listarVerNaHome ($idusuario) {
 		return $this->objDAO->listarVerNaHome($idusuario);
 	}
-	function listarParaCompartilhar ($idusuario) {
-		return $this->objDAO->listarParaCompartilhar ($idusuario);
+	function listarParaCompartilhar ($idusuario, $idconsultor) {
+		return $this->objDAO->listarParaCompartilhar ($idusuario, $idconsultor);
 	}
 	function filtrar ($idusuario, $data) {
 		return $this->objDAO->filtrar($idusuario, $data);

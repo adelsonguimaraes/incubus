@@ -307,8 +307,9 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
 
         function compartilharClienteCtrl($scope, $uibModalInstance, parentScope) {
            $scope.obj = {
-                idusuario: '',
-                clientes: []
+                idconsultor: '',
+                clientes: [],
+                removidos: []
             };
 
             // listando consultores
@@ -323,7 +324,8 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
                             //se o sucesso === true
                             if (response.data.success == true) {
                                 $scope.consultores = response.data.data;
-                                $scope.obj.idusuario = response.data.data[0].id;
+                                $scope.obj.idconsultor = response.data.data[0].id;
+                                $scope.listarClientes($scope.obj.idconsultor);
                                 $rootScope.loadoff();
                             } else {
                                 $rootScope.loadoff();
@@ -337,10 +339,10 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
 
             $scope.clientes = [];
             // listando clientes para compartilhar
-            $scope.listarClientes = function (obj) {
-console.log(obj);
+            $scope.listarClientes = function (idconsultor) {
+
                 var dataRequest = {
-                    idusuario: obj.idusuario
+                    idconsultor: idconsultor
                 };
                 var data = { "metodo": "listarParaCompartilhar", "data": dataRequest, "class": "cliente", request: 'GET' };
 
@@ -351,6 +353,9 @@ console.log(obj);
                             //se o sucesso === true
                             if (response.data.success == true) {
                                 $scope.clientes = response.data.data;
+                                $scope.clientesChecados = []; // limpando checados
+                                $scope.clientesRemover = []; // limpando removidos
+                                for (var i of $scope.clientes) if (i.checked) $scope.clientesChecados.push(i);
                                 $rootScope.loadoff();
                             } else {
                                 $rootScope.loadoff();
@@ -359,20 +364,32 @@ console.log(obj);
                         }, function errorCallback(response) {
                             //error
                         });
+            };
+
+            $scope.clientesRemover = [];
+            $scope.clientesChecados = [];
+            $scope.addCliente = function (obj) {
+                // se checado adiciona se não remove
+                if (obj.checked) {
+                    $scope.clientesChecados.push(obj); // adicionando o cliente como checado
+                    $scope.clientesRemover.splice($scope.clientesRemover.indexOf(obj), 1); // removendo de adicionados
+                }else{
+                    $scope.clientesChecados.splice($scope.clientesChecados.indexOf(obj), 1); // adicionando cliente como removido
+                    $scope.clientesRemover.push(obj); // removendo de removidos
+                }
             }
 
             $scope.ok = function (obj) {
-
-                console.log(obj);
-                return false;
-
-                if (obj === undefined) {
-                    SweetAlert.swal({ html: true, title: "Atenção", text: "Informe pelo menos um campo para filtrar", type: "error" });
+                
+                if ($scope.clientesChecados.length<=0) {
+                    SweetAlert.swal({ html: true, title: "Atenção", text: "Selecione os clientes que deseja compartilhar!", type: "error" });
                     return false;
                 }
 
                 var copy = angular.copy(obj);
-                var data = { "metodo": "filtrar", "data": copy, "class": "cliente", request: 'GET' };
+                copy.clientes = $scope.clientesChecados;
+                copy.removidos = $scope.clientesRemover;
+                var data = { "metodo": "compartilhar", "data": copy, "class": "cliente", request: 'GET' };
 
                 $rootScope.loadon();
 
@@ -380,9 +397,10 @@ console.log(obj);
                     .then(function successCallback(response) {
                         //se o sucesso === true
                         if (response.data.success == true) {
-                            parentScope.clientes = response.data.data;
-                            $rootScope.loadoff();
-                            $uibModalInstance.dismiss('cancel');
+                            $scope.listarClientes($scope.obj.idconsultor);
+                            // $rootScope.loadoff();
+                            // $uibModalInstance.dismiss('cancel');
+                            MyToast.show("Compartilhamentos realizados com sucesso!");
                         } else {
                             SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
                         }

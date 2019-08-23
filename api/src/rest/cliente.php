@@ -149,11 +149,11 @@ function listarVerNaHome () {
 	$response = $control->listarVerNaHome($data['idusuario']);
 	echo json_encode($response);
 }
-function listarParaCompartilhar ($idusuario) {
+function listarParaCompartilhar () {
 	$data = $_POST['data'];
-	var_dump($data);exit;
+	$usuario = $_POST['usuario'];
 	$control = new ClienteControl();
-	$response = $control->listarParaCompartilhar($data['idusuario']);
+	$response = $control->listarParaCompartilhar($usuario['idusuario'], $data['idconsultor']);
 	echo json_encode($response);
 }
 function filtrar () {
@@ -189,6 +189,29 @@ function deletar () {
 	$banco->setId($data['id']);
 	$control = new ClienteControl($banco);
 	echo json_encode($control->deletar());
+}
+
+// compartilhando clientes
+function compartilhar () {
+	$data = $_POST["data"];
+	$usuario = $_POST["usuario"];
+	
+	// adicionando compartilhamento
+	foreach ($data['clientes'] as $key) {
+		$control = new ClienteControl();
+		$resp = $control->compartilhar($usuario['idusuario'], $data['idconsultor'], $key['id']);
+		if ($resp['success']===false) die (json_encode($resp));
+	}
+
+	// removendo compartilhamento
+	foreach ($data['removidos'] as $key) {
+		$control = new ClienteControl();
+		$resp = $control->descompartilhar($usuario['idusuario'], $data['idconsultor'], $key['id']);
+		if ($resp['success']===false) die (json_encode($resp));
+	}
+
+	echo json_encode($resp);
+	
 }
 
 

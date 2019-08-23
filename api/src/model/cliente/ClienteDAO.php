@@ -91,6 +91,34 @@ Class ClienteDAO {
 		return $this->superdao->getResponse();
 	}
 
+	// compartilhar
+	function compartilhar ($idusuario, $idconsultor, $idcliente) {
+		$this->sql ="UPDATE cliente SET idusuariocompartilhado = $idconsultor WHERE id = $idcliente AND idusuario =$idusuario";
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), "Cliente", 'Compartilhar' ) );
+		}else{
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( true );
+		}
+		return $this->superdao->getResponse();
+	}
+
+	// remover compartilhamento
+	function descompartilhar ($idusuario, $idconsultor, $idcliente) {
+		$this->sql ="UPDATE cliente SET idusuariocompartilhado = NULL WHERE id = $idcliente AND idusuario =$idusuario AND idusuariocompartilhado = $idconsultor";
+		$this->superdao->resetResponse();
+
+		if(!mysqli_query($this->con, $this->sql)) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), "Cliente", 'Descompartilhar' ) );
+		}else{
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( true );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	// importar
 	function importar ($idusuario, $idusuarioantigo) {
 		$this->sql = "UPDATE cliente SET idusuario = $idusuario  WHERE idusuario = $idusuarioantigo";
@@ -187,10 +215,10 @@ Class ClienteDAO {
 	}
 
 	// listarParaCompartilhar
-	function listarParaCompartilhar ($idusuario) {
-		$this->sql = "SELECT * 
+	function listarParaCompartilhar ($idusuario, $idconsultor) {
+		$this->sql = "SELECT c.*
 		FROM cliente c
-		WHERE c.idusuariocompartilhado IS NULL OR c.idusuariocompartilhado = $idusuario";
+		WHERE c.idusuario = $idusuario AND (c.idusuariocompartilhado IS NULL OR c.idusuariocompartilhado = $idconsultor)";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();
@@ -199,6 +227,7 @@ Class ClienteDAO {
 			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'listarParaCompartilhar' ) );
 		}else{
 			while($row = mysqli_fetch_assoc($result)) {
+				$row['checked'] = empty($row['idusuariocompartilhado']) ? false : true;
 				array_push($this->lista, $row);
 			}
 			$this->superdao->setSuccess( true );
