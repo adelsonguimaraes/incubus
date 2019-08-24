@@ -341,6 +341,8 @@ angular.module(module).controller('clienteCtrl', function ($rootScope, $scope, $
             // listando clientes para compartilhar
             $scope.listarClientes = function (idconsultor) {
 
+                console.log(idconsultor);
+
                 var dataRequest = {
                     idconsultor: idconsultor
                 };

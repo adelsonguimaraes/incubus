@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label for="">Consultor</label>
-                    <select class="form-control" name="idconsultor" id="idconsultor" ng-model="obj.idconsultor" ng-options="obj.id as obj.nome for obj in consultores" ng-change="listarClientes(obj)"></select>
+                    <select class="form-control" name="idconsultor" id="idconsultor" ng-model="obj.idconsultor" ng-options="obj.id as obj.nome for obj in consultores" ng-change="listarClientes(obj.idconsultor)"></select>
                 </div>
             </div>
             <br>
