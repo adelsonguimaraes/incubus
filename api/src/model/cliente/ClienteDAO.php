@@ -292,6 +292,30 @@ Class ClienteDAO {
 		}
 		return $this->superdao->getResponse();
 	}
+
+	//listar paginado
+	function listarCompartilhadosPaginado($idusuario, $start, $limit) {
+		$this->sql = "SELECT * FROM cliente 
+		WHERE idusuariocompartilhado = $idusuario and (status = 'PROSPECTO' or status = 'RETORNO')
+		order by status = 'PROSPECT' asc, status = 'RETORNO', datacadastro desc
+		limit  $start , $limit";
+		$result = mysqli_query ( $this->con, $this->sql );
+
+		$this->superdao->resetResponse();
+
+		if(!$result) {
+			$this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Cliente' , 'Listar' ) );
+		}else{
+			while($row = mysqli_fetch_assoc($result)) {
+				$row['verhome'] = ($row['verhome']==='SIM' ? true : false);
+				array_push($this->lista, $row);
+			}
+			$this->superdao->setSuccess( true );
+			$this->superdao->setData( $this->lista );
+		}
+		return $this->superdao->getResponse();
+	}
+
 	//deletar
 	function deletar (Cliente $obj) {
 		$this->superdao->resetResponse();

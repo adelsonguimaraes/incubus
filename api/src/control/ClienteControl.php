@@ -63,8 +63,11 @@ Class ClienteControl {
 		return $this->objDAO->deletar($this->obj);
 	}
 	function listarPaginado ($idusuario, $start, $limit) {
-	return $this->objDAO->listarPaginado($idusuario, $start, $limit);
+		return $this->objDAO->listarPaginado($idusuario, $start, $limit);
 	}
+	function listarCompartilhadosPaginado ($idusuario, $start, $limit) {
+		return $this->objDAO->listarCompartilhadosPaginado($idusuario, $start, $limit);
+		}
 	function qtdTotal () {
 		return $this->objDAO->qtdTotal();
 	}

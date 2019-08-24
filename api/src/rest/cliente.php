@@ -143,6 +143,15 @@ function listarPaginado () {
 	$response = $control->listarPaginado($idusuario, $data["start"], $data["limit"]);
 	echo json_encode($response);
 }
+function listarCompartilhadosPaginado () {
+	$data = $_POST["data"];
+	$usuario = $_POST['usuario'];
+	$idusuario = $usuario["idusuario"];
+	if (!empty($data["idusuario"])) $idusuario = $data["idusuario"];
+	$control = new ClienteControl();
+	$response = $control->listarCompartilhadosPaginado($idusuario, $data["start"], $data["limit"]);
+	echo json_encode($response);
+}
 function listarVerNaHome () {
 	$data = $_POST['data'];
 	$control = new ClienteControl();

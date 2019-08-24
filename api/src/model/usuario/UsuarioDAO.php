@@ -330,7 +330,8 @@ Class UsuarioDAO {
 		$this->sql = "SELECT m.*
 		FROM menu_usuario mu
 		INNER JOIN menu m ON m.id = mu.idmenu
-		WHERE mu.idusuario = $idusuario";
+		WHERE mu.idusuario = $idusuario
+		ORDER BY m.ordenador ASC";
 
 		$result = mysqli_query( $this->con, $this->sql );
 
