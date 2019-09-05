@@ -15,7 +15,7 @@ Class Taxaadministrativa implements JsonSerializable {
 	private $objtipotaxa;
 	private $codigo;
 	private $taxa;
-	private $procentagem;
+	private $porcentagem;
 	private $datacadastro;
 	private $dataedicao;
 
@@ -26,7 +26,7 @@ Class Taxaadministrativa implements JsonSerializable {
 		Tipotaxa $objtipotaxa = NULL,
 		$codigo = NULL,
 		$taxa = NULL,
-		$procentagem = NULL,
+		$porcentagem = NULL,
 		$datacadastro = NULL,
 		$dataedicao = NULL
 	)
@@ -35,7 +35,7 @@ Class Taxaadministrativa implements JsonSerializable {
 		$this->objtipotaxa	= $objtipotaxa;
 		$this->codigo	= $codigo;
 		$this->taxa	= $taxa;
-		$this->procentagem	= $procentagem;
+		$this->porcentagem	= $porcentagem;
 		$this->datacadastro	= $datacadastro;
 		$this->dataedicao	= $dataedicao;
 	}
@@ -69,11 +69,11 @@ Class Taxaadministrativa implements JsonSerializable {
 		$this->taxa = $taxa;
 		return $this;
 	}
-	public function getProcentagem() {
-		return $this->procentagem;
+	public function getPorcentagem() {
+		return $this->porcentagem;
 	}
-	public function setProcentagem($procentagem) {
-		$this->procentagem = $procentagem;
+	public function setPorcentagem($porcentagem) {
+		$this->porcentagem = $porcentagem;
 		return $this;
 	}
 	public function getDatacadastro() {
@@ -98,7 +98,7 @@ Class Taxaadministrativa implements JsonSerializable {
 			"objtipotaxa"	=> $this->objtipotaxa,
 			"codigo"	=> $this->codigo,
 			"taxa"	=> $this->taxa,
-			"procentagem"	=> $this->procentagem,
+			"porcentagem"	=> $this->porcentagem,
 			"datacadastro"	=> $this->datacadastro,
 			"dataedicao"	=> $this->dataedicao
 		];

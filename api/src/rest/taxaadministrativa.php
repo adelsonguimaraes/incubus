@@ -38,7 +38,7 @@ function cadastrar () {
 		new Tipotaxa($data['idtipotaxa']),
 		$data['codigo'],
 		$data['taxa'],
-		$data['procentagem']
+		$data['porcentagem']
 	);
 	$control = new TaxaadministrativaControl($obj);
 	$response = $control->cadastrar();
@@ -62,7 +62,7 @@ function atualizar () {
 		new Tipotaxa($data['idtipotaxa']),
 		$data['codigo'],
 		$data['taxa'],
-		$data['procentagem']
+		$data['porcentagem']
 	);
 	$control = new TaxaadministrativaControl($obj);
 	$response = $control->atualizar();

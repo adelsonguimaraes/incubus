@@ -25,12 +25,12 @@ Class TaxaadministrativaDAO {
 
 	//cadastrar
 	function cadastrar (taxaadministrativa $obj) {
-		$this->sql = sprintf("INSERT INTO taxaadministrativa(idtipotaxa, codigo, taxa, procentagem)
+		$this->sql = sprintf("INSERT INTO taxaadministrativa(idtipotaxa, codigo, taxa, porcentagem)
 		VALUES(%d, %d, %f, %f)",
 			mysqli_real_escape_string($this->con, $obj->getObjtipotaxa()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getCodigo()),
 			mysqli_real_escape_string($this->con, $obj->getTaxa()),
-			mysqli_real_escape_string($this->con, $obj->getProcentagem()));
+			mysqli_real_escape_string($this->con, $obj->getPorcentagem()));
 
 		$this->superdao->resetResponse();
 
@@ -47,11 +47,11 @@ Class TaxaadministrativaDAO {
 
 	//atualizar
 	function atualizar (Taxaadministrativa $obj) {
-		$this->sql = sprintf("UPDATE taxaadministrativa SET idtipotaxa = %d, codigo = %d, taxa = %f, procentagem = %f, dataedicao = '%s' WHERE id = %d ",
+		$this->sql = sprintf("UPDATE taxaadministrativa SET idtipotaxa = %d, codigo = %d, taxa = %f, porcentagem = %f, dataedicao = '%s' WHERE id = %d ",
 			mysqli_real_escape_string($this->con, $obj->getObjtipotaxa()->getId()),
 			mysqli_real_escape_string($this->con, $obj->getCodigo()),
 			mysqli_real_escape_string($this->con, $obj->getTaxa()),
-			mysqli_real_escape_string($this->con, $obj->getProcentagem()),
+			mysqli_real_escape_string($this->con, $obj->getPorcentagem()),
 			mysqli_real_escape_string($this->con, date('Y-m-d H:i:s')),
 			mysqli_real_escape_string($this->con, $obj->getId()));
 		$this->superdao->resetResponse();

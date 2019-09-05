@@ -74,6 +74,7 @@
     padding: 0;
     list-style: none;
     margin: 0;
+    margin-bottom: 40px;
 }
 .mymenu ul:nth-child(3)  {
     padding-left: 18px;
@@ -117,6 +118,7 @@
     text-align: right;
     text-decoration: none;
     cursor: pointer;
+    background: #fff;
 }
 .mymenu .footer a:hover {
     background: #ccc;
