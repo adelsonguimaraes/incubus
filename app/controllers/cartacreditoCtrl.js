@@ -203,7 +203,8 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
                 ocultar: true,
                 valorconsultor: calculaValorConsultor(carta.valor)
             };
-            $scope.obj.valorfinal = calculaValorFinal($scope.obj.valorcomtaxa, carta.entrada);
+            // $scope.obj.valorfinal = calculaValorFinal($scope.obj.valorcomtaxa, carta.entrada);
+            $scope.obj.valorfinal = calculaValorFinal($scope.obj.valorcomtaxa, $scope.obj.entrada);
             $scope.obj.parcelamento = calculaParcelamento($scope.obj.valorfinal, carta.parcela);
 
 
@@ -240,12 +241,12 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
             function calculaValorFinal (valor, entrada) {
                 valor = desformataValor(valor);
                 entrada = desformataValor(entrada);
-                return formataValor(+valor-entrada);
+                return formataValor(parseFloat(valor)-parseFloat(entrada));
             }
             function calculaParcelamento (valor, parcela) {
                 valor = desformataValor(valor);
                 //Math.trunc pegando apenas a parte inteira do valor
-                return Math.trunc(+valor/parcela) + 'x de ' + formataValor(parcela);
+                return Math.trunc(parseFloat(valor)/parseFloat(parcela)) + 'x de ' + formataValor(parcela);
             }
             function calculaValorConsultor (valor) {
                 valor = desformataValor(valor);
