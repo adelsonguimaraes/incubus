@@ -196,7 +196,9 @@ Class ClienteDAO {
 
 	//listar
 	function listarVerNaHome ($idusuario) {
-		$this->sql = "SELECT * FROM cliente where idusuario = $idusuario and verhome = 'SIM'";
+		$this->sql = "SELECT * 
+		FROM cliente 
+		where idusuario = $idusuario and verhome = 'SIM' AND idusuariocompartilhado IS NULL";
 		$result = mysqli_query($this->con, $this->sql);
 
 		$this->superdao->resetResponse();

@@ -191,7 +191,8 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
             $scope.obj = {
                 modalidade: carta.modalidade,
                 valor: formataValor(carta.valor),
-                entrada: formataValor(carta.entrada),
+                inclusao: formataValor(carta.entrada),
+                entrada: formataValor(parseFloat(carta.entrada)+parseFloat(carta.parcela)),
                 parcela: formataValor(carta.parcela),
                 // negociado
                 valornegociado: formataValor(carta.valor),

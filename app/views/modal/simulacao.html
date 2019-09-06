@@ -7,17 +7,15 @@
         <form name="simulacaoForm">
             <div class="row">
                 <div class="col-md-12">
-                    <h3>
+                    <!-- <h3>
                         Cliente
-                        <!-- <small>Sem cliente</small> <input type="checkbox" name="ocultar" id="ocultar" ng-model="obj.ocultar" checked> -->
                     </h3>
                     <small>* Selecione um cliente caso queirar salvar a simulação</small>
-                    <!-- <hr>        	 -->
                     <div class="row">
                         <div class="col-sm-12">
                             <select class="form-control" name="cliente" ng-model="obj.idcliente" ng-options="obj.id as obj.nome for obj in clientes"></select>
                         </div>
-                    </div>
+                    </div> -->
                     <h3>Valores da Carta</h3>
                     <hr>
                     <div class="row">
@@ -26,16 +24,21 @@
                             <input class="form-control" type="tel" mascara-moeda name="valor" ng-model="obj.valor" readonly="true">
                         </div>
                         <div class="col-sm-6">
-                            <label>Entrada</label>
-                            <input class="form-control" type="tel" mascara-moeda name="entrada" ng-model="obj.entrada" readonly="true">
+                            <!-- <label>Entrada</label> -->
+                            <label>Inclusão</label>
+                            <input class="form-control" type="tel" mascara-moeda name="inclusao" ng-model="obj.inclusao" readonly="true">
                         </div>
     				</div>
             		<div class="row">
-            			<div class="col-sm-6">
+            			<div class="col-sm-4">
                             <label>Parcela</label>
                             <input class="form-control" type="tel" mascara-moeda name="parcela" ng-model="obj.parcela" readonly="true">
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
+                            <label>Entrada</label>
+                            <input class="form-control" type="tel" mascara-moeda name="entrada" ng-model="obj.entrada" readonly="true">
+                        </div>
+                        <div class="col-sm-4">
                             <label>Taxa</label>
                             <input class="form-control" type="tel" name="taxa" ng-model="obj.taxa" readonly="true">
                         </div>
