@@ -188,11 +188,13 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
         });
 
         function simulacaoCartaCreditoCtrl($scope, $uibModalInstance, carta, parentScope) {
+            let entrada = ((+carta.entrada)+(+carta.parcela)).toFixed(2); // calculando a entrada
+
             $scope.obj = {
                 modalidade: carta.modalidade,
                 valor: formataValor(carta.valor),
                 inclusao: formataValor(carta.entrada),
-                entrada: formataValor(parseFloat(carta.entrada)+parseFloat(carta.parcela)),
+                entrada: formataValor(entrada),
                 parcela: formataValor(carta.parcela),
                 // negociado
                 valornegociado: formataValor(carta.valor),
@@ -207,6 +209,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
             $scope.obj.valorfinal = calculaValorFinal($scope.obj.valorcomtaxa, $scope.obj.entrada);
             $scope.obj.parcelamento = calculaParcelamento($scope.obj.valorfinal, carta.parcela);
 
+            console.log($scope.obj);
 
             $scope.clientes = [];
             $scope.listarClientes = function () {
@@ -236,21 +239,25 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
            
             function calculaValorComTaxa (valor, taxa) {
                 valor = desformataValor(valor);
-                return formataValor(+valor+(+taxa/100*+valor));
+                valor = parseFloat(valor)+parseFloat(taxa)/100*parseFloat(valor);
+                return formataValor(valor.toFixed(2));
             }
             function calculaValorFinal (valor, entrada) {
                 valor = desformataValor(valor);
                 entrada = desformataValor(entrada);
-                return formataValor(parseFloat(valor)-parseFloat(entrada));
+                let result = parseFloat(valor)-parseFloat(entrada);
+                return formataValor(result.toFixed(2));
             }
             function calculaParcelamento (valor, parcela) {
                 valor = desformataValor(valor);
                 //Math.trunc pegando apenas a parte inteira do valor
-                return Math.trunc(parseFloat(valor)/parseFloat(parcela)) + 'x de ' + formataValor(parcela);
+                let result = parseFloat(valor)/parseFloat(parcela);
+                return Math.trunc(result.toFixed(2)) + 'x de ' + formataValor(parcela);
             }
             function calculaValorConsultor (valor) {
                 valor = desformataValor(valor);
-                return formataValor(Math.round(0.7/100*+valor));
+                let result = 0.7/100*parseFloat(valor);
+                return formataValor(Math.round(result));
             }
 
             $scope.alteraValor = function (item, $event) {
@@ -262,7 +269,7 @@ angular.module(module).controller('cartacreditoCtrl', function ($rootScope, $sco
 
                 // if (($event.keyCode>=48 && $event.keyCode<=57) || ($event.keyCode>=96 && $event.keyCode<=105)) {
                     item.valorcomtaxa = calculaValorComTaxa(item.valornegociado, carta.taxa);
-                    item.valorfinal = calculaValorFinal(item.valorcomtaxa, carta.entrada);
+                    item.valorfinal = calculaValorFinal(item.valorcomtaxa, $scope.obj.entrada);
                     item.parcelamento = calculaParcelamento(
                         item.valorfinal, 
                         carta.parcela
