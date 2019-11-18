@@ -42,7 +42,7 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
         $scope.buscarInfoPageConsultor();
     }
 
-    var coord = { lat: '-3.0889928', lon: '-60.0228449' };
+    var coord = { lat: '-3.115292', lon: '-60.023733' };
     var carregaMapa = function (coord) {
         if (coord) {
             setTimeout(function () {
@@ -67,7 +67,7 @@ angular.module(module).controller('atendimentoCtrl', function ($rootScope, $scop
                 map.dragging.disable();
                 
                 L.marker([coord.lat, coord.lon]).addTo(map)
-                    .bindPopup('A/Santos Representaçoes/ Newbens</small>')
+                    .bindPopup('Norte Consórcio - Carros Imóveis motos apartamentos Rep. Embracon Recon Canopus Honda Yamaha Vkn.')
                     .openPopup();
             }, 100);
         }
