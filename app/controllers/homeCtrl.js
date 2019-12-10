@@ -66,6 +66,7 @@ angular.module(module).controller('homeCtrl', function ($rootScope, $scope, auth
         maquinasJogando();
         console.log("JOGADA PLAYER", $scope.jogo.jogadores);
         $scope.view = 3;
+        rodada();
     }
 
     // função que força jogada do player quando o tempo de jogada acaba
@@ -78,6 +79,7 @@ angular.module(module).controller('homeCtrl', function ($rootScope, $scope, auth
         maquinasJogando();
         console.log("JOGADA FORÇADA", $scope.jogo.jogadores);
         $scope.view = 3;
+        rodada();
     }
 
     function randomPlay () {
@@ -98,6 +100,34 @@ angular.module(module).controller('homeCtrl', function ($rootScope, $scope, auth
                 f.jogada = randomPlay();
             }
         }
+    }
+
+    $scope.rodada = [];
+    function rodada () {
+        // var i = $interval(function () {
+        //     $scope.rodada.push({
+        //         jogador1: $scope.jogo.jogadores[0].nome,
+        //         jogada1: $scope.jogo.jogadores[0].jogada,
+        //         jogador2: $scope.jogo.jogadores[1].nome,
+        //         jogada2: $scope.jogo.jogadores[1].jogada
+        //     });
+        // }, 5000)
+        $scope.rodada = [{
+            jogador1: $scope.jogo.jogadores[0].nome,
+            jogada1: $scope.jogo.jogadores[0].jogada,
+            jogador2: $scope.jogo.jogadores[1].nome,
+            jogada2: $scope.jogo.jogadores[1].jogada
+        },{
+            jogador1: $scope.jogo.jogadores[0].nome,
+            jogada1: $scope.jogo.jogadores[0].jogada,
+            jogador2: $scope.jogo.jogadores[2].nome,
+            jogada2: $scope.jogo.jogadores[2].jogada
+        },{
+            jogador1: $scope.jogo.jogadores[1].nome,
+            jogada1: $scope.jogo.jogadores[1].jogada,
+            jogador2: $scope.jogo.jogadores[2].nome,
+            jogada2: $scope.jogo.jogadores[2].jogada
+        }];
     }
 
 });

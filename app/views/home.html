@@ -106,11 +106,31 @@
                         </div>
                     </div>
                     <hr>
+                    <center><h4>Tabela</h4></center>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Jogador</th>
+                                <th>Jogada</th>
+                                <th></th>
+                                <th>Jogada</th>
+                                <th>Jogador</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="r in rodada">
+                                <td>{{r.jogador1}}</td>
+                                <td>{{r.jogada1}}</td>
+                                <td>Vs</td>
+                                <td>{{r.jogada2}}</td>
+                                <td>{{r.jogador2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </form>
             </div>
-            <div class="panel-footer">
-                <button class="btn btn-default btn-block" ng-click="jogando()">Jogar</button>
-            </div>
+            <!-- <div class="panel-footer">
+            </div> -->
         </div>
     </section>
 </div>
