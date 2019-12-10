@@ -1,49 +1,87 @@
-<div ng-include="'app/views/common/header.html'"></div>
-<section>
-    <div class="title">
-        Agenda
-        <a ng-click="toggle('agenda')"><i class="fa" ng-class="{'fa-minus': groups.agenda, 'fa-plus': !groups.agenda }"></i></a>
-    </div>
-    <ul class="list-group" ng-if="groups.agenda">
-        <div style="padding:5px;">
-            <input class="form-control" type="text" ng-model="filtroAgenda" placeholder="Filtro, mais agilidade nas suas buscas">
+<!-- <div ng-include="'app/views/common/header.html'"></div> -->
+<div class="home">
+    <section ng-if="view==1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <center>
+                    <h4>Bem Vindo ao JokenpOn</h4>
+                    <hr>
+                    <p><b>Regras:</b></p>
+                    <p>Vidas Iniciais 5 <i class="glyphicon glyphicon-heart"></i></p>
+                    <p>Vitória recebe +1 <i class="glyphicon glyphicon-heart"></i></p>
+                    <p>Empate perde -1 <i class="glyphicon glyphicon-heart"></i></p>
+                    <p>Derrota perde -2 <i class="glyphicon glyphicon-heart"></i></p>
+                </center>
+            </div>
+            <div class="panel-body">
+                <form name="form">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Nome</label>
+                                <input type="text" class="form-control" name="nome" id="nome" ng-model="obj.nome" ng-required="true">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer" style="display: flow-root;">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-default" ng-click="entrar(obj)" ng-disabled="form.$invalid">Salvar</button>
+                </div>
+            </div>
         </div>
-        <div class="agendamentos">
-            <li class="list-group-item" ng-repeat="obj in agendas | filter:filtroAgenda" ng-click="itemClickAgenda(obj);">
-                <div><b>Data/Hora:</b> {{obj.datahora | datahora}}</div>
-                <div><b>Cliente:</b> {{obj.cliente}}</div>
-                <div><b>Tipo:</b> {{obj.tipo | nomeProprio}}</div>
-                <div><b>Observação:</b> {{obj.observacao}}</div>
-            </li>
+    </section>
+
+    <section ng-if="view==2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div style="display: flex;">
+                    <h4 style="flex: 1;">Jogador: {{jogador.nome}}</h4>
+                    <h4 style="width:50px;">
+                        <i class="glyphicon glyphicon-heart" style="color:brown;"></i> {{jogador.moeda}}
+                    </h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <label for="">Escolha sua jogada! Tempo: <span class="time">{{jogo.tempo}}</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <button class="btn btn-default btn-lg" ng-class="{'active' : btn == 'pedra'}" ng-click="setButton('pedra')">
+                                    <label for="">Pedra</label><br>
+                                    <i class="fa fa-hand-rock-o fa-4x" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <button class="btn btn-default btn-lg" ng-class="{'active' : btn == 'papel'}"  ng-click="setButton('papel')">
+                                    <label for="">Papel</label><br>
+                                    <i class="fa fa-hand-paper-o fa-4x" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <button class="btn btn-default btn-lg" ng-class="{'active' : btn == 'tesoura'}"  ng-click="setButton('tesoura')">
+                                    <label for="">Tesoura</label><br>
+                                    <i class="fa fa-hand-peace-o fa-4x" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default btn-block" ng-click="jogando()">Jogar</button>
+            </div>
         </div>
-    </ul>
-</section>
-<section>
-    <div class="title">
-        Clientes
-        <a ng-click="toggle('cliente')"><i class="fa fa-minus"></i></a>
-    </div>
-    <ul class="list-group" ng-if="groups.cliente">
-        <div style="padding:5px;">
-            <input class="form-control" type="text" ng-model="filtroCliente" placeholder="Filtro, mais agilidade nas suas buscas">
-        </div>
-        <div class="agendamentos">
-            <li class="list-group-item" ng-repeat="obj in clientes | filter:filtroCliente">
-                <div><b>Nome:</b> {{obj.nome}}</div>
-                <div><b>Celular:</b> {{obj.celular | cel}}</div>
-                <div><b>Status:</b> {{obj.status | nomeProprio}}</div>
-                <div><b>Interesse:</b> {{obj.interesse}}</div>
-                <div><b>Valor:</b> {{obj.valor | moeda}}</div>
-                <div><b>Entrada:</b> {{obj.entrada | moeda}}</div>
-                <div><b>Parcela:</b> {{obj.parcela | moeda}}</div>
-                <div><b>Observação:</b> {{obj.observacao}}</div>
-            </li>
-        </div>
-    </ul>
-</section>
-<!-- <div class="notification animated swing">
-    <a ng-click="clickNotification()">
-        <span>3</span>
-        <i class="fa fa-bell"></i>
-    </a>
-</div> -->
+    </section>
+</div>

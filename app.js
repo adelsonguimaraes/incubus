@@ -1,5 +1,5 @@
 // configs
-const module = 'incubus';
+const module = 'jokenpon';
 const api = "api/";
 const version = '1.0.1';
 
