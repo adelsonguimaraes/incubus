@@ -65,6 +65,7 @@ angular.module(module).controller('homeCtrl', function ($rootScope, $scope, auth
         $interval.cancel(t);
         maquinasJogando();
         console.log("JOGADA PLAYER", $scope.jogo.jogadores);
+        $scope.view = 3;
     }
 
     // função que força jogada do player quando o tempo de jogada acaba
@@ -76,6 +77,7 @@ angular.module(module).controller('homeCtrl', function ($rootScope, $scope, auth
         $interval.cancel(t);
         maquinasJogando();
         console.log("JOGADA FORÇADA", $scope.jogo.jogadores);
+        $scope.view = 3;
     }
 
     function randomPlay () {

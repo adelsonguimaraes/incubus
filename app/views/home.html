@@ -84,4 +84,33 @@
             </div>
         </div>
     </section>
+
+    <section ng-if="view==3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div style="display: flex;">
+                    <h4 style="flex: 1;">Jogador: {{jogador.nome}}</h4>
+                    <h4 style="width:50px;">
+                        <i class="glyphicon glyphicon-heart" style="color:brown;"></i> {{jogador.moeda}}
+                    </h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <p ng-repeat="j in jogo.jogadores" style="display: flex;">
+                                <label style="flex:1;">{{j.nome}}</label>
+                                <label style="width:50px;"><i class="glyphicon glyphicon-heart" style="color:brown;"></i> {{j.moeda}}</label>
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default btn-block" ng-click="jogando()">Jogar</button>
+            </div>
+        </div>
+    </section>
 </div>
